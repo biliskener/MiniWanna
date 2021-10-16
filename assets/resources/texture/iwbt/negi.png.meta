@@ -1,0 +1,68 @@
+{
+  "ver": "1.0.21",
+  "importer": "image",
+  "imported": true,
+  "uuid": "6a1788f0-04fd-40ec-b78b-d66102efc2c6",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "negi": {
+      "ver": "1.0.4",
+      "uuid": "92f259bf-83e7-49b8-831e-b60344eeffc0",
+      "rawTextureUuid": "6a1788f0-04fd-40ec-b78b-d66102efc2c6",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 6,
+      "width": 32,
+      "height": 20,
+      "rawWidth": 32,
+      "rawHeight": 32,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "6a1788f0-04fd-40ec-b78b-d66102efc2c6@6c48a",
+      "displayName": "negi",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "6a1788f0-04fd-40ec-b78b-d66102efc2c6"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "hasAlpha": true,
+    "type": "texture",
+    "redirect": "6a1788f0-04fd-40ec-b78b-d66102efc2c6@6c48a"
+  }
+}

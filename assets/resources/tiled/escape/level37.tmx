@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="7" nextobjectid="59">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+10,10,10,10,10,10,10,10,10,10,10,10,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+2,2,2,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <layer id="3" name="Layer3" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,17,0,0,0,0,0,0,15,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,17,0,0,15,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,8,0,0,16,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,16,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="6" name="Layer4">
+  <object id="4" name="1" gid="5" x="60" y="480" width="60" height="60"/>
+  <object id="5" name="2" gid="5" x="60" y="540" width="60" height="60"/>
+  <object id="6" name="3" gid="5" x="60" y="600" width="60" height="60"/>
+  <object id="7" name="4" gid="5" x="60" y="660" width="60" height="60"/>
+  <object id="8" name="5" gid="5" x="120" y="660" width="60" height="60"/>
+  <object id="9" name="6" gid="5" x="180" y="660" width="60" height="60"/>
+  <object id="10" name="7" gid="5" x="240" y="660" width="60" height="60"/>
+  <object id="11" name="8" gid="5" x="300" y="660" width="60" height="60"/>
+  <object id="12" name="9" gid="5" x="360" y="660" width="60" height="60"/>
+  <object id="13" name="10" gid="5" x="420" y="660" width="60" height="60"/>
+  <object id="14" name="11" gid="5" x="480" y="660" width="60" height="60"/>
+  <object id="15" name="12" gid="5" x="540" y="660" width="60" height="60"/>
+  <object id="16" name="13" gid="5" x="600" y="660" width="60" height="60"/>
+  <object id="17" name="14" gid="5" x="600" y="600" width="60" height="60"/>
+  <object id="18" name="15" gid="5" x="600" y="540" width="60" height="60"/>
+  <object id="19" name="16" gid="5" x="600" y="480" width="60" height="60"/>
+  <object id="20" name="17" gid="5" x="600" y="420" width="60" height="60"/>
+  <object id="21" name="18" gid="5" x="600" y="360" width="60" height="60"/>
+  <object id="22" name="19" gid="5" x="600" y="300" width="60" height="60"/>
+  <object id="23" name="20" gid="5" x="600" y="240" width="60" height="60"/>
+  <object id="24" name="21" gid="5" x="600" y="180" width="60" height="60"/>
+  <object id="25" name="22" gid="5" x="600" y="120" width="60" height="60"/>
+  <object id="26" name="23" gid="5" x="540" y="120" width="60" height="60"/>
+  <object id="27" name="24" gid="5" x="480" y="120" width="60" height="60"/>
+  <object id="28" name="25" gid="5" x="420" y="120" width="60" height="60"/>
+  <object id="29" name="26" gid="5" x="360" y="120" width="60" height="60"/>
+  <object id="30" name="27" gid="5" x="300" y="120" width="60" height="60"/>
+  <object id="31" name="28" gid="5" x="240" y="120" width="60" height="60"/>
+  <object id="32" name="29" gid="5" x="180" y="120" width="60" height="60"/>
+  <object id="33" name="30" gid="5" x="120" y="120" width="60" height="60"/>
+  <object id="34" name="31" gid="5" x="60" y="120" width="60" height="60"/>
+  <object id="35" name="32" gid="5" x="60" y="180" width="60" height="60"/>
+  <object id="36" name="33" gid="5" x="60" y="240" width="60" height="60"/>
+  <object id="37" name="34" gid="5" x="60" y="300" width="60" height="60"/>
+  <object id="38" name="35" gid="5" x="60" y="360" width="60" height="60"/>
+  <object id="39" name="36" gid="5" x="60" y="420" width="60" height="60"/>
+  <object id="40" name="37" gid="5" x="120" y="480" width="60" height="60"/>
+  <object id="41" name="38" gid="5" x="180" y="540" width="60" height="60"/>
+  <object id="42" name="39" gid="5" x="240" y="540" width="60" height="60"/>
+  <object id="43" name="40" gid="5" x="300" y="540" width="60" height="60"/>
+  <object id="44" name="41" gid="5" x="360" y="540" width="60" height="60"/>
+  <object id="45" name="42" gid="5" x="420" y="540" width="60" height="60"/>
+  <object id="46" name="43" gid="5" x="480" y="540" width="60" height="60"/>
+  <object id="47" name="44" gid="5" x="480" y="480" width="60" height="60"/>
+  <object id="48" name="45" gid="5" x="480" y="420" width="60" height="60"/>
+  <object id="49" name="46" gid="5" x="480" y="360" width="60" height="60"/>
+  <object id="50" name="47" gid="5" x="480" y="300" width="60" height="60"/>
+  <object id="51" name="48" gid="5" x="480" y="240" width="60" height="60"/>
+  <object id="52" name="49" gid="5" x="420" y="240" width="60" height="60"/>
+  <object id="53" name="50" gid="5" x="360" y="240" width="60" height="60"/>
+  <object id="54" name="51" gid="5" x="300" y="240" width="60" height="60"/>
+  <object id="55" name="52" gid="5" x="240" y="240" width="60" height="60"/>
+  <object id="56" name="53" gid="5" x="180" y="240" width="60" height="60"/>
+  <object id="57" name="54" gid="5" x="180" y="300" width="60" height="60"/>
+  <object id="58" name="55" gid="5" x="180" y="360" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="4" name="Trigger">
+  <object id="3" name="key1" gid="4" x="240" y="600" width="60" height="60">
+   <properties>
+    <property name="params" value="{&quot;targetLayers&quot;: &quot;Layer4&quot;, &quot;interval&quot;: 0.25}"/>
+    <property name="script" value="BlocksDisappear"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="2" name="Transfer">
+  <object id="1" name="gate1" gid="6" x="120" y="600" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level36"/>
+   </properties>
+  </object>
+  <object id="2" name="gate2" gid="21" x="240" y="360" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level38"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

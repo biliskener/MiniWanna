@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="8" nextobjectid="17">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,3,3,3,
+1,1,1,1,1,3,3,1,1,3,1,3,
+1,3,3,1,1,3,3,1,1,3,1,1,
+3,3,3,3,1,3,3,1,3,3,3,3,
+1,1,3,3,3,3,3,3,3,3,1,1,
+3,1,3,3,1,1,1,3,3,3,3,1,
+10,1,3,3,1,1,1,3,3,3,3,1,
+1,1,3,3,3,3,3,3,3,3,1,1,
+1,3,3,3,1,3,3,1,3,3,3,3,
+1,1,1,1,1,3,3,1,1,3,1,1,
+1,1,1,1,1,1,1,1,1,3,3,1,
+1,1,1,1,3,1,1,1,1,1,3,3
+</data>
+ </layer>
+ <layer id="2" name="Layer3" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,17,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,8,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+15,0,0,17,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Layer4" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="Layer5" width="12" height="12">
+  <properties>
+   <property name="params" value="{}"/>
+   <property name="script" value="LayerVisibility"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,5,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,5,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="5" name="Layer6" width="12" height="12">
+  <properties>
+   <property name="params" value="{&quot;startDelay&quot;: 0.5, &quot;stopDelay&quot;: 0.5}"/>
+   <property name="script" value="LayerVisibility"/>
+  </properties>
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,5,0,0,0,0,
+0,0,0,0,0,0,0,5,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="6" name="Transfer">
+  <object id="4" name="gate2" gid="19" x="0" y="300" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level15"/>
+   </properties>
+  </object>
+  <object id="5" name="gate1" gid="6" x="0" y="180" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level13"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="Trigger">
+  <object id="7" name="key2" gid="4" x="300" y="360" width="60" height="60">
+   <properties>
+    <property name="params" value="{&quot;targetLevel&quot;: &quot;level11&quot;,&quot;targetLayers&quot;:&quot;Layer6&quot;}"/>
+    <property name="script" value="LayerTrigger"/>
+   </properties>
+  </object>
+  <object id="6" name="key1" gid="4" x="540" y="720" width="60" height="60">
+   <properties>
+    <property name="params" value="{&quot;targetLayers&quot;:  &quot;Layer5&quot;}"/>
+    <property name="script" value="LayerTrigger"/>
+   </properties>
+  </object>
+  <object id="16" name="prop1" gid="14" x="60" y="720" width="60" height="60"/>
+ </objectgroup>
+</map>

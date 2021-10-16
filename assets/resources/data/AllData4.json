@@ -1,0 +1,18 @@
+{
+   "scenes" : {
+      "1" : {
+         "backgroundImage" : "ui/game/scene1.jpg",
+         "floorImage" : "ui/game/floor1.png",
+         "hangImage" : "ui/game/scene_hang1.png",
+         "id" : 1,
+         "name" : "小土城"
+      },
+      "2" : {
+         "backgroundImage" : "ui/game/scene2.jpg",
+         "floorImage" : "ui/game/floor2.png",
+         "hangImage" : "ui/game/scene_hang2.png",
+         "id" : 2,
+         "name" : "樱花城"
+      }
+   }
+}

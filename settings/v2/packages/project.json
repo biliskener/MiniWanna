@@ -1,0 +1,108 @@
+{
+  "__version__": "1.0.1",
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Player"
+      },
+      {
+        "index": 2,
+        "name": "Block"
+      },
+      {
+        "index": 3,
+        "name": "Bullet"
+      },
+      {
+        "index": 4,
+        "name": "Spike"
+      },
+      {
+        "index": 5,
+        "name": "Blood"
+      },
+      {
+        "index": 6,
+        "name": "Save"
+      },
+      {
+        "index": 7,
+        "name": "Trigger"
+      },
+      {
+        "index": 8,
+        "name": "Platform"
+      },
+      {
+        "index": 9,
+        "name": "Boss"
+      },
+      {
+        "index": 10,
+        "name": "BossBullet1"
+      },
+      {
+        "index": 11,
+        "name": "BossBullet2"
+      },
+      {
+        "index": 12,
+        "name": "PlayerInvincible"
+      },
+      {
+        "index": 13,
+        "name": "PlayerBlack"
+      },
+      {
+        "index": 14,
+        "name": "PlayerWhite"
+      },
+      {
+        "index": 15,
+        "name": "BlockWhite"
+      },
+      {
+        "index": 16,
+        "name": "BlockBlack"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 0,
+      "1": 4052,
+      "2": 31018,
+      "3": 4164,
+      "4": 28674,
+      "5": 4,
+      "6": 28682,
+      "7": 28674,
+      "8": 28678,
+      "9": 28674,
+      "10": 28674,
+      "11": 28678,
+      "12": 4060,
+      "13": 69588,
+      "14": 36820,
+      "15": 16384,
+      "16": 8192
+    },
+    "defaultMaterial": {
+      "restitution": 0,
+      "friction": 0
+    }
+  },
+  "general": {
+    "designResolution": {
+      "height": 960,
+      "fitWidth": true,
+      "fitHeight": true,
+      "width": 720
+    }
+  },
+  "layer": [
+    {
+      "name": "WORLD_2D",
+      "value": 1
+    }
+  ]
+}

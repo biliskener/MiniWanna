@@ -1,0 +1,68 @@
+{
+  "ver": "1.0.21",
+  "importer": "image",
+  "imported": true,
+  "uuid": "d84e9707-7ce8-463a-ab29-e5e2ef02cb59",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "dengdai": {
+      "ver": "1.0.4",
+      "uuid": "e1848ad5-6518-4c65-ba4e-599beedfc890",
+      "rawTextureUuid": "d84e9707-7ce8-463a-ab29-e5e2ef02cb59",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 1,
+      "offsetY": 0,
+      "trimX": 4,
+      "trimY": 2,
+      "width": 219,
+      "height": 94,
+      "rawWidth": 225,
+      "rawHeight": 98,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "d84e9707-7ce8-463a-ab29-e5e2ef02cb59@6c48a",
+      "displayName": "dengdai",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "d84e9707-7ce8-463a-ab29-e5e2ef02cb59"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "hasAlpha": true,
+    "type": "texture",
+    "redirect": "d84e9707-7ce8-463a-ab29-e5e2ef02cb59@6c48a"
+  }
+}

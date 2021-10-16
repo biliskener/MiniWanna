@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="12" nextobjectid="68">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <objectgroup id="11" name="Layer3">
+  <object id="62" gid="5" x="240" y="180" width="60" height="60"/>
+  <object id="63" gid="5" x="300" y="180" width="60" height="60"/>
+  <object id="66" x="840" y="-360" width="1" height="14"/>
+ </objectgroup>
+ <objectgroup id="10" name="Layer4">
+  <object id="51" gid="5" x="0" y="120" width="60" height="60"/>
+  <object id="52" gid="5" x="60" y="180" width="60" height="60"/>
+  <object id="53" gid="5" x="120" y="240" width="60" height="60"/>
+  <object id="54" gid="5" x="180" y="300" width="60" height="60"/>
+  <object id="55" gid="5" x="240" y="360" width="60" height="60"/>
+  <object id="56" gid="5" x="300" y="420" width="60" height="60"/>
+  <object id="57" gid="5" x="360" y="480" width="60" height="60"/>
+  <object id="58" gid="5" x="420" y="540" width="60" height="60"/>
+  <object id="59" gid="5" x="480" y="600" width="60" height="60"/>
+  <object id="60" gid="5" x="540" y="660" width="60" height="60"/>
+  <object id="61" gid="5" x="600" y="720" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="6" name="Layer5">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.5"/>
+  </properties>
+  <object id="13" name="spike_square_11" gid="13" x="-60" y="120" width="60" height="60"/>
+  <object id="18" name="spike_square_12" gid="13" x="-60" y="240" width="60" height="60"/>
+  <object id="19" name="spike_square_13" gid="13" x="-60" y="360" width="60" height="60"/>
+  <object id="20" name="spike_square_14" gid="13" x="-60" y="480" width="60" height="60"/>
+  <object id="21" name="spike_square_15" gid="13" x="-60" y="600" width="60" height="60"/>
+  <object id="22" name="spike_square_16" gid="13" x="-60" y="720" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="9" name="Layer6">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.5"/>
+  </properties>
+  <object id="42" name="spike_square_21" gid="12" x="720" y="120" width="60" height="60"/>
+  <object id="43" name="spike_square_22" gid="12" x="720" y="240" width="60" height="60"/>
+  <object id="44" name="spike_square_23" gid="12" x="720" y="360" width="60" height="60"/>
+  <object id="45" name="spike_square_24" gid="12" x="720" y="480" width="60" height="60"/>
+  <object id="46" name="spike_square_25" gid="12" x="720" y="600" width="60" height="60"/>
+  <object id="47" name="spike_square_26" gid="12" x="720" y="720" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="7" name="Layer7">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.5"/>
+  </properties>
+  <object id="31" name="spike_square_31" gid="10" x="0" y="0" width="60" height="60"/>
+  <object id="32" name="spike_square_32" gid="10" x="60" y="0" width="60" height="60"/>
+  <object id="33" name="spike_square_33" gid="10" x="120" y="0" width="60" height="60"/>
+  <object id="34" name="spike_square_34" gid="10" x="180" y="0" width="60" height="60"/>
+  <object id="35" name="spike_square_35" gid="10" x="240" y="0" width="60" height="60"/>
+  <object id="36" name="spike_square_36" gid="10" x="300" y="0" width="60" height="60"/>
+  <object id="37" name="spike_square_37" gid="10" x="360" y="0" width="60" height="60"/>
+  <object id="38" name="spike_square_38" gid="10" x="420" y="0" width="60" height="60"/>
+  <object id="39" name="spike_square_39" gid="10" x="480" y="0" width="60" height="60"/>
+  <object id="40" name="spike_square_3a" gid="10" x="540" y="0" width="60" height="60"/>
+  <object id="41" name="spike_square_3b" gid="10" x="600" y="0" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="4" name="Transfer">
+  <object id="15" name="gate2" gid="19" x="600" y="60" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level29"/>
+   </properties>
+  </object>
+  <object id="16" name="gate1" gid="6" x="60" y="720" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level27"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Objects"/>
+ <objectgroup id="8" name="Trigger">
+  <object id="67" name="level_script_b" x="270" y="90" width="60" height="30">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript28B"/>
+   </properties>
+  </object>
+  <object id="65" name="level_script_a" x="60" y="660" width="60" height="60">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript28A"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

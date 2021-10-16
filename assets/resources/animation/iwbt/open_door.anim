@@ -1,0 +1,85 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "open_door",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.1,
+  "sample": 60,
+  "speed": 0.1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "anchorY": [
+        {
+          "frame": 0,
+          "value": 0
+        }
+      ]
+    },
+    "paths": {
+      "open_door_02": {
+        "props": {
+          "anchorY": [
+            {
+              "frame": 0,
+              "value": 0
+            }
+          ],
+          "opacity": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.03333333333333333,
+              "value": 255
+            }
+          ],
+          "x": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.03333333333333333,
+              "value": 42
+            },
+            {
+              "frame": 0.06666666666666667,
+              "value": 42
+            },
+            {
+              "frame": 0.1,
+              "value": 0
+            }
+          ]
+        },
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": [
+              {
+                "frame": 0,
+                "value": {
+                  "__uuid__": "f532e9d3-1a63-4b58-adaa-71a906d4f2ce"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "e0f7f0ad-ea56-467c-93ae-7053835c255b"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

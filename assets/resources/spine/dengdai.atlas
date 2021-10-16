@@ -1,0 +1,27 @@
+
+dengdai.png
+size: 225,98
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: false
+  xy: 97, 2
+  size: 91, 94
+  orig: 91, 94
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 190, 63
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+h
+  rotate: false
+  xy: 2, 2
+  size: 93, 94
+  orig: 93, 94
+  offset: 0, 0
+  index: -1

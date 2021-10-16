@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="4" nextobjectid="9">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+3,3,3,3,3,3,3,3,3,3,3,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+1,3,3,3,3,3,3,3,3,3,3,1,
+1,3,3,3,3,3,3,3,3,3,3,1,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,1,1,1,1,1,1,1,1,1,1,3,
+3,3,3,3,3,3,3,3,3,3,3,3
+</data>
+ </layer>
+ <objectgroup id="2" name="Transfer">
+  <object id="8" name="gate3" gid="19" x="600" y="480" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level19"/>
+   </properties>
+  </object>
+  <object id="7" name="gate2" gid="19" x="60" y="480" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate4"/>
+    <property name="target_level" value="level11"/>
+   </properties>
+  </object>
+  <object id="1" name="gate1" gid="6" x="420" y="300" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate3"/>
+    <property name="target_level" value="level12"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Trigger">
+  <object id="4" name="prop2" gid="1073741838" x="360" y="480" width="60" height="60"/>
+  <object id="5" name="prop1" gid="1073741838" x="600" y="300" width="60" height="60"/>
+ </objectgroup>
+</map>

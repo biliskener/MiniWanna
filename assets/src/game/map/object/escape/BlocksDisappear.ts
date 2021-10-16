@@ -1,0 +1,62 @@
+import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledMap, Tween, Vec3, _decorator } from "cc";
+import { cc_assert, cc_tween } from "../../../../framework/core/nox";
+import { noxSound } from "../../../../framework/core/noxSound";
+import { ObjectTag } from "../../../const/ObjectTag";
+import { BaseObject } from "../BaseObject";
+
+const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
+
+type BlockState = {
+    name: string,
+    node: Node,
+    pos: Vec3,
+    tween?: Tween<Node>
+}
+
+@ccclass
+@disallowMultiple
+export class BlocksDisappear extends BaseObject {
+    private params: { targetLayers: string, interval?: number };
+
+    private tileMap: TiledMap;
+    private allBlockStates: BlockState[] = [];
+
+    start(): void {
+        this.tileMap = this.map.getTiledMap();
+        for (let layerName of this.params.targetLayers.split("|")) {
+            let layer = this.tileMap.getObjectGroup(layerName);
+            for (let object of layer.getObjects()) {
+                let block = layer.node.getChildByName("img" + object.id);
+                cc_assert(block);
+                this.allBlockStates.push({
+                    name: object.name,
+                    node: block,
+                    pos: block.position.clone()
+                });
+            }
+        }
+        this.allBlockStates.sort((a: BlockState, b: BlockState) => {
+            return parseInt(a.name) - parseInt(b.name);
+        });
+
+        this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+    }
+
+    private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
+        if (otherCollider.tag != ObjectTag.Default) return;
+        noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
+        this.map.deferredActivateNode(this.node, false);
+        this.startDisappear();
+    }
+
+    private startDisappear() {
+        for (let i = 0; i < this.allBlockStates.length; ++i) {
+            let blockState = this.allBlockStates[i];
+            blockState.tween = cc_tween(blockState.node)
+                .delay(i * (this.params.interval ?? 0.2)).call(() => {
+                    blockState.node.position = new Vec3(-10000, -10000, 0);
+                    delete blockState.tween;
+                }).start();
+        }
+    }
+}

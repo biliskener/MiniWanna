@@ -1,0 +1,68 @@
+{
+  "ver": "1.0.21",
+  "importer": "image",
+  "imported": true,
+  "uuid": "e76e7ba5-f26a-45c3-844a-e0327bf4cb87",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "tree": {
+      "ver": "1.0.4",
+      "uuid": "a5740136-98ec-4697-bb4b-46d12f962a92",
+      "rawTextureUuid": "e76e7ba5-f26a-45c3-844a-e0327bf4cb87",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 111,
+      "height": 168,
+      "rawWidth": 111,
+      "rawHeight": 168,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "e76e7ba5-f26a-45c3-844a-e0327bf4cb87@6c48a",
+      "displayName": "tree",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "e76e7ba5-f26a-45c3-844a-e0327bf4cb87"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "hasAlpha": true,
+    "type": "texture",
+    "redirect": "e76e7ba5-f26a-45c3-844a-e0327bf4cb87@6c48a"
+  }
+}

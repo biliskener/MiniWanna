@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="10" nextobjectid="41">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,
+3,1,1,1,1,1,1,1,1,1,1,1,
+1,3,1,1,1,1,1,1,1,1,1,1,
+3,3,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,3,
+1,1,1,1,1,1,1,1,1,1,3,3,
+3,3,3,3,3,3,3,3,3,3,3,1,
+3,3,3,3,3,3,3,3,3,3,3,3
+</data>
+ </layer>
+ <objectgroup id="2" name="Transfer">
+  <object id="1" name="gate2" gid="6" x="1" y="180" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level14"/>
+   </properties>
+  </object>
+  <object id="2" name="gate1" gid="6" x="1" y="600" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level12"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Object"/>
+ <objectgroup id="4" name="RigidSquare5">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.5"/>
+   <property name="params" value="{&quot;actionType&quot;: &quot;loop_move&quot;, &quot;duration&quot;: 1.5, &quot;moveX&quot;: -1.5, &quot;moveY&quot;: 1.5}"/>
+   <property name="script" value="Platform"/>
+  </properties>
+  <object id="3" name="rigid_square_1" gid="7" x="420" y="180" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="5" name="RigidSquare4">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.125"/>
+   <property name="params" value="{&quot;actionType&quot;: &quot;rotate&quot;, &quot;duration&quot;: 2.0, &quot;rotateAngle&quot;: 90}"/>
+   <property name="script" value="Platform"/>
+  </properties>
+  <object id="20" name="rigid_square_1" gid="7" x="660" y="480" width="60" height="60"/>
+  <object id="19" name="rigid_square_2" gid="7" x="660" y="420" width="60" height="60"/>
+  <object id="18" name="rigid_square_3" gid="7" x="660" y="360" width="60" height="60"/>
+  <object id="17" name="rigid_square_4" gid="7" x="660" y="300" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="6" name="RigidSquare3">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.125"/>
+   <property name="params" value="{&quot;actionType&quot;: &quot;rotate&quot;, &quot;duration&quot;: 2.0, &quot;rotateAngle&quot;: 90}"/>
+   <property name="script" value="Platform"/>
+  </properties>
+  <object id="31" name="rigid_square_4" gid="7" x="600" y="360" width="60" height="60"/>
+  <object id="30" name="rigid_square_3" gid="7" x="600" y="420" width="60" height="60"/>
+  <object id="29" name="rigid_square_2" gid="7" x="600" y="480" width="60" height="60"/>
+  <object id="28" name="rigid_square_1" gid="7" x="600" y="540" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="7" name="RigidSquare2">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.125"/>
+   <property name="params" value="{&quot;actionType&quot;: &quot;rotate&quot;, &quot;duration&quot;: 2.0, &quot;rotateAngle&quot;: 90}"/>
+   <property name="script" value="Platform"/>
+  </properties>
+  <object id="24" name="rigid_square_1" gid="7" x="540" y="600" width="60" height="60"/>
+  <object id="25" name="rigid_square_2" gid="7" x="540" y="540" width="60" height="60"/>
+  <object id="26" name="rigid_square_3" gid="7" x="540" y="480" width="60" height="60"/>
+  <object id="27" name="rigid_square_4" gid="7" x="540" y="420" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="8" name="RigidSquare1">
+  <properties>
+   <property name="anchorX" type="float" value="0.5"/>
+   <property name="anchorY" type="float" value="0.5"/>
+   <property name="params" value="{&quot;actionType&quot;: &quot;loop_move&quot;, &quot;duration&quot;: 3.5, &quot;moveX&quot;: 3.5, &quot;moveY&quot;: 3.5, &quot;initMoving&quot;: true}"/>
+   <property name="script" value="Platform"/>
+  </properties>
+  <object id="4" name="rigid_square_1" gid="7" x="120" y="240" width="60" height="60"/>
+ </objectgroup>
+ <objectgroup id="9" name="Trigger">
+  <object id="21" name="key1" gid="4" x="664" y="656" width="56" height="52">
+   <properties>
+    <property name="params" value="{&quot;targetPlatforms&quot;: &quot;RigidSquare2|RigidSquare3|RigidSquare4&quot;}"/>
+    <property name="script" value="PlatformTrigger"/>
+   </properties>
+  </object>
+  <object id="22" name="key2" gid="4" x="420" y="298" width="60" height="58">
+   <properties>
+    <property name="params" value="{&quot;targetPlatforms&quot;: &quot;RigidSquare5&quot;}"/>
+    <property name="script" value="PlatformTrigger"/>
+   </properties>
+  </object>
+  <object id="23" name="key3" gid="4" x="600" y="180" width="60" height="60">
+   <properties>
+    <property name="params" value="{&quot;targetLevel&quot;: &quot;level12&quot;,&quot;targetPlatforms&quot;: &quot;RigidSquare1&quot;}"/>
+    <property name="script" value="PlatformTrigger"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

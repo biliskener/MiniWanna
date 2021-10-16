@@ -1,0 +1,31 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "playerFall",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.04,
+  "sample": 50,
+  "speed": 0.2,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "a9a02132-cef6-42e1-b6ee-c81a9467920e"
+            }
+          },
+          {
+            "frame": 0.02,
+            "value": {
+              "__uuid__": "963d2099-d912-4039-be33-4f33256bc2ea"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

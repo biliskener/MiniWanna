@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.1" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="25" height="19" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="38">
+ <tileset firstgid="1" source="tiles.tsx"/>
+ <objectgroup id="7" name="Trigger">
+  <object id="11" name="LoadGame" x="224" y="448" width="32" height="32">
+   <properties>
+    <property name="script" value="Select"/>
+   </properties>
+  </object>
+  <object id="12" name="Medium" x="544" y="448" width="32" height="32">
+   <properties>
+    <property name="script" value="Select"/>
+   </properties>
+  </object>
+  <object id="22" name="Hard" x="640" y="320" width="32" height="32">
+   <properties>
+    <property name="script" value="Select"/>
+   </properties>
+  </object>
+  <object id="23" name="VeryHard" x="128" y="320" width="32" height="32">
+   <properties>
+    <property name="script" value="Select"/>
+   </properties>
+  </object>
+  <object id="24" name="Impossible" x="384" y="160" width="32" height="32">
+   <properties>
+    <property name="script" value="Select"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="Collider">
+  <object id="27" x="768" y="0" width="32" height="608"/>
+  <object id="28" x="32" y="576" width="736" height="32"/>
+  <object id="31" x="32" y="0" width="736" height="32"/>
+  <object id="32" x="0" y="0" width="32" height="608"/>
+  <object id="33" x="320" y="224" width="160" height="32"/>
+  <object id="34" x="608" y="352" width="96" height="32"/>
+  <object id="35" x="512" y="480" width="96" height="32"/>
+  <object id="36" x="96" y="352" width="96" height="32"/>
+  <object id="37" x="192" y="480" width="96" height="32"/>
+ </objectgroup>
+ <layer id="1" name="Layer2" width="25" height="19">
+  <data encoding="csv">
+8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,12,12,12,12,12,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,8,
+8,0,0,12,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,12,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,8,
+8,0,0,0,0,0,12,12,12,0,0,0,0,0,0,0,12,12,12,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,8,
+8,0,0,0,0,0,0,0,0,0,20,0,0,0,20,0,0,0,0,0,0,0,0,0,8,
+8,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,8
+</data>
+ </layer>
+</map>

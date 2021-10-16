@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="4" nextobjectid="8">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+3,3,3,3,1,1,1,1,3,3,3,3,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,
+2,2,2,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <objectgroup id="2" name="Trigger">
+  <object id="1" name="key1" gid="4" x="300" y="180" width="60" height="60">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript39"/>
+   </properties>
+  </object>
+  <object id="2" name="key2" gid="4" x="240" y="300" width="60" height="60">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript39"/>
+   </properties>
+  </object>
+  <object id="3" name="key3" gid="4" x="300" y="480" width="60" height="60">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript39"/>
+   </properties>
+  </object>
+  <object id="4" name="key4" gid="4" x="240" y="600" width="60" height="60">
+   <properties>
+    <property name="params" value="{}"/>
+    <property name="script" value="LevelScript39"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Transfer">
+  <object id="6" name="gate1" gid="6" x="60" y="120" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level38"/>
+   </properties>
+  </object>
+  <object id="7" name="gate2" gid="27" x="660" y="60" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate3"/>
+    <property name="target_level" value="level1"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

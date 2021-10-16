@@ -1,0 +1,244 @@
+{
+   "propLevels" : {
+      "10001" : {
+         "desc" : "持续4秒",
+         "effect" : 4,
+         "id" : 10001,
+         "level" : 1,
+         "type" : 1,
+         "upgradePrice" : 1500
+      },
+      "10002" : {
+         "desc" : "持续5秒",
+         "effect" : 5,
+         "id" : 10002,
+         "level" : 2,
+         "type" : 1,
+         "upgradePrice" : 3000
+      },
+      "10003" : {
+         "desc" : "持续6秒",
+         "effect" : 6,
+         "id" : 10003,
+         "level" : 3,
+         "type" : 1,
+         "upgradePrice" : 4500
+      },
+      "10004" : {
+         "desc" : "持续7秒",
+         "effect" : 7,
+         "id" : 10004,
+         "level" : 4,
+         "type" : 1,
+         "upgradePrice" : 6000
+      },
+      "10005" : {
+         "desc" : "持续8秒",
+         "effect" : 8,
+         "id" : 10005,
+         "level" : 5,
+         "type" : 1,
+         "upgradePrice" : 7500
+      },
+      "10006" : {
+         "desc" : "持续9秒",
+         "effect" : 9,
+         "id" : 10006,
+         "level" : 6,
+         "type" : 1,
+         "upgradePrice" : 9000
+      },
+      "10007" : {
+         "desc" : "持续10秒",
+         "effect" : 10,
+         "id" : 10007,
+         "level" : 7,
+         "type" : 1,
+         "upgradePrice" : 10500
+      },
+      "10008" : {
+         "desc" : "持续11秒",
+         "effect" : 11,
+         "id" : 10008,
+         "level" : 8,
+         "type" : 1,
+         "upgradePrice" : 12000
+      },
+      "10009" : {
+         "desc" : "持续12秒",
+         "effect" : 12,
+         "id" : 10009,
+         "level" : 9,
+         "type" : 1,
+         "upgradePrice" : 13500
+      },
+      "10010" : {
+         "desc" : "持续13秒",
+         "effect" : 13,
+         "id" : 10010,
+         "level" : 10,
+         "type" : 1,
+         "upgradePrice" : 15000
+      },
+      "20001" : {
+         "desc" : "持续4秒",
+         "effect" : 4,
+         "id" : 20001,
+         "level" : 1,
+         "type" : 2,
+         "upgradePrice" : 500
+      },
+      "20002" : {
+         "desc" : "持续5秒",
+         "effect" : 5,
+         "id" : 20002,
+         "level" : 2,
+         "type" : 2,
+         "upgradePrice" : 1000
+      },
+      "20003" : {
+         "desc" : "持续6秒",
+         "effect" : 6,
+         "id" : 20003,
+         "level" : 3,
+         "type" : 2,
+         "upgradePrice" : 1500
+      },
+      "20004" : {
+         "desc" : "持续7秒",
+         "effect" : 7,
+         "id" : 20004,
+         "level" : 4,
+         "type" : 2,
+         "upgradePrice" : 2000
+      },
+      "20005" : {
+         "desc" : "持续8秒",
+         "effect" : 8,
+         "id" : 20005,
+         "level" : 5,
+         "type" : 2,
+         "upgradePrice" : 2500
+      },
+      "20006" : {
+         "desc" : "持续9秒",
+         "effect" : 9,
+         "id" : 20006,
+         "level" : 6,
+         "type" : 2,
+         "upgradePrice" : 3000
+      },
+      "20007" : {
+         "desc" : "持续10秒",
+         "effect" : 10,
+         "id" : 20007,
+         "level" : 7,
+         "type" : 2,
+         "upgradePrice" : 3500
+      },
+      "20008" : {
+         "desc" : "持续11秒",
+         "effect" : 11,
+         "id" : 20008,
+         "level" : 8,
+         "type" : 2,
+         "upgradePrice" : 4000
+      },
+      "20009" : {
+         "desc" : "持续12秒",
+         "effect" : 12,
+         "id" : 20009,
+         "level" : 9,
+         "type" : 2,
+         "upgradePrice" : 4500
+      },
+      "20010" : {
+         "desc" : "持续13秒",
+         "effect" : 13,
+         "id" : 20010,
+         "level" : 10,
+         "type" : 2,
+         "upgradePrice" : 5000
+      },
+      "30001" : {
+         "desc" : "持续4秒",
+         "effect" : 4,
+         "id" : 30001,
+         "level" : 1,
+         "type" : 3,
+         "upgradePrice" : 1000
+      },
+      "30002" : {
+         "desc" : "持续5秒",
+         "effect" : 5,
+         "id" : 30002,
+         "level" : 2,
+         "type" : 3,
+         "upgradePrice" : 2000
+      },
+      "30003" : {
+         "desc" : "持续6秒",
+         "effect" : 6,
+         "id" : 30003,
+         "level" : 3,
+         "type" : 3,
+         "upgradePrice" : 3000
+      },
+      "30004" : {
+         "desc" : "持续7秒",
+         "effect" : 7,
+         "id" : 30004,
+         "level" : 4,
+         "type" : 3,
+         "upgradePrice" : 4000
+      },
+      "30005" : {
+         "desc" : "持续8秒",
+         "effect" : 8,
+         "id" : 30005,
+         "level" : 5,
+         "type" : 3,
+         "upgradePrice" : 5000
+      },
+      "30006" : {
+         "desc" : "持续9秒",
+         "effect" : 9,
+         "id" : 30006,
+         "level" : 6,
+         "type" : 3,
+         "upgradePrice" : 6000
+      },
+      "30007" : {
+         "desc" : "持续10秒",
+         "effect" : 10,
+         "id" : 30007,
+         "level" : 7,
+         "type" : 3,
+         "upgradePrice" : 7000
+      },
+      "30008" : {
+         "desc" : "持续11秒",
+         "effect" : 11,
+         "id" : 30008,
+         "level" : 8,
+         "type" : 3,
+         "upgradePrice" : 8000
+      },
+      "30009" : {
+         "desc" : "持续12秒",
+         "effect" : 12,
+         "id" : 30009,
+         "level" : 9,
+         "type" : 3,
+         "upgradePrice" : 9000
+      },
+      "30010" : {
+         "desc" : "持续13秒",
+         "effect" : 13,
+         "id" : 30010,
+         "level" : 10,
+         "type" : 3,
+         "upgradePrice" : 10000
+      }
+   }
+}

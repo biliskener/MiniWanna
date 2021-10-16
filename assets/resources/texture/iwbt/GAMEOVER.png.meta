@@ -1,0 +1,68 @@
+{
+  "ver": "1.0.21",
+  "importer": "image",
+  "imported": true,
+  "uuid": "96d6def2-0c1b-4507-a904-13057e2ef9cd",
+  "files": [
+    ".png",
+    ".json"
+  ],
+  "subMetas": {
+    "GAMEOVER": {
+      "ver": "1.0.4",
+      "uuid": "15e054bc-3003-4951-b9e7-5fb0a9bed69f",
+      "rawTextureUuid": "96d6def2-0c1b-4507-a904-13057e2ef9cd",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 3.5,
+      "offsetY": -2,
+      "trimX": 25,
+      "trimY": 83,
+      "width": 757,
+      "height": 158,
+      "rawWidth": 800,
+      "rawHeight": 320,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {},
+      "importer": "*",
+      "imported": false,
+      "files": [],
+      "userData": {},
+      "displayName": "",
+      "id": "",
+      "name": ""
+    },
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "96d6def2-0c1b-4507-a904-13057e2ef9cd@6c48a",
+      "displayName": "GAMEOVER",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "repeat",
+        "wrapModeT": "repeat",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "96d6def2-0c1b-4507-a904-13057e2ef9cd"
+      },
+      "ver": "1.0.21",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "hasAlpha": true,
+    "type": "texture",
+    "redirect": "96d6def2-0c1b-4507-a904-13057e2ef9cd@6c48a"
+  }
+}

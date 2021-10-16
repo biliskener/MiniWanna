@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="60" tileheight="60" infinite="0" nextlayerid="6" nextobjectid="15">
+ <tileset firstgid="1" source="graph.tsx"/>
+ <layer id="1" name="Layer2" width="12" height="12">
+  <data encoding="csv">
+10,10,10,10,10,10,10,10,10,10,10,10,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,3,3,1,1,1,1,1,1,1,1,12,
+13,3,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,1,1,1,1,1,1,1,1,1,1,12,
+13,3,3,1,1,1,1,1,1,1,1,12,
+2,2,2,2,2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <layer id="2" name="Layer3" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,16,0,0,0,0,8,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,17,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,16,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,17,0,
+0,0,0,0,0,0,0,0,15,0,0,0,
+0,0,0,0,15,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="Layer4" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="Transfer">
+  <object id="12" name="gate2" gid="21" x="120" y="420" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate1"/>
+    <property name="target_level" value="level16"/>
+   </properties>
+  </object>
+  <object id="2" name="gate1" gid="6" x="60" y="600" width="60" height="60">
+   <properties>
+    <property name="target_gate" value="gate2"/>
+    <property name="target_level" value="level14"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Trigger">
+  <object id="11" name="key1" gid="4" x="120" y="240" width="60" height="60">
+   <properties>
+    <property name="params" value="{&quot;targetLevel&quot;: &quot;level14&quot;,&quot;targetLayers&quot;:&quot;Layer6&quot;}"/>
+    <property name="script" value="LayerTrigger"/>
+   </properties>
+  </object>
+  <object id="14" name="prop1" gid="14" x="600" y="360" width="60" height="60"/>
+ </objectgroup>
+</map>
