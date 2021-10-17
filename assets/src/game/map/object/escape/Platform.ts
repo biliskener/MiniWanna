@@ -2,7 +2,7 @@ import { Collider2D, Contact2DType, IPhysics2DContact, Node, PhysicsSystem2D, Ri
 import { cc_assert, cc_tween } from "../../../../framework/core/nox";
 import { noxcc } from "../../../../framework/core/noxcc";
 import { noxSound } from "../../../../framework/core/noxSound";
-import { MapUtil } from "../../../../framework/util/MapUtil";
+import { MapUtil } from "../../../../game/map/MapUtil";
 import { GameConfig, PhysicsEngineType } from "../../../config/GameConfig";
 import { ObjectGroup } from "../../../const/ObjectGroup";
 import { ObjectTag } from "../../../const/ObjectTag";

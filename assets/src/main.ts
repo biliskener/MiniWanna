@@ -13,7 +13,7 @@ import { ToastManager } from './framework/mgr/ToastManager';
 import { NoticeManager } from './framework/mgr/NoticeManager';
 import { MyApp } from './game/MyApp';
 import { initObjectGroup } from './game/const/ObjectGroup';
-import { MapUtil } from './framework/util/MapUtil';
+import { MapUtil } from './game/map/MapUtil';
 
 export function main(uiRootNode: Node) {
     //cc_game.setFrameRate(25);

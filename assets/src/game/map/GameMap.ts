@@ -9,7 +9,7 @@ import { NoxComponent } from "../../framework/core/NoxComponent";
 import { Animation, assert, AudioClip, Camera, Collider, Collider2D, Node, PhysicsSystem, PhysicsSystem2D, PolygonCollider2D, Prefab, Rect, Size, TiledLayer, TiledMap, TiledObjectGroup, TiledTile, Vec2, VERSION, _decorator } from "cc";
 import { cc_assert, CC_DEV, cc_director, CC_EDITOR, cc_find, cc_instantiate, cc_isValid, cc_rect, cc_size, cc_tween, nox } from "../../framework/core/nox";
 import { noxSound } from "../../framework/core/noxSound";
-import { MapUtil } from "../../framework/util/MapUtil";
+import { MapUtil } from "../../game/map/MapUtil";
 import { noxcc } from "../../framework/core/noxcc";
 import { ObjectGroup } from "../const/ObjectGroup";
 import { PlayerStatus } from "./object/PlayerStatus";

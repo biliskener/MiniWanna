@@ -1,15 +1,14 @@
 import { assert, BoxCollider2D, CircleCollider2D, Collider2D, EPhysics2DDrawFlags, ERigidBody2DType, Layers, Node, PhysicsSystem2D, PolygonCollider2D, Rect, RigidBody2D, Size, TiledTile, Vec2 } from "cc";
-import { noxScheduler } from "../core/noxScheduler";
-import { cc_assert, cc_director, cc_find, cc_game, cc_v2, nox } from "../core/nox";
 import { PhysicsEngineType, GameConfig } from "../../game/config/GameConfig";
 import { GameObject } from "../../game/map/collision/GameObject";
 import { CollisionObject } from "../../game/map/collision/CollisionObject";
 import { ObjectGroup } from "../../game/const/ObjectGroup";
 import { TileObject } from "../../game/map/object/TileObject";
-import { noxcc } from "../core/noxcc";
 import { GameMap } from "../../game/map/GameMap";
 import { ObjectTag } from "../../game/const/ObjectTag";
-import { BaseObject } from "../../game/map/object/BaseObject";
+import { noxScheduler } from "../../framework/core/noxScheduler";
+import { cc_assert, cc_find } from "../../framework/core/nox";
+import { noxcc } from "../../framework/core/noxcc";
 
 export module MapUtil {
     export function initColliderEngine(): void {
@@ -28,7 +27,7 @@ export module MapUtil {
             // 2.2.1 版本之前不能在 start 里开启物理引擎。
             // 设置重力
             // GM8 的 I wanna 引擎的重力为 0.4 像素/帧^2，换算下就是 1000 像素/秒^2
-            manager.gravity = cc_v2(0, GameConfig.gravity);
+            manager.gravity = new Vec2(0, GameConfig.gravity);
         }
         else {
             let manager = PhysicsSystem2D.instance;

@@ -1,6 +1,6 @@
 import { Collider2D, Contact2DType, IPhysics2DContact, Node, PhysicsSystem2D, RigidBody, RigidBody2D, TiledMap, Vec2, Vec3, _decorator } from "cc";
 import { noxcc } from "../../../../framework/core/noxcc";
-import { MapUtil } from "../../../../framework/util/MapUtil";
+import { MapUtil } from "../../../../game/map/MapUtil";
 import { GameConfig, PhysicsEngineType } from "../../../config/GameConfig";
 import { ObjectGroup } from "../../../const/ObjectGroup";
 import { ObjectTag } from "../../../const/ObjectTag";

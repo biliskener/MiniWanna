@@ -1,6 +1,6 @@
 import { debug, Node } from "cc";
 import { cc_assert, cc_game, cc_setDisplayStats } from "../framework/core/nox";
-import { MapUtil } from "../framework/util/MapUtil";
+import { MapUtil } from "../game/map/MapUtil";
 import { initObjectGroup } from "./const/ObjectGroup";
 import { Restart } from "./map/Restart";
 import { MyGame } from "./MyGame";

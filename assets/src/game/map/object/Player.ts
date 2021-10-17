@@ -15,7 +15,7 @@ import { noxSound } from "../../../framework/core/noxSound";
 import { ObjectGroup } from "../../const/ObjectGroup";
 import { noxcc } from "../../../framework/core/noxcc";
 import { PhysicsEngineType, GameConfig } from "../../config/GameConfig";
-import { MapUtil } from "../../../framework/util/MapUtil";
+import { MapUtil } from "../../../game/map/MapUtil";
 import { ObjectTag } from "../../const/ObjectTag";
 import { Gate } from "./escape/Gate";
 import { Bullet } from "./iwbt/Bullet";
