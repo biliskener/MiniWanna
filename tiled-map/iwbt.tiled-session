@@ -1,0 +1,478 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "C:/Users/liujun/Desktop/素材/mario/mario/地图/1-1.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "全部文件 (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "C:/Users/liujun/Desktop/tiles.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/liujun/Desktop/tiles2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/liujun/Desktop/素材/mario/mario/地图/1-1.tmx": {
+            "scale": 0.19550568181818181,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2787.6427678804966,
+                "y": 324.79874451451633
+            }
+        },
+        "C:/Users/liujun/Desktop/素材/mario/mario/地图/map.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/liujun/untitled.tmx": {
+            "scale": 0.56584375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1583.4760037554538,
+                "y": 1598.497818523223
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/boss.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 721.2066610479817,
+                "y": 558.6910401348484
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/end.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/init.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/level1.tmx": {
+            "scale": 0.9447610294117647,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 256.1494308784901,
+                "y": 560.4591886370271
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/menu.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/select.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "E:/MyProjects/MiniEscape/assets/resources/tiled/escape/graph.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/MiniEscape/assets/resources/tiled/escape/level1.tmx": {
+            "scale": 0.838287037037037,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 360.85491798751866,
+                "y": 1080.178936322969
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/assets/resources/tiled/tileset_coin.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/1.tmx": {
+            "scale": 1.6244999999999998,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 439.2120652508464,
+                "y": 180.05540166204992
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_1_1.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 673,
+                "y": 284.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_1_2.tmx": {
+            "scale": 1.6244999999999998,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 454.29362880886436,
+                "y": 6.463527239150494
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_1_3.tmx": {
+            "scale": 1.6165079365079364,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 630.9897879025923,
+                "y": 180.32698350353496
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_1.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 779,
+                "y": 180.33333333333331
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_2.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_3.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_4.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_5.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_1.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_3.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_4.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_5.tmx": {
+            "scale": 1.3056410256410256,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 780.0765907305577,
+                "y": 180.37117046347214
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_3_6.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 779.6666666666666,
+                "y": 180.33333333333331
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_1.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1030.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_2.tmx": {
+            "scale": 1.1524514563106796,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1029.5444493586908,
+                "y": 180.0509677555233
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_3.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1030.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_4.tmx": {
+            "scale": 1.1524514563106796,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1029.5444493586908,
+                "y": 180.0509677555233
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_5.tmx": {
+            "scale": 1.1524514563106796,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1029.5444493586908,
+                "y": 180.0509677555233
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_6.tmx": {
+            "scale": 1.1524514563106796,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1029.5444493586908,
+                "y": 180.0509677555233
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_4_7.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1030.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_5_1.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_5_2.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_5_3.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_5_4.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_6_1.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_6_2.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_6_3.tmx": {
+            "scale": 1.0504646017699115,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5002211410879,
+                "y": 180.39636907394538
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_6_4.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1129.5,
+                "y": 180.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_tail.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 673.5,
+                "y": 284.5
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_template.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 477,
+                "y": 279
+            }
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/tileset_coin.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/tileset_terrain.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/menu.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/select.tmx": {
+            "scale": 2.1505625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.36037083321224,
+                "y": 304.33898108053125
+            }
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/iwbt/Map/tiles.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/graph.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/level1.tmx": {
+            "scale": 0.838287037037037,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 359.0655547578285,
+                "y": 1078.9860275031756
+            }
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/level2.tmx": {
+            "scale": 2.5148611111111108,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 329.64047053625677,
+                "y": 359.6620091677253
+            }
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/level3.tmx": {
+            "scale": 2.5148611111111108,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 359.8608273043575,
+                "y": 359.6620091677253
+            }
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/level4.tmx": {
+            "scale": 2.5148611111111108,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 359.86082730435754,
+                "y": 1257.1270779256643
+            }
+        },
+        "E:/MyProjects/NoxMiniGame/MiniEscape/assets/resources/map/level9.tmx": {
+            "scale": 2.5148611111111108,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 360.25846357762197,
+                "y": 360.05964544098975
+            }
+        }
+    },
+    "last.imagePath": "E:/MyProjects/MiniNinjiaCat/assets/resources/tiled",
+    "last.worldFilePath": "E:/MyProjects/MiniNinjiaCat/tiled_map",
+    "loadedWorlds": [
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/1.world",
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/cat.world"
+    ],
+    "map.height": 1,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 360,
+    "map.tileWidth": 100,
+    "map.width": 12,
+    "openFiles": [
+        "C:/Users/liujun/Desktop/素材/mario/mario/地图/1-1.tmx"
+    ],
+    "project": "iwbt.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "C:/Users/liujun/Desktop/素材/mario/mario/地图/1-1.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/level1.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/select.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/menu.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/init.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/end.tmx",
+        "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/boss.tmx",
+        "E:/MyProjects/MiniEscape/assets/resources/tiled/escape/graph.tsx",
+        "E:/MyProjects/MiniNinjiaCat/assets/resources/tiled/tileset_coin.tsx",
+        "E:/MyProjects/MiniEscape/assets/resources/tiled/escape/level1.tmx",
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/tileset_coin.tsx",
+        "E:/MyProjects/MiniNinjiaCat/tiled_map/map_2_1.tmx"
+    ],
+    "stampsFolder": "E:/MyProjects/MiniNinjiaCat/tiled_map/stamp",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 27,
+        "width": 29
+    },
+    "tileset.type": 0
+}

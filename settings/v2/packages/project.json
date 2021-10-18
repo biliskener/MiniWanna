@@ -93,10 +93,10 @@
   },
   "general": {
     "designResolution": {
-      "height": 960,
+      "height": 608,
       "fitWidth": true,
       "fitHeight": true,
-      "width": 720
+      "width": 800
     }
   },
   "layer": [

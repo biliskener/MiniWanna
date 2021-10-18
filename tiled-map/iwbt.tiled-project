@@ -1,0 +1,10 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "extensionsPath": "../assets/resources/tiled/extensions",
+    "folders": [
+        "../assets/resources/tiled/iwbt"
+    ],
+    "objectTypesFile": ""
+}

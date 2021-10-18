@@ -43,10 +43,6 @@ export class SplashScene extends BaseScene {
         super.onExit();
     }
 
-    //每帧调用(真正可见状态时)
-    public onUpdate(dt: number): void {
-    }
-
     private onKeyDown(event: EventKeyboard): void {
         switch (event.keyCode) {
             case KeyCode.SHIFT_LEFT:
