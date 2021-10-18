@@ -210,7 +210,7 @@ export class Platform extends BaseObject {
                 if (dt * speedValue >= distance) {
                     this.isBackToBegin = !this.isBackToBegin;
                     this.setSpeed(-speedVector.x, -speedVector.y);
-                    MapUtil.addMovement(this.node, dstPosition.x - curPosition.x, dstPosition.y - curPosition.x);
+                    MapUtil.addMovement(this.node, dstPosition.x - curPosition.x, dstPosition.y - curPosition.y);
                     dt -= distance / speedValue;
                 }
                 else {
