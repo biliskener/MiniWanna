@@ -7,11 +7,7 @@ function getObjectGroupIndexByName(name: string): number {
 
 export let ObjectGroup = {
     Default: 1 << 0,
-    PlayerBlack: -1,
-    PlayerWhite: -1,
     Player: -1,
-    BlockWhite: -1,
-    BlockBlack: -1,
     Block: -1,
     Bullet: -1,
     Spike: -1,
@@ -33,6 +29,6 @@ export function initObjectGroup() {
             (ObjectGroup as any)[name] = 1 << getObjectGroupIndexByName(name);
         }
     }
-    ObjectGroup.PlayerAll = [ObjectGroup.Player, ObjectGroup.PlayerBlack, ObjectGroup.PlayerWhite];
-    ObjectGroup.BlockAll = [ObjectGroup.Block, ObjectGroup.BlockWhite, ObjectGroup.BlockBlack];
+    ObjectGroup.PlayerAll = [ObjectGroup.Player];
+    ObjectGroup.BlockAll = [ObjectGroup.Block];
 }

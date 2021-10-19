@@ -166,13 +166,9 @@ export class CollisionObject extends Component {
         if (collider) {
             switch (collider.group) {
                 case ObjectGroup.Block:
-                case ObjectGroup.BlockWhite:
-                case ObjectGroup.BlockBlack:
                     return CollisionGroup.COLGROUP_STATIC;
                     break;
                 case ObjectGroup.Player:
-                case ObjectGroup.PlayerBlack:
-                case ObjectGroup.PlayerWhite:
                     return CollisionGroup.COLGROUP_MOVING;
                     break;
                 case ObjectGroup.PlayerInvincible:
@@ -259,12 +255,6 @@ export class CollisionObject extends Component {
         var groupsTable: [number, number][] = [
             [ObjectGroup.Player, ObjectGroup.Block],
             [ObjectGroup.Player, ObjectGroup.Platform],
-            [ObjectGroup.PlayerBlack, ObjectGroup.Block],
-            [ObjectGroup.PlayerBlack, ObjectGroup.Platform],
-            [ObjectGroup.PlayerWhite, ObjectGroup.Block],
-            [ObjectGroup.PlayerWhite, ObjectGroup.Platform],
-            [ObjectGroup.PlayerBlack, ObjectGroup.BlockWhite],
-            [ObjectGroup.PlayerWhite, ObjectGroup.BlockBlack],
         ];
         for (var [group1, group2] of groupsTable) {
             if (selfGroup == group1 && otherGroup == group2 || selfGroup == group2 && otherGroup == group1) {

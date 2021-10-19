@@ -29,12 +29,7 @@ export class MyGame {
         noxSound.setMusicOn(SettingData.INSTANCE.enableSound);
         noxSound.setEffectOn(SettingData.INSTANCE.enableSound);
 
-        if (GameConfig.useIwbtLevels) {
-            SceneManager.pushScene(SplashScene.create());
-        }
-        else {
-            SceneManager.pushScene(MenuScene.create());
-        }
+        SceneManager.pushScene(SplashScene.create());
     }
 
     public update(dt: number) {

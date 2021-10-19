@@ -5,5 +5,4 @@ export enum PlayerStatus {
     PLAYER_FALL = 4,        // 降落
     PLAYER_DEATH = 5,       // 死亡
     PLAYER_ENTERGATE = 6,   // 传送
-    PLAYER_FLIPPING = 7,    // 正在翻转
 }

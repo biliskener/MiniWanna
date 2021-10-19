@@ -3,7 +3,6 @@ import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledMap, TiledMapA
 import { cc_assert } from "../../../framework/core/nox";
 import { BaseObject } from "./BaseObject";
 import { ObjectTag } from "../../const/ObjectTag";
-import { Platform } from "./escape/Platform";
 import { noxSound } from "../../../framework/core/noxSound";
 import { LevelScene } from "../../ui/scene/LevelScene";
 
@@ -31,6 +30,7 @@ export class PlatformTrigger extends BaseObject {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
+        /*
         noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
         this.map.deferredActivateNode(this.node, !!this.params.visibleWhenActivated);
         this.map.requestPause();
@@ -77,6 +77,7 @@ export class PlatformTrigger extends BaseObject {
         else {
             doTransition(false);
         }
+        */
     }
 
     private syncState(): void {

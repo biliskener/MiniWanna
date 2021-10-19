@@ -14,10 +14,8 @@ export class Restart extends Component {
     onKeyDown(event: EventKeyboard): void {
         switch (event.keyCode) {
             case KeyCode.F2:
-                if (GameConfig.useIwbtLevels) {
-                    SceneManager.popScene(true);
-                    SceneManager.pushScene(SplashScene.create());
-                }
+                SceneManager.popScene(true);
+                SceneManager.pushScene(SplashScene.create());
                 break;
         }
     }

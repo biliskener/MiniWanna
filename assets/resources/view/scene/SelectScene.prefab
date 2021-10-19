@@ -847,7 +847,7 @@
       "__expectedType__": "cc.AudioClip"
     },
     "playerPrefab": {
-      "__uuid__": "9e189636-17ed-4bb1-a5ae-c8672ca70376",
+      "__uuid__": "ad230e5b-b9a8-4412-ac11-dbc49f08e9c2",
       "__expectedType__": "cc.Prefab"
     },
     "platformPrefab": {

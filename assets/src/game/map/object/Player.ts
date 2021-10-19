@@ -8,19 +8,17 @@ import { CollisionHit } from "../collision/CollisionHit";
 import { HitResponse } from "../collision/HitResponse";
 import { TileAttribute } from "../collision/TileAttribute";
 import { PlayerStatus } from "./PlayerStatus";
-import { Collision } from "../collision/Collision";
-import { cc_assert, CC_EDITOR, cc_instantiate, cc_isValid, cc_macro, cc_misc, cc_systemEvent, cc_tween, nox } from "../../../framework/core/nox";
-import { Animation, assert, AudioClip, BoxCollider2D, Collider2D, Contact2DType, EventKeyboard, Game, IPhysics2DContact, KeyCode, Prefab, Rect, RigidBody2D, SystemEvent, TiledTile, Vec2, Vec3, _decorator } from "cc";
+import { cc_assert, CC_EDITOR, cc_instantiate, cc_macro, cc_systemEvent, nox } from "../../../framework/core/nox";
+import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, SystemEvent, Vec2, Vec3, _decorator } from "cc";
 import { noxSound } from "../../../framework/core/noxSound";
 import { ObjectGroup } from "../../const/ObjectGroup";
 import { noxcc } from "../../../framework/core/noxcc";
 import { PhysicsEngineType, GameConfig } from "../../config/GameConfig";
 import { MapUtil } from "../../../game/map/MapUtil";
 import { ObjectTag } from "../../const/ObjectTag";
-import { Gate } from "./escape/Gate";
 import { Bullet } from "./iwbt/Bullet";
 import { BaseObject } from "./BaseObject";
-import { Platform } from "./escape/Platform";
+import { AutoPlatform } from "./iwbt/AutoPlatform";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
 cc_macro.ENABLE_TILEDMAP_CULLING = false;
@@ -77,17 +75,12 @@ export class Player extends BaseObject {
     private leftButton: number;     // 是否按下左键
     private rightButton: number;    // 是否按下右键
     private jumpButton: boolean;    // 是否按下跳跃键
-    private flipButton: boolean;    // 是否按下改变键
-    private canFlip: boolean;       // 是否可以翻转
     private canJump: boolean;       // 是否可以在下一帧处理跳跃
     private canJump2: boolean;      // 是否可以二段跳
     private shootButton: boolean;   // 是否按下射击键
     private canShoot: boolean;      // 是否可以在下一帧发射子弹
-    private canEnterGate: boolean;  // 是否可以进入门
 
-    public playerWhite: boolean = false;    // 玩家是否为白色状态
     public playerStatus: PlayerStatus;      // 玩家状态
-    public isRotating: boolean;             // 玩家是否在跟随地图旋转
 
     private body: RigidBody2D;              // 获取刚体组件
     private speed: Vec2;                    // 获取刚体速度
@@ -101,7 +94,6 @@ export class Player extends BaseObject {
     private crushFrameCount: number = 0;
 
     public isDying: boolean = false;
-    public touchingGates: Gate[] = [];
 
     public touchedFootColliders: { [key: string]: [Collider2D, Vec3] } = {};
     public touchedHeadColliders: { [key: string]: [Collider2D, Vec3] } = {};
@@ -133,7 +125,6 @@ export class Player extends BaseObject {
         this.canJump2 = false;
         this.jumpButton = false;
         this.shootButton = false;
-        this.canEnterGate = false;
         this.playerStatus = PlayerStatus.PLAYER_IDLE;
 
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
@@ -186,18 +177,6 @@ export class Player extends BaseObject {
                     this.shootButton = true;
                 }
                 break;
-            case KeyCode.ARROW_DOWN:
-            case KeyCode.KEY_D:
-                if (!this.flipButton) {
-                    this.canFlip = true;
-                    this.flipButton = true;
-                }
-                break;
-            case KeyCode.ENTER:
-                if (!this.canEnterGate) {
-                    this.canEnterGate = true;
-                }
-                break;
             case KeyCode.KEY_R:
                 this.restartScene();
                 break;
@@ -227,14 +206,6 @@ export class Player extends BaseObject {
             case KeyCode.KEY_Z:
             case KeyCode.KEY_K:
                 this.shootButton = false;
-                break;
-            case KeyCode.ARROW_DOWN:
-            case KeyCode.KEY_D:
-                this.canFlip = false;
-                this.flipButton = false;
-                break;
-            case KeyCode.ENTER:
-                this.canEnterGate = false;
                 break;
         }
     }
@@ -269,31 +240,11 @@ export class Player extends BaseObject {
         }
 
         if (this.playerStatus != PlayerStatus.PLAYER_DEATH &&
-            this.playerStatus != PlayerStatus.PLAYER_ENTERGATE &&
-            this.playerStatus != PlayerStatus.PLAYER_FLIPPING
+            this.playerStatus != PlayerStatus.PLAYER_ENTERGATE
         ) {
-            var angle = this.getAngle();
-
             //1. 调整下落速度
             if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
                 this.speed = this.body.linearVelocity;
-                switch (angle) {
-                    case 0:
-                        break;
-                    case 90:
-                        [this.speed.x, this.speed.y] = [this.speed.y, -this.speed.x];
-                        break;
-                    case 180:
-                        this.speed.x = -this.speed.x;
-                        this.speed.y = -this.speed.y;
-                        break;
-                    case 270:
-                        [this.speed.x, this.speed.y] = [-this.speed.y, this.speed.x];
-                        break;
-                    default:
-                        cc_assert(false);
-                        break;
-                }
             }
             else {
                 this.speed.x += this.gravity.x * dt;
@@ -382,29 +333,12 @@ export class Player extends BaseObject {
                     this.speed.x = 0;
                 }
                 //8.2 速度应用到物理引擎
-                switch (angle) {
-                    case 0:
-                        break;
-                    case 90:
-                        [this.speed.x, this.speed.y] = [-this.speed.y, this.speed.x];
-                        break;
-                    case 180:
-                        this.speed.x = -this.speed.x;
-                        this.speed.y = -this.speed.y;
-                        break;
-                    case 270:
-                        [this.speed.x, this.speed.y] = [this.speed.y, -this.speed.x];
-                        break;
-                    default:
-                        cc_assert(false);
-                        break;
-                }
                 this.body.linearVelocity = this.speed;
             }
             else {
                 //9. 调整位移
                 var collisionObject = this.getComponent(CollisionObject);
-                var speed = this.speed.clone().rotate(cc_misc.degreesToRadians(angle));
+                var speed = this.speed.clone();
                 var speedX = speed.x;
                 var speedY = speed.y;
                 var mov = new Vec2(speedX * dt, speedY * dt);
@@ -414,29 +348,6 @@ export class Player extends BaseObject {
         else {
         }
 
-        if (this.canFlip) {
-            this.canFlip = false;
-            if (this.playerStatus != PlayerStatus.PLAYER_DEATH &&
-                this.playerStatus != PlayerStatus.PLAYER_ENTERGATE
-            ) {
-                if (this.checkCanFlip()) {
-                    this.startFlip();
-                }
-            }
-        }
-        else if (this.canEnterGate) {
-            this.canEnterGate = false;
-            if (this.playerStatus == PlayerStatus.PLAYER_IDLE) {
-                for (var gate of this.touchingGates) {
-                    let isSameAngle = this.checkGateAndMapSameAngle(gate);
-                    if (isSameAngle) {
-                        this.setPlayerStatus(PlayerStatus.PLAYER_ENTERGATE);
-                        gate.enterGate();
-                        break;
-                    }
-                }
-            }
-        }
         if (this.canShoot) {
             this.canShoot = false;
             if (this.playerStatus != PlayerStatus.PLAYER_DEATH && this.playerStatus != PlayerStatus.PLAYER_ENTERGATE) {
@@ -453,12 +364,7 @@ export class Player extends BaseObject {
     }
 
     private getGroundObjectGroups() {
-        if (this.playerWhite) {
-            return [ObjectGroup.Platform, ObjectGroup.Block, ObjectGroup.BlockWhite];
-        }
-        else {
-            return [ObjectGroup.Platform, ObjectGroup.Block, ObjectGroup.BlockBlack];
-        }
+        return [ObjectGroup.Platform, ObjectGroup.Block];
     }
 
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
@@ -503,50 +409,16 @@ export class Player extends BaseObject {
             var anim = this._animation;
             switch (status) {
                 case PlayerStatus.PLAYER_IDLE:
-                    if (GameConfig.useIwbtLevels) {
-                        anim.play('playerIdle');
-                    }
-                    else if (this.playerWhite) {
-                        anim.play('idle_02');
-                    }
-                    else {
-                        anim.play('idle_01');
-                    }
+                    anim.play('playerIdle');
                     break;
                 case PlayerStatus.PLAYER_RUNNING:
-                    if (GameConfig.useIwbtLevels) {
-                        anim.play('playerRunning');
-                    }
-                    else if (this.playerWhite) {
-                        anim.play('running_02');
-                    }
-                    else {
-                        anim.play('running_01');
-                    }
+                    anim.play('playerRunning');
                     break;
                 case PlayerStatus.PLAYER_JUMP:
-                    if (GameConfig.useIwbtLevels) {
-                        anim.play('playerJump');
-                    }
-                    else if (this.playerWhite) {
-                        anim.play('jump_02');
-                    }
-                    else {
-                        anim.play('jump_01');
-                    }
+                    anim.play('playerJump');
                     break;
                 case PlayerStatus.PLAYER_FALL:
-                    if (GameConfig.useIwbtLevels) {
-                        anim.play('playerFall');
-                    }
-                    else if (this.playerWhite) {
-                        anim.play('fall_02');
-                    }
-                    else {
-                        anim.play('fall_01');
-                    }
-                    break;
-                case PlayerStatus.PLAYER_FLIPPING:
+                    anim.play('playerFall');
                     break;
             }
         }
@@ -570,26 +442,7 @@ export class Player extends BaseObject {
         if (this.canJump) {
             if (nox.tableSize(this.touchedFootColliders) > 0 || this.isHitBottom) {
                 if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
-                    var forceX = 0;
-                    var forceY = 0;
-                    switch (this.getAngle()) {
-                        case 0:
-                            forceY = this.jump * GameConfig.jumpForceFactor;
-                            break;
-                        case 90:
-                            forceX = -this.jump * GameConfig.jumpForceFactor;
-                            break;
-                        case 180:
-                            forceY = -this.jump * GameConfig.jumpForceFactor;
-                            break;
-                        case 270:
-                            forceX = this.jump * GameConfig.jumpForceFactor;
-                            break;
-                        default:
-                            cc_assert(false);
-                            break;
-                    }
-                    this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(forceX, forceY), true);
+                    this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, this.jump * GameConfig.jumpForceFactor), true);
                 }
                 else {
                     this.speed.y = this.jump;
@@ -707,186 +560,7 @@ export class Player extends BaseObject {
         return this.playerStatus == PlayerStatus.PLAYER_DEATH;
     }
 
-    public checkCanRotateMap(targetAngle: number): boolean {
-        return this.playerStatus != PlayerStatus.PLAYER_DEATH
-            && this.playerStatus != PlayerStatus.PLAYER_ENTERGATE
-            && this.playerStatus != PlayerStatus.PLAYER_FLIPPING
-            && !this.isRotating
-            && this.map.canRotateMap(targetAngle);
-    }
-
-    public startRotateMap(targetAngle: number): void {
-        if (GameConfig.useIwbtLevels) {
-        }
-        else {
-            this.map.requestPause();
-
-            var mapNode = this.map.node;
-
-            this.isRotating = true;
-            if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-                this.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
-            }
-            else {
-                this.speed.set(0, 0);
-            }
-            var newAnchor = new Vec2(0.5, 0.5);
-            var oldAnchor = noxcc.anchor(this.node);    // 保存旧的锚点, 应该为脚下
-            var cposInSelf = noxcc.cpos(this.node);     // 节点中心点的位置(相对于自己的锚点)
-            var cposInParent = noxcc.convertPosAR(cposInSelf, this.node, mapNode); // 节点中心点的位置(相对于父的锚点)
-            noxcc.setAnchor(this.node, newAnchor);      // 修改自己的锚点到中心
-            noxcc.setPosAR(this.node, cposInParent);    // 中心位置对齐
-            this.map.startRotate(targetAngle, () => {
-                this.setAngle((360 - targetAngle) % 360);// 节点绕中心旋转
-                this.isRotating = false;
-                this.map.cancelPause();
-                var anchorPosInSelf = oldAnchor.clone().subtract(newAnchor).multiply2f(noxcc.w(this.node), noxcc.h(this.node)); // 旧的锚点的坐标(相对于自己的锚点)
-                var anchorPosInParent = noxcc.convertPosAR(anchorPosInSelf, this.node, mapNode);                                // 旧的锚点的坐标(相对于父的锚点)
-                noxcc.setAnchor(this.node, oldAnchor);          // 设置为旧的锚点
-                noxcc.setPosAR(this.node, anchorPosInParent);   // 锚点位置对齐
-            });
-        }
-    }
-
-    private checkCanFlip(): boolean {
-        var angle = this.getAngle();
-        if (!this.isHitBottom && nox.tableSize(this.touchedFootColliders) == 0) return false;
-
-        var bbox: Rect = null;
-        if (true) {
-            var collider = this.getComponent(BoxCollider2D);
-            bbox = new Rect(
-                collider.offset.x - collider.size.width / 2,
-                collider.offset.y - collider.size.height / 2,
-                collider.size.width,
-                collider.size.height
-            );
-
-            // 碰撞区域转换到相对于地图的矩形区域
-            bbox = noxcc.convertRectAR(bbox, this.node, this.map.node);
-
-            // 翻转后的碰撞区域
-            var tw = GameConfig.tileWidth;
-            var th = GameConfig.tileHeight;
-            if (angle == 0) {
-                var height = bbox.height;
-                var bottom = Math.round(bbox.yMin / th) * th;
-                bbox.y = bottom - Collision.DELTA - height;
-            }
-            else if (angle == 90) {
-                var width = bbox.width;
-                var right = Math.round(bbox.xMax / tw) * tw;
-                bbox.x = right + Collision.DELTA;
-            }
-            else if (angle == 180) {
-                var height = bbox.height;
-                var top = Math.round(bbox.yMax / th) * th;
-                bbox.y = top + Collision.DELTA;
-            }
-            else if (angle == 270) {
-                var width = bbox.width;
-                var left = Math.round(bbox.xMin / tw) * tw;
-                bbox.x = left - Collision.DELTA - width;
-            }
-            else {
-                cc_assert(false, "fatal error");
-            }
-        }
-
-        var tile: TiledTile = null;
-        var tiledMap = this.map.getTiledMap();
-        var layers = tiledMap.getLayers();
-        for (var layer of layers) {
-            var rect = this.map.getRectOfOverlappingTiles(layer, bbox);
-            for (var x = rect.xMin; x <= rect.xMax; ++x) {
-                for (var y = rect.yMin; y <= rect.yMax; ++y) {
-                    var tile2 = this.map.getTileAt(layer, x, y);
-                    if (tile2 && tile2.grid != 0 &&
-                        tile2.grid != GameConfig.gravityLeftTile &&
-                        tile2.grid != GameConfig.gravityRightTile &&
-                        tile2.grid != GameConfig.gravityDownTile &&
-                        tile2.grid != GameConfig.gravityUpTile) {
-                        if (tile && tile.grid != tile2.grid) {
-                            return false;
-                        }
-                        else {
-                            tile = tile2;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (tile) {
-            var allPlatforms = this.map.allPlatforms;
-            for (var key in allPlatforms) {
-                var platform = allPlatforms[key];
-                var collider2 = platform.getComponent(BoxCollider2D);
-                var bbox2 = new Rect(
-                    collider2.offset.x - collider2.size.width / 2,
-                    collider2.offset.y - collider2.size.height / 2,
-                    collider2.size.width,
-                    collider2.size.height
-                );
-                bbox2 = noxcc.convertRectAR(bbox2, platform.node, this.map.node);
-                if (bbox.intersects(bbox2)) {
-                    tile = null;
-                    break;
-                }
-            }
-        }
-
-        if (tile) {
-            if (tile.grid == GameConfig.blackTile && !this.playerWhite) {
-                return true;
-            }
-            else if (tile.grid == GameConfig.whiteTile && this.playerWhite) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public startFlip(): void {
-        if (GameConfig.useIwbtLevels) {
-        }
-        else {
-            this.map.requestPause();
-
-            this.setPlayerStatus(PlayerStatus.PLAYER_FLIPPING);
-            if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-                this.getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
-            }
-            else {
-                this.speed.set(0, 0);
-            }
-            cc_tween(this._animation.node)
-                .to(0.3, { scale: new Vec3(this._animation.node.scale.x, 0, this._animation.node.scale.z) })
-                .call(() => {
-                    this.setWhite(!this.playerWhite);
-                    this.setAngle((this.getAngle() + 180) % 360);
-                    this.setPlayerStatus(PlayerStatus.PLAYER_IDLE, true);
-                })
-                .to(0.3, { scale: new Vec3(this._animation.node.scale.x, 1, this._animation.node.scale.z) })
-                .call(() => {
-                    this.map.startFlip(() => {
-                        this.setPlayerStatus(PlayerStatus.PLAYER_IDLE, true);
-                        this.map.cancelPause();
-                        if (GameData.INSTANCE.flipedRotateAngle) {
-                            if (this.checkCanRotateMap(GameData.INSTANCE.flipedRotateAngle)) {
-                                this.startRotateMap(GameData.INSTANCE.flipedRotateAngle);
-                            }
-                            GameData.INSTANCE.flipedRotateAngle = 0;
-                        }
-                    });
-                })
-                .start();
-        }
-    }
-
     public collision_solid(hit: CollisionHit): void {
-        hit = hit.convert_by_angle(this.getAngle());
         this.isHitLeft = this.isHitLeft || hit.left;
         this.isHitRight = this.isHitRight || hit.right;
         this.isHitBottom = this.isHitBottom || hit.bottom;
@@ -895,21 +569,17 @@ export class Player extends BaseObject {
     }
 
     public collides(other: CollisionObject, hit: CollisionHit): boolean {
-        hit = hit.convert_by_angle(this.getAngle());
         return true;
     }
 
     public collision(other: CollisionObject, hit: CollisionHit): HitResponse {
-        var platform = other.getComponent(Platform);
+        var platform = other.getComponent(AutoPlatform);
         if (platform) {
             this.isHitLeft = this.isHitLeft || hit.left;
             this.isHitRight = this.isHitRight || hit.right;
             this.isHitBottom = this.isHitBottom || hit.bottom;
             this.isHitTop = this.isHitTop || hit.top;
             this.isCrush = this.isCrush || hit.crush;
-            hit = hit.convert_by_angle(this.getAngle());
-            if (hit.bottom) {
-            }
         }
         return HitResponse.CONTINUE;
     }
@@ -920,57 +590,10 @@ export class Player extends BaseObject {
         }
     }
 
-    public checkGateAndMapSameAngle(gate: Gate): boolean {
-        var map = this.map;
-        var objectGroup = map.tiledMap.getObjectGroup("Transfer");
-        var gateName = gate.gateName;
-        var gateObject = objectGroup.getObject(gateName);
-
-        if (gateObject.gid == GameConfig.teleportTile) {
-            return true;
-        }
-
-        var gateAngle = map.getGateAngleAndColor(gateObject.gid)[0];
-        var mapAngle = (map.getAngle() + 360) % 360;
-        if (gateAngle == mapAngle) {
-            return true;
-        }
-        return false;
-    }
-
     public getDeadAnim() {
         var animation = noxcc.findAnimation("dead", this.map.node.parent.parent);
         cc_assert(animation);
         return animation;
-    }
-
-    public getAngle() {
-        return this.node.angle;
-    }
-
-    public setAngle(angle: number) {
-        this.node.angle = angle;
-    }
-
-    public setWhite(isWhite: boolean, force?: boolean) {
-        if (this.playerWhite != isWhite || force) {
-            this.playerWhite = isWhite;
-            for (var key of nox.keys(this.touchedFootColliders)) {
-                var [collider] = this.touchedFootColliders[key];
-                if (this.getGroundObjectGroups().indexOf(collider.group) < 0) {
-                    delete this.touchedFootColliders[key];
-                }
-            }
-            for (var key of nox.keys(this.touchedHeadColliders)) {
-                var [collider] = this.touchedHeadColliders[key];
-                if (this.getGroundObjectGroups().indexOf(collider.group) < 0) {
-                    delete this.touchedHeadColliders[key];
-                }
-            }
-            for (let collider of this.getComponents(Collider2D)) {
-                collider.group = isWhite ? ObjectGroup.PlayerWhite : ObjectGroup.PlayerBlack;
-            }
-        }
     }
 
     public pause() {

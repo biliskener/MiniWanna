@@ -6,21 +6,16 @@ import { CollisionSystem } from "./collision/CollisionSystem";
 import { MapEdge } from "./object/MapEdge";
 import { Player } from "./object/Player";
 import { NoxComponent } from "../../framework/core/NoxComponent";
-import { Animation, assert, AudioClip, Camera, Collider, Collider2D, Node, PhysicsSystem, PhysicsSystem2D, PolygonCollider2D, Prefab, Rect, Size, TiledLayer, TiledMap, TiledObjectGroup, TiledTile, Vec2, VERSION, _decorator } from "cc";
-import { cc_assert, CC_DEV, cc_director, CC_EDITOR, cc_find, cc_instantiate, cc_isValid, cc_rect, cc_size, cc_tween, nox } from "../../framework/core/nox";
+import { Animation, AudioClip, Node, PhysicsSystem2D, Prefab, Rect, TiledLayer, TiledMap, TiledObjectGroup, TiledTile, Vec2, _decorator } from "cc";
+import { cc_assert, CC_DEV, cc_director, cc_find, cc_instantiate, cc_isValid } from "../../framework/core/nox";
 import { noxSound } from "../../framework/core/noxSound";
 import { MapUtil } from "../../game/map/MapUtil";
 import { noxcc } from "../../framework/core/noxcc";
 import { ObjectGroup } from "../const/ObjectGroup";
 import { PlayerStatus } from "./object/PlayerStatus";
 import { Spike } from "./object/Spike";
-import { Prop } from "./object/Prop";
-import { Gate } from "./object/escape/Gate";
 import { Save } from "./object/iwbt/Save";
-import { SetMapAngle } from "./object/escape/SetMapAngle";
-import { Treasure } from "./object/escape/Treasure";
 import { AutoPlatform } from "./object/iwbt/AutoPlatform";
-import { Platform } from "./object/escape/Platform";
 import { CameraControl } from "./CameraControl";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
@@ -43,10 +38,9 @@ export class GameMap extends NoxComponent {
     @property({ type: Prefab })
     cherryPrefab: Prefab = null;
 
-    cameraForRotation: Camera = null;
     tiledMap: TiledMap = null;
     playerNode: Node = null;
-    allPlatforms: { [key: string]: Platform } = {};
+    allPlatforms: { [key: string]: AutoPlatform } = {};
     allMapEdges: { [key: string]: MapEdge } = {};
 
     public levelName: string = "";
@@ -67,8 +61,6 @@ export class GameMap extends NoxComponent {
 
     onLoad(): void {
         this.tiledMap = this.getComponent(TiledMap);
-        this.cameraForRotation = this.node.parent.getChildByName("Camera").getComponent(Camera);
-        cc_assert(this.cameraForRotation);
         this.playBGM();
     }
 
@@ -86,10 +78,6 @@ export class GameMap extends NoxComponent {
         this.makeMapEdges();
 
         this.makeMapTriggers();
-
-        if (this.rebornGateName != "") {
-            this.initMapRotateAngle();
-        }
 
         this.applyGravity();
 
@@ -131,16 +119,6 @@ export class GameMap extends NoxComponent {
 
             this.playerNode = cc_instantiate(this.playerPrefab);
 
-            // 要先知道是黑还是白, 还有角度
-            if (this.rebornGateName != "") {
-                var objectGroup = this.tiledMap.getObjectGroup("Transfer");
-                var gateObject = objectGroup.getObject(this.rebornGateName);
-                var [mapInitAnlge, isWhite] = this.getGateAngleAndColor(gateObject.gid);
-                var player = this.playerNode.getComponent(Player);
-                player.setWhite(isWhite);
-                player.setAngle((720 - mapInitAnlge) % 360);
-            }
-
             // 再加碰撞组件
             if (GameConfig.useIwbtLevels) {
                 MapUtil.addBoxCollider(this.playerNode, this, ObjectGroup.Player, true, null, 0);
@@ -148,7 +126,7 @@ export class GameMap extends NoxComponent {
             else {
                 const cornerWidth = GameConfig.roundedCornerWidth;
                 const cornerHeight = GameConfig.roundedCornerHeight;
-                var group = this.playerNode.getComponent(Player).playerWhite ? ObjectGroup.PlayerWhite : ObjectGroup.PlayerBlack;
+                var group = ObjectGroup.Player;
                 var colliderRect = new Rect(0, 0, noxcc.w(this.playerNode), noxcc.h(this.playerNode) - 4);
                 if (GameConfig.usePolygonColliderForPlayer) {
                     var points: Vec2[] = [
@@ -185,29 +163,6 @@ export class GameMap extends NoxComponent {
                 pos.y += (noxcc.ay(this.playerNode)) * noxcc.h(this.playerNode);
                 this.playerNode.setPosition(pos.x, pos.y);
             }
-            else if (targetNode.getComponent(Gate)) {
-                cc_assert(targetNode.parent.parent == this.node, "fatal error");
-                var pos: Vec2;
-                if (mapInitAnlge == 0) {
-                    pos = new Vec2(noxcc.cx(targetNode), noxcc.abottom(targetNode));
-                }
-                else if (mapInitAnlge == 180) {
-                    pos = new Vec2(noxcc.cx(targetNode), noxcc.atop(targetNode));
-                }
-                else if (mapInitAnlge == 90) {
-                    pos = new Vec2(noxcc.aleft(targetNode), noxcc.cy(targetNode));
-                }
-                else if (mapInitAnlge == 270) {
-                    pos = new Vec2(noxcc.aright(targetNode), noxcc.cy(targetNode));
-                }
-                else {
-                    cc_assert(false);
-                }
-                pos = noxcc.convertPosAR(pos, targetNode, this.playerNode.parent);
-                pos.x += (noxcc.ax(this.playerNode) - 0.5) * noxcc.w(this.playerNode);
-                pos.y += (noxcc.ay(this.playerNode)) * noxcc.h(this.playerNode);
-                this.playerNode.setPosition(pos.x, pos.y);
-            }
             else {
                 cc_assert(false, "fatal error");
             }
@@ -231,7 +186,7 @@ export class GameMap extends NoxComponent {
                             if (!this.rebornGateName) {
                                 this.rebornPlayer(tile.node);
                             }
-                            tile.grid = GameConfig.whiteTile;
+                            tile.grid = GameConfig.backgroundTile;
                         }
                         this.onTileAdd(tile);
                     }
@@ -287,9 +242,6 @@ export class GameMap extends NoxComponent {
                         ]);
                         node.addComponent(Spike);
                     }
-                    else if (object.gid == GameConfig.blackWhiteTile) {
-                        MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
-                    }
                     else {
                         cc_assert(false);
                     }
@@ -311,7 +263,7 @@ export class GameMap extends NoxComponent {
 
         if (tile.grid == GameConfig.platformTile) {
             if (isAdd) {
-                tile.grid = GameConfig.whiteTile;
+                tile.grid = GameConfig.backgroundTile;
                 layer.setTiledTileAt(x, y, null);
             }
             else {
@@ -420,7 +372,7 @@ export class GameMap extends NoxComponent {
             // 樱桃，删除地图上的樱桃图块，创建新的樱桃对象。
             // PS：2.2.1 版本之前需要在 start 函数才可以。
             if (isAdd) {
-                tile.grid = GameConfig.whiteTile;
+                tile.grid = GameConfig.backgroundTile;
                 layer.setTiledTileAt(x, y, null);
                 var cherry = cc_instantiate(this.cherryPrefab);
                 cherry.getComponent(Animation).enabled = true;
@@ -433,54 +385,6 @@ export class GameMap extends NoxComponent {
                 cherry.parent = layer.node;
                 noxcc.addX(cherry, tileSize.width / 2 - noxcc.aw(tile.node.parent));
                 noxcc.addY(cherry, tileSize.height / 2 - noxcc.ah(tile.node.parent));
-            }
-        }
-        else if (tile.grid == GameConfig.gravityLeftTile
-            || tile.grid == GameConfig.gravityRightTile
-            || tile.grid == GameConfig.gravityDownTile
-            || tile.grid == GameConfig.gravityUpTile
-        ) {
-            if (isAdd) {
-                collider = MapUtil.addTiledCircleCollider(
-                    tile, this, ObjectGroup.Trigger, true,
-                    tileSize,
-                    tileSize.width * GameConfig.triggerCollisionSize,
-                    tileSize.height * GameConfig.triggerCollisionSize
-                );
-                var setMapAngle = tile.node.addComponent(SetMapAngle);
-                switch (tile.grid) {
-                    case GameConfig.gravityLeftTile:
-                        setMapAngle.targetAngle = 90;
-                        break;
-                    case GameConfig.gravityRightTile:
-                        setMapAngle.targetAngle = 270;
-                        break;
-                    case GameConfig.gravityDownTile:
-                        setMapAngle.targetAngle = 0;
-                        break;
-                    case GameConfig.gravityUpTile:
-                        setMapAngle.targetAngle = 180;
-                        break;
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
-            }
-        }
-        else if (tile.grid == GameConfig.whiteTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.BlockWhite, false, tileSize, tileSize.width, tileSize.height);
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
-            }
-        }
-        else if (tile.grid == GameConfig.blackTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.BlockBlack, false, tileSize, tileSize.width, tileSize.height);
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
             }
         }
         else {
@@ -499,17 +403,6 @@ export class GameMap extends NoxComponent {
 
     private onTileAdd(tile: TiledTile): void {
         this.onTileAction(tile, true);
-    }
-
-    private initMapRotateAngle(): void {
-        var objectGroup = this.tiledMap.getObjectGroup("Transfer");
-        var gateObject = objectGroup.getObject(this.rebornGateName);
-        var mapInitAnlge = this.getGateAngleAndColor(gateObject.gid)[0];
-        if (mapInitAnlge != 0) {
-            this.requestPause();
-            this.setAngle(mapInitAnlge);
-            this.cancelPause();
-        }
     }
 
     // 制作碰撞组件 
@@ -563,12 +456,6 @@ export class GameMap extends NoxComponent {
                 else if (object.type == 4) {
                 }
 
-                if ((object.gid & 0x0FFFFFFF) == GameConfig.propTile) {
-                    node.addComponent(Prop);
-                }
-                else if ((object.gid & 0x0FFFFFFF) == GameConfig.treasureTile) {
-                    node.addComponent(Treasure);
-                }
 
                 // 添加触发区域对应的组件与参数，可多个。
                 node.triggerNum = 0;
@@ -675,28 +562,6 @@ export class GameMap extends NoxComponent {
                     }
                     else {
                         var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, null, 0);
-                    }
-                }
-                else if (object.name && object.name.match(/^gate\d+$/)) {
-                    var imgName = "img" + object.id;
-                    var node = cc_find(imgName, objectGroup.node);
-                    cc_assert(object.name != "");
-                    node.name = object.name;
-                    node.triggerNum = 1;
-
-                    var gate = node.addComponent(Gate);
-                    gate.gateName = object.name;
-                    gate.targetLevelName = (object as any).target_level;
-                    gate.targetGateName = (object as any).target_gate;
-                    cc_assert(gate.gateName, "fatal error");
-                    cc_assert(gate.targetGateName, "fatal error");
-
-                    if (object.gid == GameConfig.teleportTile) {
-                        var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
-                    }
-                    else {
-                        var gateAngle = this.getGateAngleAndColor(object.gid)[0];
-                        var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, new Rect(object.width / 3, 0, object.width / 3, object.height / 2), gateAngle);
                     }
                 }
             }
@@ -892,56 +757,16 @@ export class GameMap extends NoxComponent {
         return this.pauseCount > 0;
     }
 
-    public canRotateMap(targetAngle: number): boolean {
-        return !this.isPaused() && (targetAngle + 720) % 360 != (this.getAngle() + 720) % 360;
-    }
-
-    public startFlip(callback: () => void): void {
-        this.startRotate(this.getAngle() + 180, callback);
-    }
-
-    public startRotate(targetAngle: number, callback: () => void): void {
-        var cameraNode = this.cameraForRotation.node;
-        var fromRealAngle = cameraNode.angle;
-        var realAngle = this.toRealAngle((720 + targetAngle) % 360);
-        if (realAngle - fromRealAngle > 180) {
-            realAngle = realAngle - 360;    // 避免转动角度太大
-        }
-        cc_tween(cameraNode)
-            .to(0.3, { angle: realAngle })
-            .call(() => {
-                cameraNode.angle = (720 + realAngle) % 360;  // 限制角度在0-360之间
-                this.applyGravity();
-                callback && callback();
-            })
-            .start();
-    }
-
     public applyGravity() {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-            switch (this.getAngle()) {
-                case 0:
-                    PhysicsSystem2D.instance.gravity = new Vec2(0, GameConfig.gravity);
-                    break;
-                case 90:
-                    PhysicsSystem2D.instance.gravity = new Vec2(GameConfig.gravity, 0);
-                    break;
-                case 180:
-                    PhysicsSystem2D.instance.gravity = new Vec2(0, -GameConfig.gravity);
-                    break;
-                case 270:
-                    PhysicsSystem2D.instance.gravity = new Vec2(-GameConfig.gravity, 0);
-                    break;
-                default:
-                    cc_assert(false);
-            }
+            PhysicsSystem2D.instance.gravity = new Vec2(0, GameConfig.gravity);
         }
         else {
-            this.collisionSystem.setAngle(this.getAngle());
+            this.collisionSystem.setAngle(0);
         }
     }
 
-    public addPlatform(platform: Platform): void {
+    public addPlatform(platform: AutoPlatform): void {
         cc_assert(this.allPlatforms[platform.node.name] == null, "fatal error");
         this.allPlatforms[platform.node.name] = platform;
     }
@@ -973,51 +798,8 @@ export class GameMap extends NoxComponent {
         return layer.getTiledTileAt(x, y, false);
     }
 
-    public getGateAngleAndColor(gid: number): [number, boolean] {
-        if (gid == GameConfig.whiteGateDownTile) {
-            return [0, true];
-        }
-        else if (gid == GameConfig.blackGateDownTile) {
-            return [0, false];
-        }
-        else if (gid == GameConfig.whiteGateUpTile) {
-            return [180, true];
-        }
-        else if (gid == GameConfig.blackGateUpTile) {
-            return [180, false];
-        }
-        else if (gid == GameConfig.whiteGateLeftTile) {
-            return [90, true];
-        }
-        else if (gid == GameConfig.blackGateLeftTile) {
-            return [90, false];
-        }
-        else if (gid == GameConfig.whiteGateRightTile) {
-            return [270, true];
-        }
-        else if (gid == GameConfig.blackGateRightTile) {
-            return [270, false];
-        }
-        return [0, false];
-    }
-
     public getTiledMap() {
         return this.tiledMap;
-    }
-
-    // 获得地图角度
-    public getAngle() {
-        return (720 - this.cameraForRotation.node.angle) % 360;
-    }
-
-    // 设置地图角度
-    public setAngle(angle: number) {
-        this.cameraForRotation.node.angle = (720 - angle) % 360;
-    }
-
-    // 转换到真实角度
-    private toRealAngle(angle: number) {
-        return (720 - angle) % 360;
     }
 
     public deferredActivateNode(node: Node, active: boolean) {

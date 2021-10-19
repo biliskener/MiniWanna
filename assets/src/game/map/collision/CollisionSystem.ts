@@ -1193,20 +1193,6 @@ export class CollisionSystem /*implements ISchedulable*/ {
     private is_tile_solid(tile: TiledTile, object: CollisionObject): boolean {
         var collider = tile.node.getComponent(Collider2D);
         if (!GameConfig.useBlockTileAsObject && collider && ObjectGroup.BlockAll.indexOf(collider.group) >= 0) {
-            var player = object.getComponent(Player);
-            if (player) {   // 对玩家来说，这个地方要特殊处理
-                if (player.playerWhite && tile.grid == GameConfig.blackTile) {
-                    return false;
-                }
-                if (!player.playerWhite && tile.grid == GameConfig.whiteTile) {
-                    return false;
-                }
-            }
-            else {
-                if (tile.grid == GameConfig.blackTile || tile.grid == GameConfig.whiteTile) {
-                    return false;
-                }
-            }
             return true;
         }
         return false;
