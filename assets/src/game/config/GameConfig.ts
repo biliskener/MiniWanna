@@ -40,8 +40,8 @@ export module GameConfig {
     export const speedFactor = physicsEngineType == PhysicsEngineType.BOX2D && applyHorizontalSpeed ? 1.5 : 50; // 速度因子
     export const gravity = -1000;                           // 重力值
     export const jumpGravityScale = 1.0;                    // 跳跃按键按住时的重力缩放
-    export const riseGravityScale = 1.5;                    // 上升时的重力缩放
-    export const fallGravityScale = 2.0;                    // 下落时的重力缩放
+    export const riseGravityScale = 1.0;                    // 上升时的重力缩放
+    export const fallGravityScale = 1.0;                    // 下落时的重力缩放
     export const jumpForceFactor = 85;                      // 跳跃时施加的力的因子
     export const slowDownDistance: number = 0.4 * 50 * 50;  // 每秒减速距离
     export const speedUpDistance: number = 0.4 * 50 * 50;   // 每秒加速距离

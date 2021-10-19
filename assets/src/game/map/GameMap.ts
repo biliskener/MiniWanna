@@ -123,7 +123,7 @@ export class GameMap extends NoxComponent {
             const cornerWidth = GameConfig.roundedCornerWidth;
             const cornerHeight = GameConfig.roundedCornerHeight;
             var group = ObjectGroup.Player;
-            var colliderRect = new Rect(12, 1, 11, 20);
+            var colliderRect = new Rect(9, 1, 16, 20);  // 3 + 2 * SHIFT_DELTA
             if (GameConfig.usePolygonColliderForPlayer) {
                 var points: Vec2[] = [
                     new Vec2(colliderRect.xMin, colliderRect.yMin + cornerWidth),

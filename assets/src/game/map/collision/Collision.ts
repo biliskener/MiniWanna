@@ -10,7 +10,7 @@ export module Collision {
     export const LOGICAL_FPS = 64.0;
 
     // SHIFT_DELTA is used for sliding over 1-tile gaps and collision detection
-    export const SHIFT_DELTA = 7.0; //7.0; 太小会挂在墙上，太大会因穿透太被夹死 iwbt要改为3.0
+    export const SHIFT_DELTA = 7.0; //7.0; 太小会挂在墙上，太大会因穿透太被夹死 此值要尽可能小，完美值为刚好大于最大重力穿透
 
     // a small value... be careful as CD is very sensitive to it
     export const DELTA = .002;
