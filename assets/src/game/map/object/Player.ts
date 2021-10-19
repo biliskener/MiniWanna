@@ -508,7 +508,7 @@ export class Player extends BaseObject {
                 this.playerDeathPos = this.node.getPosition();
                 // GM8 的 I wanna 引擎是 20 帧，每帧 40 个血，会比较卡，改成 32 帧，每帧 25 个血。  
                 if (GameConfig.useIwbtLevels) {
-                    noxSound.playEffect("sound/escape/onDeath.mp3");
+                    noxSound.playEffect("sound/iwbt/onDeath.mp3");
                     this.node.setScale(0, 0);
                     this.schedule(this.bloodEmitter, 0.01, 32, 0.01);
                     this.schedule(() => {

@@ -121,8 +121,8 @@
     "_projection": 0,
     "_priority": 100,
     "_fov": 45,
-    "_fovAxis": 1,
-    "_orthoHeight": 480,
+    "_fovAxis": 0,
+    "_orthoHeight": 304,
     "_near": 1,
     "_far": 2000,
     "_color": {
@@ -221,8 +221,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
-      "height": 720
+      "width": 800,
+      "height": 608
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -291,8 +291,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
-      "height": 720
+      "width": 800,
+      "height": 608
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",

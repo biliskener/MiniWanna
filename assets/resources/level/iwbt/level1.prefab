@@ -243,7 +243,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 245
+      "a": 235
     },
     "_spriteFrame": null,
     "_type": 0,
@@ -370,7 +370,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 245
+      "a": 235
     },
     "_spriteFrame": null,
     "_type": 0,
@@ -497,7 +497,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 245
+      "a": 235
     },
     "_spriteFrame": null,
     "_type": 0,
@@ -624,7 +624,7 @@
       "r": 255,
       "g": 255,
       "b": 255,
-      "a": 245
+      "a": 235
     },
     "_spriteFrame": null,
     "_type": 0,
@@ -1080,7 +1080,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 51
@@ -1306,7 +1306,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 63
@@ -1419,7 +1419,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 69
@@ -1532,7 +1532,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 75
@@ -1645,7 +1645,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 81

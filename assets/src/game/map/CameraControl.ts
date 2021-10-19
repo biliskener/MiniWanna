@@ -20,12 +20,7 @@ export class CameraControl extends Component {
         this.gameOverNode = cc_find("GAMEOVER", SceneManager.getRunningScene().node);
         this.mapNode = this.node;
         this.viewNode = this.mapNode.parent;
-        if (noxcc.h(this.mapNode) == noxcc.h(this.viewNode)) {
-            this.viewNode.getComponent(Mask).enabled = true;
-        }
-        else {
-            this.viewNode.getComponent(Mask).enabled = false;
-        }
+        this.viewNode.getComponent(Mask).enabled = false;
         this.cameraForMovement = this.node.parent.getChildByName("Camera").getComponent(Camera);
         cc_assert(this.cameraForMovement);
     }
