@@ -28,12 +28,12 @@ export class ClearTile extends BaseObject {
 
     private onContact(otherNode: Node, selfNode: Node): void {
         noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
-        GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1);
+        GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1);
         this.syncState();
     }
 
     private syncState(): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.tiledMap.tmxAsset.name, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.tiledMap.tmxAsset.name, this.node.name);
         if (state) {
             this.map.deferredActivateNode(this.targetLayer.node, false);
             this.map.deferredActivateNode(this.node, false);

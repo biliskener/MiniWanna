@@ -76,7 +76,7 @@ export class LayerTrigger extends BaseObject {
     private syncState(): void {
         cc_assert(this.params.targetLayers && this.params.targetLayers != "");
         var layerNames = this.params.targetLayers.split("|");
-        var state = GameData.INSTANCE.savedData.getObjectState(this.params.targetLevel || this.map.levelName, layerNames[0]);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.params.targetLevel || this.map.levelName, layerNames[0]);
         if (state) {
             this.map.deferredActivateNode(this.node, !!this.params.visibleWhenActivated);
         }

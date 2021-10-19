@@ -1,6 +1,7 @@
 import { noxEvent0 } from "../../framework/core/noxEvent";
 
 export class SavedData {
+    public id: number;                              // 存档ID
     public changed: boolean = false;
     public version: number = 1;                     // 存档版本号
     public levelName: string = "level1";            // 关卡名称
@@ -16,6 +17,10 @@ export class SavedData {
     public levelStates: SavedData.LevelStates = {}; // 每一关的每个对象的状态值
 
     public dataChangedEvent: noxEvent0 = new noxEvent0();
+
+    public constructor(id: number) {
+        this.id = id;
+    }
 
     public encode(): string {
         var data = {
@@ -83,7 +88,7 @@ export class SavedData {
         var oldSeconds = Math.floor(this.gameTime);
         this.gameTime += dt;
         var newSeconds = Math.floor(this.gameTime);
-        if(newSeconds != oldSeconds) {
+        if (newSeconds != oldSeconds) {
             this.dataChangedEvent.dispatchEvent();
         }
     }

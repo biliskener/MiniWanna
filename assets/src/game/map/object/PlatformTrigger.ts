@@ -82,7 +82,7 @@ export class PlatformTrigger extends BaseObject {
     private syncState(): void {
         cc_assert(this.params.targetPlatforms && this.params.targetPlatforms != "");
         var platformNames = this.params.targetPlatforms.split("|");
-        var state = GameData.INSTANCE.savedData.getObjectState(this.params.targetLevel || this.map.levelName, platformNames[0]);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.params.targetLevel || this.map.levelName, platformNames[0]);
         if (state) {
             this.map.deferredActivateNode(this.node, !!this.params.visibleWhenActivated);
         }

@@ -63,7 +63,7 @@ export class Gate extends BaseObject {
             var targetGate = this.node.parent.getChildByName(this.targetGateName);
             noxcc.setPosAR(player.node, targetGate.position.x, targetGate.position.y);
 
-            GameData.INSTANCE.savedData.setLevelAndGate(this.map.levelName, this.targetGateName);
+            GameData.INSTANCE.currSavedData.setLevelAndGate(this.map.levelName, this.targetGateName);
             GameData.INSTANCE.saveGame();
         }
         else {

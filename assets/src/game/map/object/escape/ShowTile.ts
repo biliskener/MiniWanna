@@ -21,7 +21,7 @@ export class ShowTile extends BaseObject {
 
         this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         if (this.params.resetTime) {
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 0);
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 0);
         }
         this.syncState();
     }
@@ -31,7 +31,7 @@ export class ShowTile extends BaseObject {
             this.resetTime += dt;
             if (this.resetTime >= this.params.resetTime) {
                 noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
-                GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 0);
+                GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 0);
                 this.syncState();
             }
         }
@@ -45,13 +45,13 @@ export class ShowTile extends BaseObject {
     private onContact(otherNode: Node, selfNode: Node): void {
         if (noxcc.getNodeOpacity(this.node) == 255) {
             noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1);
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1);
             this.syncState();
         }
     }
 
     private syncState(): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         this.resetTime = 0;
         this.map.deferredActivateNode(this.targetLayer.node, !!state);
         if (this.params.resetTime) {

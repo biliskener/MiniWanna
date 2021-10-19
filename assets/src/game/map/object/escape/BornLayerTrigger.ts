@@ -28,10 +28,10 @@ export class BornLayerTrigger extends BaseObject {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         if (!state) {
             noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1);
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1);
             this.map.deferredActivateNode(this.node, false);
             // 平台消失
             let layerNames = this.params.targetLayers.split("|");

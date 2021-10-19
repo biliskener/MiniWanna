@@ -109,7 +109,7 @@ export class GameMap extends NoxComponent {
 
         if (cc_director.getScene().name != "SelectScene") {
             // 计算游戏时间 
-            GameData.INSTANCE.savedData.addGameTime(dt);
+            GameData.INSTANCE.currSavedData.addGameTime(dt);
         }
     }
 
@@ -521,11 +521,11 @@ export class GameMap extends NoxComponent {
         if (SceneManager.getRunningSceneId() == SceneId.select) {
             return;
         }
-        if (GameData.INSTANCE.savedData.mode == "Impossible") return;
+        if (GameData.INSTANCE.currSavedData.mode == "Impossible") return;
         this.makeMapColliderBy("VeryHard");
-        if (GameData.INSTANCE.savedData.mode == "VeryHard") return;
+        if (GameData.INSTANCE.currSavedData.mode == "VeryHard") return;
         this.makeMapColliderBy("Hard");
-        if (GameData.INSTANCE.savedData.mode == "Hard") return;
+        if (GameData.INSTANCE.currSavedData.mode == "Hard") return;
         this.makeMapColliderBy("Medium");
     }
 

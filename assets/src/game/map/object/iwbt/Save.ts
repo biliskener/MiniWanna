@@ -37,9 +37,9 @@ export class Save extends BaseObject {
             var mapNode = this.node.parent.parent;
             var map = this.map;
             var player = mapNode.getChildByName("player");
-            GameData.INSTANCE.savedData.playerX = player.position.x;
-            GameData.INSTANCE.savedData.playerY = player.position.y;
-            GameData.INSTANCE.savedData.setLevelAndGate(map.levelName, "");
+            GameData.INSTANCE.currSavedData.playerX = player.position.x;
+            GameData.INSTANCE.currSavedData.playerY = player.position.y;
+            GameData.INSTANCE.currSavedData.setLevelAndGate(map.levelName, "");
             GameData.INSTANCE.saveGame();
         }
     }

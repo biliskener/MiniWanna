@@ -23,7 +23,7 @@ export class LayerVisibility extends BaseObject {
     }
 
     private syncState(): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         if (this.params.initInvisible) {
             this.map.deferredActivateNode(this.node, !!state);
         }
@@ -50,7 +50,7 @@ export class LayerVisibility extends BaseObject {
         };
 
         var doneCallback = () => {
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1);
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1);
             this.syncState();
             callback && callback();
         };

@@ -21,7 +21,7 @@ export class Select extends Component {
         if (name == "LoadGame") {
             // 读取游戏
             GameData.INSTANCE.loadGame();
-            if (GameData.INSTANCE.savedData.levelName == "") {
+            if (GameData.INSTANCE.currSavedData.levelName == "") {
                 SceneManager.replaceScene(SelectScene.create());
             }
             else {
@@ -30,8 +30,8 @@ export class Select extends Component {
         }
         else {
             // 新游戏
-            GameData.INSTANCE.savedData.setLevelAndGate("level1", "");
-            GameData.INSTANCE.savedData.mode = selfNode.name;
+            GameData.INSTANCE.currSavedData.setLevelAndGate("level1", "");
+            GameData.INSTANCE.currSavedData.mode = selfNode.name;
             SceneManager.replaceScene(LevelScene.create());
         }
     }

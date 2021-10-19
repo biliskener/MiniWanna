@@ -65,7 +65,7 @@ export class LevelScene extends BaseScene {
     public onEnter(): void {
         super.onEnter();
 
-        GameData.INSTANCE.savedData.dataChangedEvent.addListener(this, this.updateInfoPanel);
+        GameData.INSTANCE.currSavedData.dataChangedEvent.addListener(this, this.updateInfoPanel);
 
         noxSound.playBgWithSoundNames(["sound/escape/BgmGame.mp3"]);
         this.updateInfoPanel();
@@ -73,7 +73,7 @@ export class LevelScene extends BaseScene {
 
     //界面关闭时的调用
     public onExit(): void {
-        GameData.INSTANCE.savedData.dataChangedEvent.removeListener(this, this.updateInfoPanel);
+        GameData.INSTANCE.currSavedData.dataChangedEvent.removeListener(this, this.updateInfoPanel);
 
         noxSound.stopBackgroundSound();
 
@@ -138,7 +138,7 @@ export class LevelScene extends BaseScene {
                 map.rebornGateName = gateName;
 
                 if (needSave) {
-                    GameData.INSTANCE.savedData.setLevelAndGate(levelName, gateName);
+                    GameData.INSTANCE.currSavedData.setLevelAndGate(levelName, gateName);
                     GameData.INSTANCE.saveGame();
                 }
 
@@ -174,7 +174,7 @@ export class LevelScene extends BaseScene {
     }
 
     public reloadLevel(): void {
-        this.loadLevel(GameData.INSTANCE.savedData.levelName, GameData.INSTANCE.savedData.gateName);
+        this.loadLevel(GameData.INSTANCE.currSavedData.levelName, GameData.INSTANCE.currSavedData.gateName);
     }
 
     public getCrossMap() {
@@ -182,7 +182,7 @@ export class LevelScene extends BaseScene {
     }
 
     private updateInfoPanel() {
-        var savedData = GameData.INSTANCE.savedData;
+        var savedData = GameData.INSTANCE.currSavedData;
         var map = this.maps[MAP_IDX.CROSS] || this.maps[MAP_IDX.MAIN];
         var levelName = map ? map.levelName : savedData.levelName;
         this.levelLabel.string = levelName.replace(/[a-zA-Z]*/g, "");

@@ -1,4 +1,5 @@
 import { cc_assert, cc_sys } from "../../framework/core/nox";
+import { UserDefault } from "../../framework/core/UserDefault";
 import { SavedData } from "./SavedData";
 
 export class GameData {
@@ -15,21 +16,22 @@ export class GameData {
     }
 
     public init: boolean = false;   // 是否初始化
-    public saveId: number = 0;      // 存档 ID
-    public savedData: SavedData = new SavedData();
+    public currSaveId: number = 0;  // 存档 ID
+    public currSavedData: SavedData = null;
+    public allSavedData: { [key: string]: SavedData } = {};
 
     public flipedRotateAngle: number = 0;  // 翻转后需要旋转的角度
 
     // 清空数据
     public clear(): void {
-        this.savedData = new SavedData();
+        this.currSavedData = null;
     }
 
     // 读取游戏
     public loadGame(): boolean {
-        var savedData = this.getSaveData(this.saveId);
-        if (savedData) {
-            this.savedData = savedData;
+        if (this.currSaveId) {
+            var savedData = this.loadSavedData(this.currSaveId);
+            this.currSavedData = savedData;
             return true;
         }
         return false;
@@ -37,19 +39,41 @@ export class GameData {
 
     // 保存游戏
     public saveGame(): void {
-        var content = this.savedData.encode();
-        cc_sys.localStorage.setItem("save" + this.saveId, content);
+        if (this.currSaveId && this.currSavedData) {
+            var content = this.currSavedData.encode();
+            UserDefault.setStringForKey("save" + this.currSaveId, content);
+        }
     }
 
     // 读取存档数据
-    private getSaveData(id: number): SavedData {
-        var content = cc_sys.localStorage.getItem("save" + id);
+    public getSavedData(id: number): SavedData {
+        return this.allSavedData[id];
+    }
+
+    // 加载指定的存档
+    private loadSavedData(id: number) {
+        var savedData = new SavedData(id);
+        var content = UserDefault.getStringForKey("save" + id);
         if (content) {
-            var save = new SavedData();
-            if (save.decode(content)) {
-                return save;
-            }
+            savedData.decode(content);
         }
-        return null;
+        return savedData;
+    }
+
+    // 加载所有的存档
+    public loadAllSavedData() {
+        this.allSavedData = {}
+        for (var id = 1; id <= 3; ++id) {
+            var savedData = this.loadSavedData(id);
+            this.allSavedData[id] = savedData;
+        }
+    }
+
+    public unloadAllSavedData() {
+        this.allSavedData = {};
+    }
+
+    public setCurrSaveId(id: number) {
+        this.currSaveId = id;
     }
 }

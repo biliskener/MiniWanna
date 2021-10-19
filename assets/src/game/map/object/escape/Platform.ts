@@ -120,7 +120,7 @@ export class Platform extends BaseObject {
         if (!this.params) {
             return;
         }
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         if (state) {
             if (this.params.actionType == "move") {
                 this.node.setPosition(this.stopPostion);
@@ -233,7 +233,7 @@ export class Platform extends BaseObject {
             }
         };
         var doneCallback = () => {
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1);
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1);
             this.syncState();
             callback && callback();
         };

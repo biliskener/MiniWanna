@@ -28,17 +28,17 @@ export class Treasure extends BaseObject {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         if (!state) {
             noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
 
-            GameData.INSTANCE.savedData.setObjectState(this.map.levelName, this.node.name, 1)
-            GameData.INSTANCE.savedData.addTreasureCount();
+            GameData.INSTANCE.currSavedData.setObjectState(this.map.levelName, this.node.name, 1)
+            GameData.INSTANCE.currSavedData.addTreasureCount();
             this.syncState();
-            if (GameData.INSTANCE.savedData.treasureCount == 1) {
+            if (GameData.INSTANCE.currSavedData.treasureCount == 1) {
                 TreasurePromptForm.create().show();
             }
-            else if (GameData.INSTANCE.savedData.treasureCount == 4) {
+            else if (GameData.INSTANCE.currSavedData.treasureCount == 4) {
                 // 获得所有宝物时，开启指定的门
                 this.map.requestPause();
                 var doTransition = (cross: boolean) => {
@@ -58,7 +58,7 @@ export class Treasure extends BaseObject {
                         layer.getComponent(LayerVisibility).doTransition(() => {
                             if (++doneCount == layers.length) {
                                 // 要先保存，因为节点已经被销毁了
-                                GameData.INSTANCE.savedData.setObjectState(this.params.targetLevel || this.map.levelName, layer.name, 1);
+                                GameData.INSTANCE.currSavedData.setObjectState(this.params.targetLevel || this.map.levelName, layer.name, 1);
                                 if (cross) {
                                     noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
                                     LevelScene.currenton().unloadCrossLevel();
@@ -84,7 +84,7 @@ export class Treasure extends BaseObject {
     }
 
     private syncState(): void {
-        var state = GameData.INSTANCE.savedData.getObjectState(this.map.levelName, this.node.name);
+        var state = GameData.INSTANCE.currSavedData.getObjectState(this.map.levelName, this.node.name);
         this.map.deferredActivateNode(this.node, !state);
     }
 }

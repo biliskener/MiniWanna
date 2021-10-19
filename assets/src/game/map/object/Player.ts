@@ -639,7 +639,7 @@ export class Player extends BaseObject {
         else {
             if (this.playerStatus != PlayerStatus.PLAYER_DEATH) {
                 this.setPlayerStatus(PlayerStatus.PLAYER_DEATH);
-                GameData.INSTANCE.savedData.addDeathCount();
+                GameData.INSTANCE.currSavedData.addDeathCount();
 
                 // 玩家重力和速度都为0，并且隐藏。
                 // PS：因为是血是在该脚本创建，所以不能将 active 设为 false。
