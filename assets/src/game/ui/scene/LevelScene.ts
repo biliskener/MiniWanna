@@ -67,7 +67,7 @@ export class LevelScene extends BaseScene {
 
         GameData.INSTANCE.currSavedData.dataChangedEvent.addListener(this, this.updateInfoPanel);
 
-        noxSound.playBgWithSoundNames(["sound/escape/BgmGame.mp3"]);
+        noxSound.playBgWithSoundNames(["sound/iwbt/track01.mp3"]);
         this.updateInfoPanel();
     }
 
