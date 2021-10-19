@@ -24,7 +24,7 @@ export module GameConfig {
 
     export const rebornTile: number = 14;
     export const platformTile: number = 2;
-    export const backgroundTile: number = 11;
+    export const backgroundTile: number = 0;
     export const saveTile: number = 15;
     export const spikeDownTile: number = 17;
     export const spikeUpTile: number = 20;

@@ -1,14 +1,14 @@
 [
   {
     "__type__": "cc.AnimationClip",
-    "_name": "playerRunning",
+    "_name": "playerSliding",
     "_objFlags": 0,
     "_native": "",
     "sample": 50,
     "speed": 0.2,
     "wrapMode": 2,
     "enableTrsBlending": false,
-    "_duration": 0.08,
+    "_duration": 0.04,
     "_hash": 500763545,
     "_tracks": [
       {
@@ -53,25 +53,15 @@
     "__type__": "cc.ObjectCurve",
     "_times": [
       0,
-      0.02,
-      0.04,
-      0.06
+      0.02
     ],
     "_values": [
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@5fc05",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@22b44",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@c2ec1",
-        "__expectedType__": "cc.SpriteFrame"
-      },
-      {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@a2792",
-        "__expectedType__": "cc.SpriteFrame"
-      },
-      {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@a7181",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@d5f33",
         "__expectedType__": "cc.SpriteFrame"
       }
     ]

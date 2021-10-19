@@ -2,12 +2,12 @@
   "ver": "2.0.3",
   "importer": "animation-clip",
   "imported": true,
-  "uuid": "0ba66a42-37e0-47b4-b9fb-534dc32e4574",
+  "uuid": "96d4d499-e3bc-46bb-a785-a5ea569ffeb6",
   "files": [
     ".cconb"
   ],
   "subMetas": {},
   "userData": {
-    "name": "playerDead"
+    "name": "playerLadderLeftRight"
   }
 }

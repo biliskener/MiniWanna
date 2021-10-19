@@ -1,31 +1,69 @@
-{
-  "__type__": "cc.AnimationClip",
-  "_name": "playerJump",
-  "_objFlags": 0,
-  "_native": "",
-  "_duration": 0.04,
-  "sample": 50,
-  "speed": 0.2,
-  "wrapMode": 2,
-  "curveData": {
-    "comps": {
-      "cc.Sprite": {
-        "spriteFrame": [
-          {
-            "frame": 0,
-            "value": {
-              "__uuid__": "c6cdaf33-1c35-4314-a671-e03c38d32f48"
-            }
-          },
-          {
-            "frame": 0.02,
-            "value": {
-              "__uuid__": "b22abf0c-6821-4e3c-b79d-9a6b366a80be"
-            }
-          }
-        ]
+[
+  {
+    "__type__": "cc.AnimationClip",
+    "_name": "playerJump",
+    "_objFlags": 0,
+    "_native": "",
+    "sample": 50,
+    "speed": 0.2,
+    "wrapMode": 2,
+    "enableTrsBlending": false,
+    "_duration": 0.04,
+    "_hash": 500763545,
+    "_tracks": [
+      {
+        "__id__": 1
       }
+    ],
+    "_exoticAnimation": null,
+    "_events": []
+  },
+  {
+    "__type__": "cc.animation.ObjectTrack",
+    "_binding": {
+      "__type__": "cc.animation.TrackBinding",
+      "path": {
+        "__id__": 2
+      }
+    },
+    "_channel": {
+      "__id__": 4
     }
   },
-  "events": []
-}
+  {
+    "__type__": "cc.animation.TrackPath",
+    "_paths": [
+      {
+        "__id__": 3
+      },
+      "spriteFrame"
+    ]
+  },
+  {
+    "__type__": "cc.animation.ComponentPath",
+    "component": "cc.Sprite"
+  },
+  {
+    "__type__": "cc.animation.Channel",
+    "_curve": {
+      "__id__": 5
+    }
+  },
+  {
+    "__type__": "cc.ObjectCurve",
+    "_times": [
+      0,
+      0.02
+    ],
+    "_values": [
+      {
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@09fce",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@030fd",
+        "__expectedType__": "cc.SpriteFrame"
+      }
+    ]
+  }
+]

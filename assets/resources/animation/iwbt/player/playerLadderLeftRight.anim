@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.AnimationClip",
-    "_name": "playerRunning",
+    "_name": "playerLadderLeftRight",
     "_objFlags": 0,
     "_native": "",
     "sample": 50,
@@ -59,19 +59,19 @@
     ],
     "_values": [
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@5fc05",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@a5e8f",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@c2ec1",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@f7373",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@a2792",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@2a714",
         "__expectedType__": "cc.SpriteFrame"
       },
       {
-        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@a7181",
+        "__uuid__": "1da5d125-bfb7-4980-b258-7499b122e947@ea49c",
         "__expectedType__": "cc.SpriteFrame"
       }
     ]

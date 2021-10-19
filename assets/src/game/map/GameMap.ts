@@ -120,33 +120,29 @@ export class GameMap extends NoxComponent {
             this.playerNode = cc_instantiate(this.playerPrefab);
 
             // 再加碰撞组件
-            if (GameConfig.useIwbtLevels) {
-                MapUtil.addBoxCollider(this.playerNode, this, ObjectGroup.Player, true, null, 0);
+            const cornerWidth = GameConfig.roundedCornerWidth;
+            const cornerHeight = GameConfig.roundedCornerHeight;
+            var group = ObjectGroup.Player;
+            var colliderRect = new Rect(12, 1, 11, 20);
+            if (GameConfig.usePolygonColliderForPlayer) {
+                var points: Vec2[] = [
+                    new Vec2(colliderRect.xMin, colliderRect.yMin + cornerWidth),
+                    new Vec2(colliderRect.xMin + cornerHeight, colliderRect.yMin),
+                    new Vec2(colliderRect.xMax - cornerHeight, colliderRect.yMin),
+                    new Vec2(colliderRect.xMax, colliderRect.yMin + cornerWidth),
+                    new Vec2(colliderRect.xMax, colliderRect.yMax - cornerWidth),
+                    new Vec2(colliderRect.xMax - cornerHeight, colliderRect.yMax),
+                    new Vec2(colliderRect.xMin + cornerHeight, colliderRect.yMax),
+                    new Vec2(colliderRect.xMin, colliderRect.yMax - cornerWidth),
+                ];
+                MapUtil.addPolygonCollider(this.playerNode, this, group, true, points);
             }
             else {
-                const cornerWidth = GameConfig.roundedCornerWidth;
-                const cornerHeight = GameConfig.roundedCornerHeight;
-                var group = ObjectGroup.Player;
-                var colliderRect = new Rect(0, 0, noxcc.w(this.playerNode), noxcc.h(this.playerNode) - 4);
-                if (GameConfig.usePolygonColliderForPlayer) {
-                    var points: Vec2[] = [
-                        new Vec2(colliderRect.xMin, colliderRect.yMin + cornerWidth),
-                        new Vec2(colliderRect.xMin + cornerHeight, colliderRect.yMin),
-                        new Vec2(colliderRect.xMax - cornerHeight, colliderRect.yMin),
-                        new Vec2(colliderRect.xMax, colliderRect.yMin + cornerWidth),
-                        new Vec2(colliderRect.xMax, colliderRect.yMax - cornerWidth),
-                        new Vec2(colliderRect.xMax - cornerHeight, colliderRect.yMax),
-                        new Vec2(colliderRect.xMin + cornerHeight, colliderRect.yMax),
-                        new Vec2(colliderRect.xMin, colliderRect.yMax - cornerWidth),
-                    ];
-                    MapUtil.addPolygonCollider(this.playerNode, this, group, true, points);
-                }
-                else {
-                    MapUtil.addBoxCollider(this.playerNode, this, group, true, colliderRect, 0);
-                }
-                MapUtil.addFootBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
-                MapUtil.addHeadBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
+                MapUtil.addBoxCollider(this.playerNode, this, group, true, colliderRect, 0);
             }
+            MapUtil.addFootBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
+            MapUtil.addHeadBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
+
             MapUtil.setDynamicType(this.playerNode);
 
             // 最后加入到场景中
