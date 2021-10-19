@@ -427,9 +427,7 @@ export class GameMap extends NoxComponent {
                 var object = objects[i];
                 var node: Node = null;
                 if (object.type == 0) {
-                    node = noxcc.newNode();
-                    cc_assert(object.name != "");
-                    node.name = object.name;
+                    node = noxcc.newNode(object.name != "" ? object.name : "object" + object.id);
                     noxcc.setSize(node, object.width, object.height);
                     noxcc.setAnchor(node, 0, 1);
                     noxcc.setPosAR(node, object.x - noxcc.aw(this.node), object.y - noxcc.ah(this.node));
@@ -437,10 +435,12 @@ export class GameMap extends NoxComponent {
                 else if (object.type == 4) {
                     node = objectGroup.node.getChildByName("img" + object.id);
                 }
+                else {
+                    cc_assert(false, "not supported");
+                }
 
+                cc_assert(this.node.getChildByName(node.name) == null);
                 node.parent = this.node;
-                cc_assert(object.name != "");
-                node.name = object.name;
 
                 // 矩形区域
                 if (object.type == 0) {
@@ -451,7 +451,9 @@ export class GameMap extends NoxComponent {
                 }
                 else if (object.type == 4) {
                 }
-
+                else {
+                    cc_assert(false, "not supported");
+                }
 
                 // 添加触发区域对应的组件与参数，可多个。
                 node.triggerNum = 0;

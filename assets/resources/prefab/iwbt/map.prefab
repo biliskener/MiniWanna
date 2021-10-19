@@ -247,15 +247,21 @@
       "__id__": 9
     },
     "backgroundMusic": {
-      "__uuid__": "54fadf13-27bf-44ae-ba14-15c5cc41ad3c",
+      "__uuid__": "40dad264-e19b-4c95-997c-7be8723cb71c",
       "__expectedType__": "cc.AudioClip"
     },
     "playerPrefab": {
-      "__uuid__": "9e189636-17ed-4bb1-a5ae-c8672ca70376",
+      "__uuid__": "ad230e5b-b9a8-4412-ac11-dbc49f08e9c2",
       "__expectedType__": "cc.Prefab"
     },
-    "platformPrefab": null,
-    "cherryPrefab": null,
+    "platformPrefab": {
+      "__uuid__": "a90cf686-7f61-4056-b51d-26f49681d17d",
+      "__expectedType__": "cc.Prefab"
+    },
+    "cherryPrefab": {
+      "__uuid__": "95589cc3-5e50-4c5f-93c1-1aa202476e7d",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": ""
   },
   {
