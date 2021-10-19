@@ -35,10 +35,6 @@ export class SelectScene extends BaseScene {
         super.onExit();
     }
 
-    //每帧调用(真正可见状态时)
-    public onUpdate(dt: number): void {
-    }
-
     public static create(): SelectScene {
         var view = new SelectScene();
         view.init();

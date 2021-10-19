@@ -94,7 +94,7 @@
   "general": {
     "designResolution": {
       "height": 608,
-      "fitWidth": true,
+      "fitWidth": false,
       "fitHeight": true,
       "width": 800
     }

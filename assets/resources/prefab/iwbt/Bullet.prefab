@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Bullet",
+    "_name": "bullet",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
