@@ -95,7 +95,7 @@ export class GameMap extends NoxComponent {
             this.collisionSystem.update(dt);
         }
 
-        if (cc_director.getScene().name != "SelectScene") {
+        if (SceneManager.getRunningSceneId() != SceneId.select) {
             // 计算游戏时间 
             GameData.INSTANCE.currSavedData.addGameTime(dt);
         }

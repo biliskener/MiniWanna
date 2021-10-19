@@ -126,7 +126,6 @@ export class MenuScene extends BaseScene {
 
     private startGame() {
         GameData.INSTANCE.setCurrSaveId(this.mCursorIndex);
-        GameData.INSTANCE.loadGame();
         SceneManager.replaceScene(SelectScene.create());
     }
 

@@ -1,4 +1,4 @@
-import { Collider2D, Component, IPhysics2DContact, Node, _decorator } from "cc";
+import { Collider2D, Component, Contact2DType, IPhysics2DContact, Node, _decorator } from "cc";
 import { SceneManager } from "../../../../framework/base/SceneManager";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { GameData } from "../../../data/GameData";
@@ -10,9 +10,13 @@ const { ccclass, property, executeInEditMode, requireComponent, executionOrder, 
 @ccclass
 @disallowMultiple
 export class Select extends Component {
+    start(): void {
+        this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
+    }
+
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
         if (otherCollider.tag != ObjectTag.Default) return;
-        contact.disabled = true;
+        if (contact) contact.disabled = true;
         this.onContact(otherCollider.node, selfCollider.node);
     }
 
@@ -30,8 +34,10 @@ export class Select extends Component {
         }
         else {
             // 新游戏
+            GameData.INSTANCE.newGame();
             GameData.INSTANCE.currSavedData.setLevelAndGate("level1", "");
             GameData.INSTANCE.currSavedData.mode = selfNode.name;
+            GameData.INSTANCE.saveGame();
             SceneManager.replaceScene(LevelScene.create());
         }
     }

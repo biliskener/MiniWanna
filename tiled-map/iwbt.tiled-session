@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/init.tmx",
+    "activeFile": "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/tiles.tsx",
     "expandedProjectPaths": [
         "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt"
     ],
@@ -378,7 +378,7 @@
             "scale": 2.1505625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 400.3603708332123,
+                "x": 399.8953762097126,
                 "y": 304.33898108053125
             }
         },
@@ -386,16 +386,16 @@
             "scale": 2.1505625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 380.83059664622635,
-                "y": 476.85198639890734
+                "x": 399.8953762097126,
+                "y": 304.33898108053125
             }
         },
         "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/select.tmx": {
-            "scale": 2.1505625,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 399.8953762097126,
-                "y": 304.33898108053125
+                "x": 400,
+                "y": 304.5
             }
         },
         "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/tiles.tsx": {
@@ -471,10 +471,10 @@
     "project": "iwbt.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/tiles.tsx",
-        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/select.tmx",
-        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/menu.tmx",
         "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/init.tmx",
+        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/menu.tmx",
+        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/select.tmx",
+        "E:/MyProjects/MiniWanna/assets/resources/tiled/iwbt/tiles.tsx",
         "C:/Users/liujun/Desktop/素材/mario/mario/地图/1-1.tmx",
         "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/level1.tmx",
         "E:/MyProjects/IWBT CocosCreator Engine/assets/Map/select.tmx",

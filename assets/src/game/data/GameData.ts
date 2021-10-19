@@ -15,16 +15,14 @@ export class GameData {
         return this.gInstance;
     }
 
-    public init: boolean = false;   // 是否初始化
     public currSaveId: number = 0;  // 存档 ID
     public currSavedData: SavedData = null;
     public allSavedData: { [key: string]: SavedData } = {};
 
-    public flipedRotateAngle: number = 0;  // 翻转后需要旋转的角度
-
-    // 清空数据
-    public clear(): void {
-        this.currSavedData = null;
+    public newGame(): void {
+        cc_assert(this.currSaveId);
+        var savedData = new SavedData(this.currSaveId);
+        this.currSavedData = savedData;
     }
 
     // 读取游戏

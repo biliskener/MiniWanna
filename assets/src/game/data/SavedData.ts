@@ -4,7 +4,7 @@ export class SavedData {
     public id: number;                              // 存档ID
     public changed: boolean = false;
     public version: number = 1;                     // 存档版本号
-    public levelName: string = "level1";            // 关卡名称
+    public levelName: string = "";                  // 关卡名称
     public gateName: string = "";                   // 门的名称
     public playerX: number = 0;                     // 出生点位置
     public playerY: number = 0;                     // 出生点位置
