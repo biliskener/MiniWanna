@@ -15,7 +15,7 @@ import { ObjectGroup } from "../const/ObjectGroup";
 import { PlayerStatus } from "./object/PlayerStatus";
 import { Spike } from "./object/Spike";
 import { Save } from "./object/iwbt/Save";
-import { AutoPlatform } from "./object/iwbt/AutoPlatform";
+import { Platform } from "./object/iwbt/Platform";
 import { CameraControl } from "./CameraControl";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
@@ -40,7 +40,7 @@ export class GameMap extends NoxComponent {
 
     tiledMap: TiledMap = null;
     playerNode: Node = null;
-    allPlatforms: { [key: string]: AutoPlatform } = {};
+    allPlatforms: { [key: string]: Platform } = {};
     allMapEdges: { [key: string]: MapEdge } = {};
 
     public levelName: string = "";
@@ -546,7 +546,7 @@ export class GameMap extends NoxComponent {
                     }
 
                     // 必须先设定参数，再设置parent
-                    var platform = node.addComponent(AutoPlatform);
+                    var platform = node.addComponent(Platform);
                     platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
 
                     node.active = true;
@@ -764,7 +764,7 @@ export class GameMap extends NoxComponent {
         }
     }
 
-    public addPlatform(platform: AutoPlatform): void {
+    public addPlatform(platform: Platform): void {
         cc_assert(this.allPlatforms[platform.node.name] == null, "fatal error");
         this.allPlatforms[platform.node.name] = platform;
     }

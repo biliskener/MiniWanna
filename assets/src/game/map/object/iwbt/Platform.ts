@@ -13,7 +13,7 @@ const { ccclass, property, executeInEditMode, requireComponent, executionOrder, 
 
 @ccclass
 @disallowMultiple
-export class AutoPlatform extends BaseObject {
+export class Platform extends BaseObject {
     public initSpeed: Vec2;    // 初始速度
     public currentSpeed: Vec2;
 

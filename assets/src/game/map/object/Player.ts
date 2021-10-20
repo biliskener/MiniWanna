@@ -18,7 +18,7 @@ import { MapUtil } from "../../../game/map/MapUtil";
 import { ObjectTag } from "../../const/ObjectTag";
 import { Bullet } from "./iwbt/Bullet";
 import { BaseObject } from "./BaseObject";
-import { AutoPlatform } from "./iwbt/AutoPlatform";
+import { Platform } from "./iwbt/Platform";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
 cc_macro.ENABLE_TILEDMAP_CULLING = false;
@@ -573,7 +573,7 @@ export class Player extends BaseObject {
     }
 
     public collision(other: CollisionObject, hit: CollisionHit): HitResponse {
-        var platform = other.getComponent(AutoPlatform);
+        var platform = other.getComponent(Platform);
         if (platform) {
             this.isHitLeft = this.isHitLeft || hit.left;
             this.isHitRight = this.isHitRight || hit.right;
