@@ -1,4 +1,5 @@
-import { Collider2D, Component, IPhysics2DContact, Node, TiledTile, _decorator } from "cc";
+import { Collider2D, Component, Contact2DType, IPhysics2DContact, Node, TiledTile, _decorator } from "cc";
+import { GameConfig } from "../../../config/GameConfig";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { GameData } from "../../../data/GameData";
 import { GameMap } from "../../GameMap";
@@ -11,9 +12,10 @@ const { ccclass, property, executeInEditMode, requireComponent, executionOrder, 
 export class Save extends BaseObject {
     private tile: TiledTile;
 
-    // 设置图块（为了改变图块）
-    public setTile(tile): void {
-        this.tile = tile;
+    start() {
+        this.deactivate();
+
+        this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
     }
 
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
@@ -25,22 +27,26 @@ export class Save extends BaseObject {
         this.save();
     }
 
+    // 设置图块（为了改变图块）
+    public setTile(tile): void {
+        this.tile = tile;
+    }
+
     // 保存 
     save() {
-        // 改成变存档点图块，从红色存档点变绿色存档点，维持 1.6 秒
-        if (this.tile.grid == 15) {
-            this.tile.grid = 16;
-            this.scheduleOnce(function () {
-                this.tile.gid = 15;
-            }, 1.6);
-            // 保存游戏数据
-            var mapNode = this.node.parent.parent;
-            var map = this.map;
-            var player = mapNode.getChildByName("player");
-            GameData.INSTANCE.currSavedData.playerX = player.position.x;
-            GameData.INSTANCE.currSavedData.playerY = player.position.y;
-            GameData.INSTANCE.currSavedData.setLevelAndGate(map.levelName, "");
+        if (this.tile.grid == GameConfig.saveTile) {
+            this.deactivate();
+            GameData.INSTANCE.currSavedData.setLevelAndTile(this.map.levelName, [this.tile.x, this.tile.y]);
             GameData.INSTANCE.saveGame();
         }
+    }
+
+    deactivate() {
+        this.tile.grid = GameConfig.saveDoneTile;
+        this.tile.updateInfo();
+        this.scheduleOnce(() => {
+            this.tile.grid = GameConfig.saveTile;
+            this.tile.updateInfo();
+        }, 3);
     }
 }

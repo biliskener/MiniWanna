@@ -35,7 +35,7 @@ export class Select extends Component {
         else {
             // 新游戏
             GameData.INSTANCE.newGame();
-            GameData.INSTANCE.currSavedData.setLevelAndGate("level1", "");
+            GameData.INSTANCE.currSavedData.setLevelAndTile("level1", null);
             GameData.INSTANCE.currSavedData.mode = selfNode.name;
             GameData.INSTANCE.saveGame();
             SceneManager.replaceScene(LevelScene.create());

@@ -5,9 +5,7 @@ export class SavedData {
     public changed: boolean = false;
     public version: number = 1;                     // 存档版本号
     public levelName: string = "";                  // 关卡名称
-    public gateName: string = "";                   // 门的名称
-    public playerX: number = 0;                     // 出生点位置
-    public playerY: number = 0;                     // 出生点位置
+    public targetTile: [number, number] = null;     // 出生的块
     public mode: string = "";                       // 困难模式
     public gameTime: number = 0;                    // 游戏时间
     public lifeCount: number = 999;                 // 生命数量
@@ -26,9 +24,7 @@ export class SavedData {
         var data = {
             version: this.version,
             levelName: this.levelName,
-            gateName: this.gateName,
-            playerX: this.playerX,
-            playerY: this.playerY,
+            targetTile: this.targetTile,
             mode: this.mode,
             gameTime: this.gameTime,
             deathCount: this.deathCount,
@@ -46,9 +42,7 @@ export class SavedData {
             this.changed = false;
             this.version = data.version;
             this.levelName = data.levelName;
-            this.playerX = data.playerX;
-            this.playerY = data.playerY;
-            this.gateName = data.gateName;
+            this.targetTile = data.targetTile;
             this.mode = data.mode;
             this.gameTime = data.gameTime;
             this.deathCount = data.deathCount || 0;
@@ -114,9 +108,9 @@ export class SavedData {
         this.dataChangedEvent.dispatchEvent();
     }
 
-    public setLevelAndGate(levelName: string, gateName: string) {
+    public setLevelAndTile(levelName: string, targetTile: [number, number]) {
         this.levelName = levelName;
-        this.gateName = gateName;
+        this.targetTile = targetTile;
     }
 }
 

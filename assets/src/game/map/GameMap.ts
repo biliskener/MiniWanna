@@ -45,7 +45,7 @@ export class GameMap extends NoxComponent {
     allMapEdges: { [key: string]: MapEdge } = {};
 
     public levelName: string = "";
-    public rebornGateName: string = "";
+    public rebornTile: [number, number] = null;
 
     private pauseCount: number = 0;
 
@@ -82,10 +82,8 @@ export class GameMap extends NoxComponent {
 
         this.applyGravity();
 
-        if (this.playerNode == null && this.rebornGateName) {
-            var objectGroup = this.tiledMap.getObjectGroup("Transfer");
-            var gateNode = objectGroup.node.getChildByName(this.rebornGateName);
-            this.rebornPlayer(gateNode);
+        if (this.playerNode == null && this.rebornTile) {
+            this.rebornPlayer(this.rebornTile);
         }
     }
 
@@ -115,9 +113,8 @@ export class GameMap extends NoxComponent {
         noxSound.stopMusic();
     }
 
-    private rebornPlayer(targetNode: Node): void {
+    private rebornPlayer(targetTile: [number, number]): void {
         if (!this.playerNode) {
-
             this.playerNode = cc_instantiate(this.playerPrefab);
 
             // 再加碰撞组件
@@ -151,18 +148,16 @@ export class GameMap extends NoxComponent {
             noxcc.setZOrder(this.playerNode, 1);
 
             // 调整位置
-            if (targetNode.getComponent(TiledTile)) {
-                var pos = new Vec2(GameConfig.tileWidth / 2, 0);
-                pos.x -= noxcc.aw(this.node);
-                pos.y -= noxcc.ah(this.node);
-                pos = noxcc.convertPosAR(pos, targetNode, this.playerNode.parent);
-                pos.x += (noxcc.ax(this.playerNode) - 0.5) * noxcc.w(this.playerNode);
-                pos.y += (noxcc.ay(this.playerNode)) * noxcc.h(this.playerNode);
-                this.playerNode.setPosition(pos.x, pos.y);
-            }
-            else {
-                cc_assert(false, "fatal error");
-            }
+            var mapSize = this.tiledMap.getMapSize();
+            var tileSize = this.tiledMap.getTileSize();
+            var targetX = targetTile[0] * tileSize.width + tileSize.width / 2;
+            var targetY = (mapSize.height - 1 - targetTile[1]) * tileSize.height;
+            targetX -= noxcc.aw(this.node);
+            targetY -= noxcc.ah(this.node);
+            var pos = noxcc.convertPosAR(new Vec2(targetX, targetY), this.node, this.playerNode.parent);
+            pos.x += (noxcc.ax(this.playerNode) - 0.5) * noxcc.w(this.playerNode);
+            pos.y += (noxcc.ay(this.playerNode)) * noxcc.h(this.playerNode);
+            this.playerNode.setPosition(pos.x, pos.y);
 
             // 重置一下动画
             this.playerNode.getComponent(Player).setPlayerStatus(PlayerStatus.PLAYER_IDLE, true);
@@ -173,6 +168,7 @@ export class GameMap extends NoxComponent {
     private makeMapColliderBy(layerName: string): boolean {
         let layer = this.tiledMap.getLayer(layerName);
         if (layer) {
+            let tileSize = layer.getMapTileSize();
             let layerSize = layer.getLayerSize();
             for (let y = 0; y < layerSize.height; ++y) {
                 for (let x = 0; x < layerSize.width; ++x) {
@@ -180,8 +176,8 @@ export class GameMap extends NoxComponent {
                     if (tile.grid != 0) {
                         if (tile.grid == GameConfig.rebornTile) {
                             // 玩家起始位置 
-                            if (!this.rebornGateName) {
-                                this.rebornPlayer(tile.node);
+                            if (!this.rebornTile) {
+                                this.rebornPlayer([tile.x, tile.y]);
                             }
                             tile.grid = GameConfig.backgroundTile;
                         }

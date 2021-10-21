@@ -80,7 +80,7 @@ export class LevelScene extends BaseScene {
         super.onExit();
     }
 
-    private loadLevelEx(mapIdx: number, levelName: string, gateName: string, needSave?: boolean, levelLoadedCallback?: () => any): void {
+    private loadLevelEx(mapIdx: number, levelName: string, targetTile: [number, number], needSave?: boolean, levelLoadedCallback?: () => any): void {
         this.unloadLevelEx(mapIdx);
 
         let mapPrefabName = GameConfig.useIwbtLevels ? "prefab/iwbt/map" : "prefab/escape/map";
@@ -135,10 +135,10 @@ export class LevelScene extends BaseScene {
 
                 map.node.addComponent(CameraControl);
                 map.levelName = levelName;
-                map.rebornGateName = gateName;
+                map.rebornTile = targetTile;
 
                 if (needSave) {
-                    GameData.INSTANCE.currSavedData.setLevelAndGate(levelName, gateName);
+                    GameData.INSTANCE.currSavedData.setLevelAndTile(levelName, targetTile);
                     GameData.INSTANCE.saveGame();
                 }
 
@@ -160,12 +160,12 @@ export class LevelScene extends BaseScene {
         }
     }
 
-    public loadLevel(levelName: string, gateName: string, needSave?: boolean): void {
-        this.loadLevelEx(MAP_IDX.MAIN, levelName, gateName, needSave);
+    public loadLevel(levelName: string, targetTile: [number, number], needSave?: boolean): void {
+        this.loadLevelEx(MAP_IDX.MAIN, levelName, targetTile, needSave);
     }
 
     public loadCrossLevel(levelName: string, levelLoadedCallback: () => any): void {
-        this.loadLevelEx(MAP_IDX.CROSS, levelName, "", false, levelLoadedCallback);
+        this.loadLevelEx(MAP_IDX.CROSS, levelName, null, false, levelLoadedCallback);
     }
 
     public unloadCrossLevel() {
@@ -174,7 +174,7 @@ export class LevelScene extends BaseScene {
     }
 
     public reloadLevel(): void {
-        this.loadLevel(GameData.INSTANCE.currSavedData.levelName, GameData.INSTANCE.currSavedData.gateName);
+        this.loadLevel(GameData.INSTANCE.currSavedData.levelName, GameData.INSTANCE.currSavedData.targetTile);
     }
 
     public getCrossMap() {
