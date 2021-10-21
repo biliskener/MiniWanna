@@ -70,7 +70,7 @@ export class Player extends BaseObject {
     @property({ type: AudioClip })
     shootSound: AudioClip = null;
 
-    private invincible: boolean;    // 是否无敌模式
+    public invincible: boolean;     // 是否无敌模式
 
     private leftButton: number;     // 是否按下左键
     private rightButton: number;    // 是否按下右键
@@ -481,8 +481,6 @@ export class Player extends BaseObject {
 
     // 杀死玩家
     private killPlayer(force?: boolean): void {
-        if (!force && this.invincible) return;
-
         var sceneId = SceneManager.getRunningSceneId();
         if (sceneId == SceneId.select) {
             this.restartScene();

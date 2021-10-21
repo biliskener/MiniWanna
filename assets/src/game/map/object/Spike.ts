@@ -1,5 +1,6 @@
 import { Collider2D, Component, Contact2DType, IPhysics2DContact, Node, _decorator } from "cc";
 import { cc_assert } from "../../../framework/core/nox";
+import { GameConfig } from "../../config/GameConfig";
 import { ObjectGroup } from "../../const/ObjectGroup";
 import { ObjectTag } from "../../const/ObjectTag";
 import { GameMap } from "../GameMap";
@@ -18,7 +19,10 @@ export class Spike extends BaseObject {
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
         if (otherCollider.tag != ObjectTag.Default) return;
         if (ObjectGroup.PlayerAll.indexOf(otherCollider.group) >= 0) {
-            otherCollider.getComponent(Player).isDying = true;
+            var player = otherCollider.getComponent(Player);
+            if (!GameConfig.invincibleMode && !player.invincible) {
+                player.isDying = true;
+            }
         }
     }
 }

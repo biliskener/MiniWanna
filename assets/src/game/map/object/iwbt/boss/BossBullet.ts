@@ -1,18 +1,28 @@
 import { Component, _decorator } from "cc";
-import { cc_view } from "../../../../../framework/core/nox";
+import { noxcc } from "../../../../../framework/core/noxcc";
+import { CameraControl } from "../../../CameraControl";
+import { MapUtil } from "../../../MapUtil";
+import { BaseObject } from "../../BaseObject";
 
 const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
 
 @ccclass
 @disallowMultiple
-export class BossBullet extends Component {
+export class BossBullet extends BaseObject {
     public speedX: number = 0;
 
     update(dt: number): void {
-        var x = this.node.position.x;
-        var y = this.node.position.y;
-        // BOSS 弹幕超出屏幕 150 像素后删除
-        if (x < -150 || x > cc_view.getVisibleSize().width + 150 || y < -150 || y > cc_view.getVisibleSize().height + 150) {
+        var pos = noxcc.convertPosAR(noxcc.pos(this.node), this.node.parent, this.map.node);
+        pos.x += noxcc.aw(this.map.node);
+        pos.y += noxcc.ah(this.map.node);
+        var cameraControl = this.map.getComponent(CameraControl);
+        var cameraRect = cameraControl.getCameraRect();
+        cameraRect.x -= 150;
+        cameraRect.y -= 150;
+        cameraRect.width += 300;
+        cameraRect.height += 300;
+        if (!cameraRect.contains(pos)) {
+            MapUtil.removeCollider(this.node);
             this.node.destroy();
         }
     }

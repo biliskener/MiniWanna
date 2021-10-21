@@ -156,7 +156,7 @@ export module MapUtil {
         collider.group = group;
         collider.offset = new Vec2(offsetX, offsetY);
         collider.size = new Size(width, height);
-        collider.sensor = group == ObjectGroup.Trigger;
+        collider.sensor = group == ObjectGroup.Trigger || group == ObjectGroup.BossBullet1 || group == ObjectGroup.BossBullet2;
         collider.tag = ObjectTag.Default;
         MapUtil.applyCollider(collider);
         addCollisionObject(node, map);
@@ -257,7 +257,7 @@ export module MapUtil {
         collider.group = group;
         collider.offset = new Vec2(offsetX, offsetY);
         collider.radius = width / 2;
-        collider.sensor = group == ObjectGroup.Trigger;
+        collider.sensor = group == ObjectGroup.Trigger || group == ObjectGroup.BossBullet1 || group == ObjectGroup.BossBullet2;
         collider.tag = ObjectTag.Default;
         MapUtil.applyCollider(collider);
         addCollisionObject(node, map);
@@ -281,7 +281,7 @@ export module MapUtil {
         collider.group = group;
         collider.offset = new Vec2(offsetX, offsetY);
         collider.points = newPoints;
-        collider.sensor = group == ObjectGroup.Trigger;
+        collider.sensor = group == ObjectGroup.Trigger || group == ObjectGroup.BossBullet1 || group == ObjectGroup.BossBullet2;
         collider.tag = ObjectTag.Default;
         MapUtil.applyCollider(collider);
         addCollisionObject(node, map);
@@ -317,7 +317,7 @@ export module MapUtil {
             tileSize.height / 2 - noxcc.ah(tile.node.parent)
         );
         collider.radius = width / 2;
-        collider.sensor = group == ObjectGroup.Trigger;
+        collider.sensor = group == ObjectGroup.Trigger || group == ObjectGroup.BossBullet1 || group == ObjectGroup.BossBullet2;
         collider.tag = ObjectTag.Default;
         MapUtil.applyCollider(collider);
         addCollisionObject(tile.node, map);
@@ -331,7 +331,7 @@ export module MapUtil {
         collider.group = group;
         collider.points = points;
         collider.offset = new Vec2(-noxcc.aw(tile.node.parent), -noxcc.ah(tile.node.parent));
-        collider.sensor = group == ObjectGroup.Trigger;
+        collider.sensor = group == ObjectGroup.Trigger || group == ObjectGroup.BossBullet1 || group == ObjectGroup.BossBullet2;
         collider.tag = ObjectTag.Default;
         MapUtil.applyCollider(collider);
         addCollisionObject(tile.node, map);

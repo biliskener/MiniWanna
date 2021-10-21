@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, EventTouch, Camera, view, PhysicsSystem2D, Mask, TERRAIN_HEIGHT_BASE } from 'cc';
+import { _decorator, Component, Node, EventTouch, Camera, view, PhysicsSystem2D, Mask, TERRAIN_HEIGHT_BASE, Rect } from 'cc';
 const { ccclass, property } = _decorator;
 import { SceneManager } from "../../framework/base/SceneManager";
 import { cc_assert, cc_find } from "../../framework/core/nox";
@@ -105,7 +105,7 @@ export class CameraControl extends Component {
         return cc_find("player", this.node);
     }
 
-    private getCameraPos(): [number, number] {
+    public getCameraPos(): [number, number] {
         var mapNode = this.mapNode;
         var viewNode = this.viewNode;
 
@@ -114,6 +114,11 @@ export class CameraControl extends Component {
         x -= this.vibrationOffsetX;
         y -= this.vibrationOffsetY;
         return [x, y];
+    }
+
+    public getCameraRect(): Rect {
+        var [x, y] = this.getCameraPos();
+        return new Rect(x, y, noxcc.w(this.viewNode), noxcc.h(this.viewNode));
     }
 
     private setCameraPos(x: number, y: number, forceSync?: boolean) {

@@ -17,6 +17,7 @@ import { Spike } from "./object/Spike";
 import { Save } from "./object/iwbt/Save";
 import { Platform } from "./object/iwbt/Platform";
 import { CameraControl } from "./CameraControl";
+import { BossBullet } from "./object/iwbt/boss/BossBullet";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
 @ccclass
@@ -193,6 +194,8 @@ export class GameMap extends NoxComponent {
 
         let objectGroup = this.tiledMap.getObjectGroup(layerName);
         if (objectGroup) {
+            let tileWidth = this.tiledMap.getTileSize().width;
+            let tileHeight = this.tiledMap.getTileSize().height;
             let objects = objectGroup.getObjects();
             for (let object of objects) {
                 if (object.gid && object.gid != 0) {
@@ -238,9 +241,30 @@ export class GameMap extends NoxComponent {
                         ]);
                         node.addComponent(Spike);
                     }
+                    else if (object.gid == GameConfig.cherryTile) {
+                        var cherry = cc_instantiate(this.cherryPrefab);
+                        cherry.getComponent(Animation).enabled = true;
+                        cherry.getComponent(BossBullet).enabled = false;
+                        noxcc.setPosAR(cherry, node.position.x + tileWidth / 2, node.position.y + tileHeight / 2);
+                        MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
+                        MapUtil.setDynamicType(cherry);
+                        cherry.parent = node.parent;
+                        node.destroy();
+                        node = cherry;
+                    }
+                    else if (object.gid == GameConfig.blockTile) {
+                        MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
+                    }
                     else {
                         cc_assert(false);
                     }
+                    if (object.name != "") {
+                        cc_assert(node.parent.getChildByName(object.name) == null);
+                        node.name = object.name;
+                    }
+                }
+                else {
+                    cc_assert(false);
                 }
             }
             return true;
@@ -365,6 +389,7 @@ export class GameMap extends NoxComponent {
             // 传送门，由于没法区分多个门，所以在对象层里处理。
         }
         else if (tile.grid == GameConfig.cherryTile) {
+            cc_assert(false, "未测试");
             // 樱桃，删除地图上的樱桃图块，创建新的樱桃对象。
             // PS：2.2.1 版本之前需要在 start 函数才可以。
             if (isAdd) {
@@ -372,7 +397,7 @@ export class GameMap extends NoxComponent {
                 layer.setTiledTileAt(x, y, null);
                 var cherry = cc_instantiate(this.cherryPrefab);
                 cherry.getComponent(Animation).enabled = true;
-                cherry.getComponent("BossBullet").enabled = false;
+                cherry.getComponent(BossBullet).enabled = false;
                 tile = cherry.addComponent(TiledTile);
                 tile._x = x;
                 tile._y = y;
@@ -456,7 +481,6 @@ export class GameMap extends NoxComponent {
                 }
 
                 // 添加触发区域对应的组件与参数，可多个。
-                node.triggerNum = 0;
                 var j = 1;
                 while (true) {
                     var id = (j == 1 ? "" : String(j));
@@ -469,7 +493,6 @@ export class GameMap extends NoxComponent {
                         else {
                             trigger["params"] = params;
                         }
-                        node.triggerNum++;
                     } else {
                         break;
                     }
@@ -506,7 +529,6 @@ export class GameMap extends NoxComponent {
                 if (object.name.match(/^(platform|rigid_square_)\d+$/i) && !(object as any).mainPlatform) { // 平台
                     var node = noxcc.newNode();
                     node.parent = objectGroup.node;
-                    node.triggerNum = 1;
                     node.active = false;
 
                     var imgNode = cc_find("img" + object.id, objectGroup.node);
@@ -604,7 +626,6 @@ export class GameMap extends NoxComponent {
         cc_assert(objectGroup.getGroupName() != "");
         node.name = objectGroup.getGroupName();
         node.parent = objectGroup.node;
-        node.triggerNum = 1;
         node.active = false;
 
         let minX = Number.POSITIVE_INFINITY;

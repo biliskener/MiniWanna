@@ -6,6 +6,7 @@ export enum PhysicsEngineType {
 }
 
 export module GameConfig {
+    export const invincibleMode: boolean = true;
     export const useIwbtLevels: boolean = true;
     export const usePhysicsDraw: boolean = false;
     export const useRawTileMapAssets: boolean = false;   // 直接使用TiledMap资源，而不是使用预制作为关卡
@@ -24,6 +25,7 @@ export module GameConfig {
 
     export const rebornTile: number = 14;
     export const platformTile: number = 2;
+    export const blockTile: number = 3;
     export const backgroundTile: number = 0;
     export const saveTile: number = 15;
     export const spikeDownTile: number = 17;
