@@ -179,7 +179,7 @@ export class GameMap extends NoxComponent {
                             if (!this.rebornTile) {
                                 this.rebornPlayer([tile.x, tile.y]);
                             }
-                            tile.grid = GameConfig.backgroundTile;
+                            tile.grid = GameConfig.emptyTile;
                         }
                         this.onTileAdd(tile);
                     }
@@ -279,14 +279,14 @@ export class GameMap extends NoxComponent {
 
         if (tile.grid == GameConfig.platformTile) {
             if (isAdd) {
-                tile.grid = GameConfig.backgroundTile;
+                tile.grid = GameConfig.emptyTile;
                 layer.setTiledTileAt(x, y, null);
             }
             else {
                 cc_assert(false, "fatal error");
             }
         }
-        else if (tile.grid == GameConfig.backgroundTile) {
+        else if (tile.grid == GameConfig.emptyTile || GameConfig.backgroundTiles.indexOf(tile.grid) >= 0) {
             // 背景，不处理。
         }
         else if (tile.grid == GameConfig.saveTile) {
@@ -389,7 +389,7 @@ export class GameMap extends NoxComponent {
             // 樱桃，删除地图上的樱桃图块，创建新的樱桃对象。
             // PS：2.2.1 版本之前需要在 start 函数才可以。
             if (isAdd) {
-                tile.grid = GameConfig.backgroundTile;
+                tile.grid = GameConfig.emptyTile;
                 layer.setTiledTileAt(x, y, null);
                 var cherry = cc_instantiate(this.cherryPrefab);
                 cherry.getComponent(Animation).enabled = true;
