@@ -7,10 +7,9 @@ import { BaseObject } from "../../../BaseObject";
 import { Player } from "../../../Player";
 import { BossShootable } from "./BossShootable";
 
-const { ccclass, property } = _decorator;
+const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
 
-export type Params = { bullet: string, speed: number };
-
+@ccclass
 export class BossShoot1 extends BaseObject implements BossShootable {
     private params: { bullet: string, speed: number };
 

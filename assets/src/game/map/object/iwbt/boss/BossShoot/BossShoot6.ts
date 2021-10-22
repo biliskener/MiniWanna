@@ -5,8 +5,9 @@ import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { BaseObject } from "../../../BaseObject";
 import { BossShootable } from "./BossShootable";
 
-const { ccclass, property } = _decorator;
+const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
 
+@ccclass
 export class BossShoot6 extends BaseObject implements BossShootable {
     private params: { bullet: string, speed: number, count: number };
 

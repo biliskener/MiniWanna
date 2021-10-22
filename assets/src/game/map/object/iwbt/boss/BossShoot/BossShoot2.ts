@@ -7,8 +7,9 @@ import { MapUtil } from "../../../../MapUtil";
 import { BaseObject } from "../../../BaseObject";
 import { BossShootable } from "./BossShootable";
 
-const { ccclass, property } = _decorator;
+const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
 
+@ccclass
 export class BossShoot2 extends BaseObject implements BossShootable {
     private params: { bullet: string, speed: number };
 

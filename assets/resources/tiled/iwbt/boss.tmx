@@ -10,49 +10,21 @@
   </object>
   <object id="3" name="miku" gid="25" x="560" y="592" width="312" height="480">
    <properties>
+    <property name="params2" value="{&quot;bullet&quot;:&quot;cherryYellow&quot;,&quot;speed&quot;:350}"/>
+    <property name="params3" value="{&quot;bullet&quot;:&quot;cherryPink&quot;,&quot;speed&quot;:100}"/>
+    <property name="params4" value="{&quot;bullet&quot;:&quot;negi&quot;,&quot;speed&quot;:150}"/>
+    <property name="params5" value="{&quot;bullet&quot;:&quot;cherryBlue&quot;,&quot;speed&quot;:300,&quot;count&quot;:10}"/>
+    <property name="params6" value="{&quot;bullet&quot;:&quot;negi&quot;,&quot;speed1&quot;:150,&quot;speed2&quot;:300,&quot;count&quot;:12}"/>
+    <property name="params7" value="{&quot;bullet&quot;:&quot;cherryOrange&quot;,&quot;speed&quot;:350,&quot;count&quot;:30}"/>
+    <property name="params8" value="{&quot;bullet&quot;:&quot;cherryViolet&quot;,&quot;speed1&quot;:200,&quot;speed2&quot;:350,&quot;count&quot;:5}"/>
     <property name="script" value="Boss"/>
-   </properties>
-  </object>
-  <object id="4" name="shoot1" x="336" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;cherryYellow&quot;,&quot;speed&quot;:350}"/>
-    <property name="script" value="BossShoot1"/>
-   </properties>
-  </object>
-  <object id="5" name="shoot2" x="368" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;cherryPing&quot;,&quot;speed&quot;:100}"/>
-    <property name="script" value="BossShoot2"/>
-   </properties>
-  </object>
-  <object id="6" name="shoot3" x="400" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;negi&quot;,&quot;speed&quot;:150}"/>
-    <property name="script" value="BossShoot3"/>
-   </properties>
-  </object>
-  <object id="7" name="shoot4" x="432" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;cherryBlue&quot;,&quot;speed&quot;:300,&quot;count&quot;:10}"/>
-    <property name="script" value="BossShoot4"/>
-   </properties>
-  </object>
-  <object id="8" name="shoot5" x="464" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;negi&quot;,&quot;speed1&quot;:150,&quot;speed2&quot;:300,&quot;count&quot;:12}"/>
-    <property name="script" value="BossShoot5"/>
-   </properties>
-  </object>
-  <object id="9" name="shoot6" x="496" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;cherryOrange&quot;,&quot;speed&quot;:350,&quot;count&quot;:30}"/>
-    <property name="script" value="BossShoot6"/>
-   </properties>
-  </object>
-  <object id="10" name="shoot7" x="528" y="560">
-   <properties>
-    <property name="params" value="{&quot;bullet&quot;:&quot;cherryViolet&quot;,&quot;speed1&quot;:200,&quot;speed2&quot;:350,&quot;count&quot;:5}"/>
-    <property name="script" value="BossShoot"/>
+    <property name="script2" value="BossShoot1"/>
+    <property name="script3" value="BossShoot2"/>
+    <property name="script4" value="BossShoot3"/>
+    <property name="script5" value="BossShoot4"/>
+    <property name="script6" value="BossShoot5"/>
+    <property name="script7" value="BossShoot6"/>
+    <property name="script8" value="BossShoot7"/>
    </properties>
   </object>
  </objectgroup>
