@@ -21,8 +21,8 @@ export class BossShoot5 extends BaseObject implements BossShootable {
 
     start(): void {
         this.bullets = [];
-        this.time1 = (cc_view.getVisibleSize().width - 32) / this.params.speed1;
-        this.time2 = (cc_view.getVisibleSize().height - 32) / this.params.speed2;
+        this.time1 = (noxcc.w(this.map.node) - 32) / this.params.speed1;
+        this.time2 = (noxcc.h(this.map.node) - 32) / this.params.speed2;
         this.da = 360 / this.params.count;
         this.radius = 19;
         this.count = 0;

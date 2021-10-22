@@ -1,10 +1,11 @@
-import { Node, RigidBody2D, Vec2, _decorator } from "cc";
+import { Node, _decorator } from "cc";
 import { cc_find } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { BaseObject } from "../../../BaseObject";
 import { Player } from "../../../Player";
+import { BossBullet } from "../BossBullet";
 import { BossShootable } from "./BossShootable";
 
 const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
@@ -32,7 +33,7 @@ export class BossShoot1 extends BaseObject implements BossShootable {
     // 发射
     public shoot(): void {
         var bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
-        noxcc.setPosAR(bullet, 637, 264);
+        noxcc.setPosAR(bullet, 637 - noxcc.aw(this.map.node), 264 - noxcc.aw(this.map.node));
         noxcc.setParent(bullet, this.map.node);
         var playerPos = this.player.getPosition();
         if (this.player.getComponent(Player).isDead()) {
@@ -44,6 +45,6 @@ export class BossShoot1 extends BaseObject implements BossShootable {
         var dist = Math.sqrt(dx * dx + dy * dy);
         var speedX = dx / dist * this.params.speed;
         var speedY = dy / dist * this.params.speed;
-        bullet.getComponent(RigidBody2D).linearVelocity = new Vec2(speedX, speedY);
+        bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
     }
 }

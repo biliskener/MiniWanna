@@ -78,7 +78,8 @@ export class BulletPrefabMgr extends Component {
         var prefab = this[type] as Prefab;
         if (prefab) {
             var node = cc_instantiate(prefab);
-            node.getComponent(Animation).enabled = true;
+            var animation = node.getComponent(Animation);
+            if (animation) animation.enabled = true;
             node.getComponent("BossBullet").enabled = true;
             if (type.match(/^cherry/)) {
                 MapUtil.addCircleCollider(node, map, group, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);

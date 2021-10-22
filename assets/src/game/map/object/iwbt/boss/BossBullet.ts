@@ -10,8 +10,13 @@ const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent
 @disallowMultiple
 export class BossBullet extends BaseObject {
     public speedX: number = 0;
+    public speedY: number = 0;
 
     update(dt: number): void {
+        if (this.speedX || this.speedY) {
+            noxcc.addXY(this.node, this.speedX * dt, this.speedY * dt);
+        }
+
         var pos = noxcc.convertPosAR(noxcc.pos(this.node), this.node.parent, this.map.node);
         pos.x += noxcc.aw(this.map.node);
         pos.y += noxcc.ah(this.map.node);
@@ -25,5 +30,10 @@ export class BossBullet extends BaseObject {
             MapUtil.removeCollider(this.node);
             this.node.destroy();
         }
+    }
+
+    setSpeed(speedX: number, speedY: number) {
+        this.speedX = speedX;
+        this.speedY = speedY;
     }
 }

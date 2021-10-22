@@ -33,10 +33,10 @@ export class Boss extends BaseObject {
         // 子弹发射的类型和时间
         this.shoots = [
             { type: BossShoot1, start: 5, end: 25 },
-            //{ type: BossShoot2, start: 15, end: 35 },
-            //{ type: BossShoot3, start: 25, end: 45 },
-            //{ type: BossShoot4, start: 35, end: 55 },
-            //{ type: BossShoot5, start: 45, end: 65 },
+            { type: BossShoot2, start: 15, end: 35 },
+            { type: BossShoot3, start: 25, end: 45 },
+            { type: BossShoot4, start: 35, end: 55 },
+            { type: BossShoot5, start: 45, end: 65 },
             //{ type: BossShoot6, start: 55, end: 75 },
             //{ type: BossShoot7, start: 70, end: 90 },
         ];
