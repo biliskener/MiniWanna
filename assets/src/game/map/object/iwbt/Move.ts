@@ -1,6 +1,5 @@
-import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledLayer, TiledMap, TiledObjectGroup, Vec3, _decorator } from "cc";
+import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledObjectGroup, Vec3, _decorator } from "cc";
 import { cc_assert, cc_tween, cc_view } from "../../../../framework/core/nox";
-import { noxcc } from "../../../../framework/core/noxcc";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { MapUtil } from "../../MapUtil";
 import { BaseObject } from "../BaseObject";

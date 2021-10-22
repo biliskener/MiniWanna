@@ -1,28 +1,20 @@
-import { Component, Node, Prefab, RigidBody2D, Vec2, _decorator } from "cc";
-import { cc_find, cc_instantiate } from "../../../../../../framework/core/nox";
+import { RigidBody2D, Vec2, _decorator } from "cc";
 import { noxcc } from "../../../../../../framework/core/noxcc";
+import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
+import { ObjectGroup } from "../../../../../const/ObjectGroup";
+import { BaseObject } from "../../../BaseObject";
+import { BossShootable } from "./BossShootable";
 
 const { ccclass, property } = _decorator;
 
-@ccclass
-export class BossShoot6 extends Component {
-    // 子弹
-    @property({ type: Prefab })
-    bullet: Prefab = null;
+export class BossShoot6 extends BaseObject implements BossShootable {
+    private params: { bullet: string, speed: number, count: number };
 
-    @property({})
-    speed: number = 350;
-
-    @property({})
-    num: number = 350;
-
-    protected map: Node = null;
     protected dr: number = 0;
     protected index: number = 0;
 
     start(): void {
-        this.map = cc_find("Canvas/map");
-        this.dr = 2 * Math.PI / this.num;
+        this.dr = 2 * Math.PI / this.params.count;
         this.index = 0;
     }
 
@@ -38,14 +30,14 @@ export class BossShoot6 extends Component {
 
     // 发射
     public shoot(): void {
-        var bullet = cc_instantiate(this.bullet);
+        let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setPosAR(bullet, 637, 264);
-        bullet.parent = this.map;
-        var speedX = this.speed * Math.cos(this.index * this.dr);
-        var speedY = this.speed * Math.sin(this.index * this.dr);
+        noxcc.setParent(bullet, this.map.node);
+        var speedX = this.params.speed * Math.cos(this.index * this.dr);
+        var speedY = this.params.speed * Math.sin(this.index * this.dr);
         bullet.getComponent(RigidBody2D).linearVelocity = new Vec2(speedX, speedY);
         this.index++;
-        if (this.index >= this.num) {
+        if (this.index >= this.params.count) {
             this.index = 0;
         }
     }

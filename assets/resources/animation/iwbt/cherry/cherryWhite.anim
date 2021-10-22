@@ -1,31 +1,69 @@
-{
-  "__type__": "cc.AnimationClip",
-  "_name": "cherryWhite",
-  "_objFlags": 0,
-  "_native": "",
-  "_duration": 0.03333333333333333,
-  "sample": 60,
-  "speed": 0.11,
-  "wrapMode": 2,
-  "curveData": {
-    "comps": {
-      "cc.Sprite": {
-        "spriteFrame": [
-          {
-            "frame": 0,
-            "value": {
-              "__uuid__": "fe2d1d62-e86d-4802-a200-ad6b7d685e67"
-            }
-          },
-          {
-            "frame": 0.016666666666666666,
-            "value": {
-              "__uuid__": "b8b1550d-eda6-4a91-8958-010c2cc7a844"
-            }
-          }
-        ]
+[
+  {
+    "__type__": "cc.AnimationClip",
+    "_name": "cherryWhite",
+    "_objFlags": 0,
+    "_native": "",
+    "sample": 60,
+    "speed": 0.11,
+    "wrapMode": 2,
+    "enableTrsBlending": false,
+    "_duration": 0.03333333333333333,
+    "_hash": 500763545,
+    "_tracks": [
+      {
+        "__id__": 1
       }
+    ],
+    "_exoticAnimation": null,
+    "_events": []
+  },
+  {
+    "__type__": "cc.animation.ObjectTrack",
+    "_binding": {
+      "__type__": "cc.animation.TrackBinding",
+      "path": {
+        "__id__": 2
+      }
+    },
+    "_channel": {
+      "__id__": 4
     }
   },
-  "events": []
-}
+  {
+    "__type__": "cc.animation.TrackPath",
+    "_paths": [
+      {
+        "__id__": 3
+      },
+      "spriteFrame"
+    ]
+  },
+  {
+    "__type__": "cc.animation.ComponentPath",
+    "component": "cc.Sprite"
+  },
+  {
+    "__type__": "cc.animation.Channel",
+    "_curve": {
+      "__id__": 5
+    }
+  },
+  {
+    "__type__": "cc.ObjectCurve",
+    "_times": [
+      0,
+      0.016666666666666666
+    ],
+    "_values": [
+      {
+        "__uuid__": "5be0feb2-f36d-4018-92ea-8e3efc0fd4e4@7cef5",
+        "__expectedType__": "cc.SpriteFrame"
+      },
+      {
+        "__uuid__": "5be0feb2-f36d-4018-92ea-8e3efc0fd4e4@60d2f",
+        "__expectedType__": "cc.SpriteFrame"
+      }
+    ]
+  }
+]

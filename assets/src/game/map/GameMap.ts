@@ -499,14 +499,6 @@ export class GameMap extends NoxComponent {
                     MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
                 }
                 else if (object.type == 4) {
-                    var width = noxcc.w(node);
-                    var height = noxcc.h(node);
-                    MapUtil.addCircleCollider(node, this, ObjectGroup.Trigger, true, new Rect(
-                        width * (1 - GameConfig.triggerCollisionSize) * 0.5,
-                        height * (1 - GameConfig.triggerCollisionSize) * 0.5,
-                        width * GameConfig.triggerCollisionSize,
-                        height * GameConfig.triggerCollisionSize,
-                    ), 0);
                 }
                 else {
                     cc_assert(false);

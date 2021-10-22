@@ -2,6 +2,7 @@ import { SceneManager } from "../framework/base/SceneManager";
 import { cc_assert } from "../framework/core/nox";
 import { noxSound } from "../framework/core/noxSound";
 import { GameConfig } from "./config/GameConfig";
+import { BulletPrefabMgr } from "./BulletPrefabMgr";
 import { GameData } from "./data/GameData";
 import { SettingData } from "./data/SettingData";
 import { MenuScene } from "./ui/scene/MenuScene";
@@ -28,6 +29,8 @@ export class MyGame {
         SettingData.createInstance();
         noxSound.setMusicOn(SettingData.INSTANCE.enableSound);
         noxSound.setEffectOn(SettingData.INSTANCE.enableSound);
+
+        cc_assert(BulletPrefabMgr.currenton());
 
         SceneManager.pushScene(SplashScene.create());
     }

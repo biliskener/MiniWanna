@@ -1,29 +1,27 @@
-import { Component, Node, Prefab, RigidBody2D, Vec2, _decorator } from "cc";
-import { cc_find, cc_instantiate } from "../../../../../../framework/core/nox";
+import { Node, RigidBody2D, Vec2, _decorator } from "cc";
+import { cc_find } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
+import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
+import { ObjectGroup } from "../../../../../const/ObjectGroup";
+import { BaseObject } from "../../../BaseObject";
 import { Player } from "../../../Player";
+import { BossShootable } from "./BossShootable";
 
 const { ccclass, property } = _decorator;
 
-@ccclass
-export class BossShoot1 extends Component {
-    // 子弹
-    @property({ type: Prefab })
-    bullet: Prefab = null;
+export type Params = { bullet: string, speed: number };
 
-    @property({})
-    speed: number = 350;
+export class BossShoot1 extends BaseObject implements BossShootable {
+    private params: { bullet: string, speed: number };
 
-    protected map: Node = null;
     protected player: Node = null;
 
     start(): void {
-        this.map = cc_find("Canvas/map");
     }
 
     // 开始发射
     public startShoot(): void {
-        this.player = cc_find("Canvas/map/player");
+        this.player = cc_find("player", this.map.node);
         this.schedule(this.shoot, 0.2);
     }
 
@@ -34,9 +32,9 @@ export class BossShoot1 extends Component {
 
     // 发射
     public shoot(): void {
-        var bullet = cc_instantiate(this.bullet);
+        var bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setPosAR(bullet, 637, 264);
-        bullet.parent = this.map;
+        noxcc.setParent(bullet, this.map.node);
         var playerPos = this.player.getPosition();
         if (this.player.getComponent(Player).isDead()) {
             playerPos.x = 0;
@@ -45,8 +43,8 @@ export class BossShoot1 extends Component {
         var dx = playerPos.x - bullet.position.x;
         var dy = playerPos.y - bullet.position.y;
         var dist = Math.sqrt(dx * dx + dy * dy);
-        var speedX = dx / dist * this.speed;
-        var speedY = dy / dist * this.speed;
+        var speedX = dx / dist * this.params.speed;
+        var speedY = dy / dist * this.params.speed;
         bullet.getComponent(RigidBody2D).linearVelocity = new Vec2(speedX, speedY);
     }
 }
