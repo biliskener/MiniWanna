@@ -1,10 +1,9 @@
 import { Animation, Component, Node, Prefab, Rect, _decorator } from "cc";
 import { cc_assert, cc_instantiate } from "../framework/core/nox";
 import { noxcc } from "../framework/core/noxcc";
-import { ObjectGroup } from "./const/ObjectGroup";
 import { GameMap } from "./map/GameMap";
 import { MapUtil } from "./map/MapUtil";
-import { BossBullet } from "./map/object/iwbt/boss/BossBullet";
+//import { BossBullet } from "./map/object/iwbt/boss/BossBullet";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
 @ccclass
@@ -80,7 +79,7 @@ export class BulletPrefabMgr extends Component {
         if (prefab) {
             var node = cc_instantiate(prefab);
             node.getComponent(Animation).enabled = true;
-            node.getComponent(BossBullet).enabled = true;
+            node.getComponent("BossBullet").enabled = true;
             if (type.match(/^cherry/)) {
                 MapUtil.addCircleCollider(node, map, group, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
             }

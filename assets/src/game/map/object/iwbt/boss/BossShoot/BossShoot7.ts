@@ -1,5 +1,5 @@
-import { Component, Node, Prefab, RigidBody2D, Vec2, _decorator } from "cc";
-import { cc_find, cc_instantiate, cc_view } from "../../../../../../framework/core/nox";
+import { Node, RigidBody2D, Vec2, _decorator } from "cc";
+import { cc_view } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";

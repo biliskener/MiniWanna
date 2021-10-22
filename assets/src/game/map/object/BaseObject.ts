@@ -1,5 +1,5 @@
 import { GameMap } from "../GameMap";
-import { Component, _decorator } from "cc";
+import { _decorator } from "cc";
 import { cc_assert } from "../../../framework/core/nox";
 import { NoxComponent } from "../../../framework/core/NoxComponent";
 

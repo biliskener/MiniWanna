@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, EventTouch, Camera, view, PhysicsSystem2D, Mask, TERRAIN_HEIGHT_BASE, Rect } from 'cc';
+import { _decorator, Component, Node, Camera, Mask, Rect } from 'cc';
 const { ccclass, property } = _decorator;
 import { SceneManager } from "../../framework/base/SceneManager";
 import { cc_assert, cc_find } from "../../framework/core/nox";

@@ -1,4 +1,4 @@
-import { Component, _decorator } from "cc";
+import { _decorator } from "cc";
 import { noxcc } from "../../../../../framework/core/noxcc";
 import { CameraControl } from "../../../CameraControl";
 import { MapUtil } from "../../../MapUtil";

@@ -1,4 +1,4 @@
-import { assert, BoxCollider2D, CircleCollider2D, Collider2D, EPhysics2DDrawFlags, ERigidBody2DType, Layers, Node, PhysicsSystem2D, PolygonCollider2D, Rect, RigidBody2D, Size, TiledTile, Vec2 } from "cc";
+import { BoxCollider2D, CircleCollider2D, Collider2D, EPhysics2DDrawFlags, ERigidBody2DType, Layers, Node, PhysicsSystem2D, PolygonCollider2D, Rect, RigidBody2D, Size, TiledTile, Vec2 } from "cc";
 import { PhysicsEngineType, GameConfig } from "../../game/config/GameConfig";
 import { GameObject } from "../../game/map/collision/GameObject";
 import { CollisionObject } from "../../game/map/collision/CollisionObject";
