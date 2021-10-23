@@ -35,8 +35,8 @@ export class BossShoot6 extends BaseObject implements BossShootable {
         let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setPosAR(bullet, 637 - noxcc.aw(this.map.node), 264 - noxcc.ah(this.map.node));
         noxcc.setParent(bullet, this.map.node);
-        var speedX = this.params.speed * Math.cos(this.index * this.dr);
-        var speedY = this.params.speed * Math.sin(this.index * this.dr);
+        let speedX = this.params.speed * Math.cos(this.index * this.dr);
+        let speedY = this.params.speed * Math.sin(this.index * this.dr);
         bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
         this.index++;
         if (this.index >= this.params.count) {

@@ -32,19 +32,19 @@ export class BossShoot1 extends BaseObject implements BossShootable {
 
     // 发射
     public shoot(): void {
-        var bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+        let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setPosAR(bullet, 637 - noxcc.aw(this.map.node), 264 - noxcc.aw(this.map.node));
         noxcc.setParent(bullet, this.map.node);
-        var playerPos = this.player.getPosition();
+        let playerPos = this.player.getPosition();
         if (this.player.getComponent(Player).isDead()) {
             playerPos.x = 0;
             playerPos.y = 608;
         }
-        var dx = playerPos.x - bullet.position.x;
-        var dy = playerPos.y - bullet.position.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        var speedX = dx / dist * this.params.speed;
-        var speedY = dy / dist * this.params.speed;
+        let dx = playerPos.x - bullet.position.x;
+        let dy = playerPos.y - bullet.position.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        let speedX = dx / dist * this.params.speed;
+        let speedY = dy / dist * this.params.speed;
         bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
     }
 }

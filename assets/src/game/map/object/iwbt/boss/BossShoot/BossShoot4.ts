@@ -18,9 +18,9 @@ export class BossShoot4 extends BaseObject implements BossShootable {
     protected count: number = 0;
 
     start(): void {
-        var prefab = BulletPrefabMgr.currenton().getPrefab(this.params.bullet);
-        var bullet = cc_instantiate(prefab);
-        var bulletWidth = noxcc.w(bullet);
+        let prefab = BulletPrefabMgr.currenton().getPrefab(this.params.bullet);
+        let bullet = cc_instantiate(prefab);
+        let bulletWidth = noxcc.w(bullet);
         bullet.destroy();
 
         this.space = (noxcc.w(this.map.node) - 64 - this.params.count * bulletWidth) / (this.params.count - 1);

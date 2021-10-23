@@ -31,8 +31,8 @@ export class BossShoot7 extends BaseObject implements BossShootable {
         noxcc.setY(this.bullet1, noxcc.h(this.map.node) + noxcc.h(this.bullet1) / 2 - noxcc.ah(this.map.node));
         noxcc.setParent(this.bullet1, this.map.node);
         this.bullet1.getComponent(BossBullet).setSpeed(0, -this.params.speed1);
-        var dist = (noxcc.h(this.map.node) + noxcc.h(this.bullet1)) / 2;
-        var time = dist / this.params.speed1;
+        let dist = (noxcc.h(this.map.node) + noxcc.h(this.bullet1)) / 2;
+        let time = dist / this.params.speed1;
         this.scheduleOnce(() => {
             if (cc_isValid(this.bullet1)) {
                 this.bullet1.getComponent(BossBullet).setSpeed(0, 0);
@@ -51,13 +51,13 @@ export class BossShoot7 extends BaseObject implements BossShootable {
 
     // 发射
     public shoot(): void {
-        for (var i = 0; i < this.params.count; i++) {
-            var bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+        for (let i = 0; i < this.params.count; i++) {
+            let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
             noxcc.setPosAR(bullet, this.bullet1.position.x, this.bullet1.position.y);
             noxcc.setParent(bullet, this.map.node);
-            var radian = i * this.dr - 0.04 * this.count;
-            var speedX = this.params.speed2 * Math.cos(radian);
-            var speedY = this.params.speed2 * Math.sin(radian);
+            let radian = i * this.dr - 0.04 * this.count;
+            let speedX = this.params.speed2 * Math.cos(radian);
+            let speedY = this.params.speed2 * Math.sin(radian);
             bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
         }
         this.count += this.value;
