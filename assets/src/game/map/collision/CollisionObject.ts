@@ -255,6 +255,7 @@ export class CollisionObject extends Component {
         var groupsTable: [number, number][] = [
             [ObjectGroup.Player, ObjectGroup.Block],
             [ObjectGroup.Player, ObjectGroup.Platform],
+            [ObjectGroup.Block, ObjectGroup.Platform],
         ];
         for (var [group1, group2] of groupsTable) {
             if (selfGroup == group1 && otherGroup == group2 || selfGroup == group2 && otherGroup == group1) {
