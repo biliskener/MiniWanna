@@ -29,6 +29,9 @@ export class Platform extends BaseObject {
         this.currSpeedY = speedY;
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
             this.getComponent(RigidBody2D).linearVelocity = new Vec2(this.currSpeedX / 40, this.currSpeedY / 40);
+            if (this.touchingPlayer) {
+                this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = this.getComponent(RigidBody2D).linearVelocity;
+            }
         }
     }
 
@@ -132,31 +135,11 @@ export class Platform extends BaseObject {
         }
     }
 
-    onEnable() {
-        this.node.on('transform-changed', this._onNodeTransformChanged, this);
-    }
-
-    onDisable() {
-        this.node.off('transform-changed', this._onNodeTransformChanged, this);
-    }
-
-    _onNodeTransformChanged(type) {
-        if (PhysicsSystem2D.instance.stepping) {
-            return;
-        }
-
-        if (type & Node.TransformBit.POSITION) {
-            if (this.touchingPlayer) {
-                noxcc.addXY(this.touchingPlayer.node, this.node.position.x - this.touchingPosition.x, this.node.position.y - this.touchingPosition.y);
-                this.touchingPosition = this.node.position.clone();
-            }
-        }
-    }
-
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
         if (otherCollider.tag == ObjectTag.Foot) {
             this.touchingPlayer = otherCollider;
             this.touchingPosition = this.node.position.clone();
+            this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = this.getComponent(RigidBody2D).linearVelocity;
         }
         else if (otherCollider.group == ObjectGroup.Block || otherCollider.group == ObjectGroup.Platform) {
             if (contact) {

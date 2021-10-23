@@ -95,8 +95,10 @@ export class Player extends BaseObject {
 
     public isDying: boolean = false;
 
-    public touchedFootColliders: { [key: string]: [Collider2D, Vec3] } = {};
-    public touchedHeadColliders: { [key: string]: [Collider2D, Vec3] } = {};
+    public touchedFootColliders: Collider2D[] = [];
+    public touchedFootPositions: Vec3[] = [];
+    public touchedHeadColliders: Collider2D[] = [];
+    public touchedHeadPositions: Vec3[] = [];
 
     private _animation: Animation;
 
@@ -230,7 +232,7 @@ export class Player extends BaseObject {
         if (this.isCrush || this.isDying) {
             this.killPlayer();
         }
-        else if (nox.tableSize(this.touchedHeadColliders) > 0 && nox.tableSize(this.touchedFootColliders) > 0) {
+        else if (this.touchedHeadColliders.length > 0 && this.touchedFootColliders.length > 0) {
             ++this.crushFrameCount;
             if (this.crushFrameCount >= 2) {
                 this.killPlayer();
@@ -244,8 +246,17 @@ export class Player extends BaseObject {
             this.playerStatus != PlayerStatus.PLAYER_ENTERGATE
         ) {
             //1. 调整下落速度
+            var platform: RigidBody2D = null;
+            if (this.touchedFootColliders.length > 0) {
+                platform = this.touchedFootColliders[0].getComponent(RigidBody2D);
+            }
             if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-                this.speed = this.body.linearVelocity;
+                if (platform) {
+                    this.speed = new Vec2(platform.linearVelocity.x, this.body.linearVelocity.y);
+                }
+                else {
+                    this.speed = this.body.linearVelocity;
+                }
             }
             else {
                 this.speed.x += this.gravity.x * dt;
@@ -272,7 +283,7 @@ export class Player extends BaseObject {
                     this.speed.x = Math.max(-this.maxSpeed, this.speed.x - GameConfig.speedUpDistance * dt);
                 }
                 else {
-                    this.speed.x = -this.maxSpeed;
+                    this.speed.x = (platform ? platform.linearVelocity.x : 0) - this.maxSpeed;
                 }
             }
             else if (this.rightButton) {
@@ -280,7 +291,7 @@ export class Player extends BaseObject {
                     this.speed.x = Math.min(this.maxSpeed, this.speed.x + GameConfig.speedUpDistance * dt);
                 }
                 else {
-                    this.speed.x = this.maxSpeed;
+                    this.speed.x = (platform ? platform.linearVelocity.x : 0) + this.maxSpeed;
                 }
             }
             else {
@@ -293,7 +304,7 @@ export class Player extends BaseObject {
                     }
                 }
                 else {
-                    this.speed.x = 0;
+                    this.speed.x = (platform ? platform.linearVelocity.x : 0) + 0;
                 }
             }
 
@@ -301,7 +312,7 @@ export class Player extends BaseObject {
             this.playerJump();
 
             //7. 处理角色动画
-            if (nox.tableSize(this.touchedFootColliders) || this.isHitBottom) {
+            if (this.touchedFootColliders.length > 0 || this.isHitBottom) {
                 if (this.leftButton || this.rightButton) {
                     this.setPlayerStatus(PlayerStatus.PLAYER_RUNNING);
                 }
@@ -372,13 +383,15 @@ export class Player extends BaseObject {
         if (selfCollider.tag == ObjectTag.Foot) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
-                this.touchedFootColliders[otherCollider.uuid] = [otherCollider, otherCollider.node.position.clone()];
+                this.touchedFootColliders.push(otherCollider);
+                this.touchedFootPositions.push(otherCollider.node.position.clone());
             }
         }
         else if (selfCollider.tag == ObjectTag.Head) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
-                this.touchedHeadColliders[otherCollider.uuid] = [otherCollider, otherCollider.node.position.clone()];
+                this.touchedHeadColliders.push(otherCollider);
+                this.touchedHeadPositions.push(otherCollider.node.position.clone());
             }
         }
         else {
@@ -394,13 +407,21 @@ export class Player extends BaseObject {
         if (selfCollider.tag == ObjectTag.Foot) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
-                delete this.touchedFootColliders[otherCollider.uuid];
+                var index = this.touchedFootColliders.indexOf(otherCollider);
+                if (index >= 0) {
+                    this.touchedFootColliders.splice(index, 1);
+                    this.touchedFootPositions.splice(index, 1);
+                }
             }
         }
         else if (selfCollider.tag == ObjectTag.Head) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
-                delete this.touchedHeadColliders[otherCollider.uuid];
+                var index = this.touchedHeadColliders.indexOf(otherCollider);
+                if (index >= 0) {
+                    this.touchedHeadColliders.splice(index, 1);
+                    this.touchedHeadPositions.splice(index, 1);
+                }
             }
         }
     }
@@ -443,7 +464,7 @@ export class Player extends BaseObject {
     // 玩家跳跃 
     private playerJump(): void {
         if (this.canJump) {
-            if (nox.tableSize(this.touchedFootColliders) > 0 || this.isHitBottom) {
+            if (this.touchedFootColliders.length > 0 || this.isHitBottom) {
                 if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
                     this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, this.jump * GameConfig.jumpForceFactor), true);
                 }
