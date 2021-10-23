@@ -566,12 +566,12 @@ export class GameMap extends NoxComponent {
 
                     if (GameConfig.useIwbtLevels) {
                         var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
-                        MapUtil.setDynamicType(node);
+                        MapUtil.setKinematicType(node);
                         collider.offset.y += noxcc.h(node) / 2;
                     }
                     else {
                         var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, null, 0);
-                        MapUtil.setDynamicType(node);
+                        MapUtil.setKinematicType(node);
                     }
                 }
             }
