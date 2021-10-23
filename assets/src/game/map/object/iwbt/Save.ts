@@ -2,7 +2,6 @@ import { Collider2D, Component, Contact2DType, IPhysics2DContact, Node, TiledTil
 import { GameConfig } from "../../../config/GameConfig";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { GameData } from "../../../data/GameData";
-import { GameMap } from "../../GameMap";
 import { BaseObject } from "../BaseObject";
 
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
@@ -20,6 +19,7 @@ export class Save extends BaseObject {
 
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
         if (otherCollider.tag != ObjectTag.Default) return;
+        if (contact) contact.disabledOnce = true;
         this.onContact(otherCollider.node, selfCollider.node);
     }
 

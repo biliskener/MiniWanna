@@ -21,24 +21,26 @@ export class Select extends Component {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        var name = selfNode.name;
-        if (name == "LoadGame") {
-            // 读取游戏
-            GameData.INSTANCE.loadGame();
-            if (GameData.INSTANCE.currSavedData.levelName == "") {
-                SceneManager.replaceScene(SelectScene.create());
+        this.scheduleOnce(() => {
+            var name = selfNode.name;
+            if (name == "LoadGame") {
+                // 读取游戏
+                GameData.INSTANCE.loadGame();
+                if (GameData.INSTANCE.currSavedData.levelName == "") {
+                    SceneManager.replaceScene(SelectScene.create());
+                }
+                else {
+                    SceneManager.replaceScene(LevelScene.create());
+                }
             }
             else {
+                // 新游戏
+                GameData.INSTANCE.newGame();
+                GameData.INSTANCE.currSavedData.setLevelAndTile("level1", null);
+                GameData.INSTANCE.currSavedData.mode = selfNode.name;
+                GameData.INSTANCE.saveGame();
                 SceneManager.replaceScene(LevelScene.create());
             }
-        }
-        else {
-            // 新游戏
-            GameData.INSTANCE.newGame();
-            GameData.INSTANCE.currSavedData.setLevelAndTile("level1", null);
-            GameData.INSTANCE.currSavedData.mode = selfNode.name;
-            GameData.INSTANCE.saveGame();
-            SceneManager.replaceScene(LevelScene.create());
-        }
+        });
     }
 }

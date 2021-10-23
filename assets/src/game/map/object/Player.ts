@@ -213,6 +213,7 @@ export class Player extends BaseObject {
     start() {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
             for (let collider of this.getComponents(Collider2D)) {
+                collider.apply();
                 collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
                 collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
             }
@@ -382,7 +383,9 @@ export class Player extends BaseObject {
         }
         else {
             if (otherCollider.group == ObjectGroup.Spike) {
-                this.killPlayer();
+                if (!GameConfig.invincibleMode && !this.invincible) {
+                    this.isDying = true;
+                }
             }
         }
     }

@@ -294,7 +294,7 @@ export class GameMap extends NoxComponent {
             if (isAdd) {
                 var save = tile.node.addComponent(Save);
                 save.setTile(tile);
-                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Save, false, tileSize, tileSize.width, tileSize.height);
+                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Trigger, true, tileSize, tileSize.width, tileSize.height);
             }
             else {
                 MapUtil.removeCollider(tile.node);
