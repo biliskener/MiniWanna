@@ -3,6 +3,7 @@ import { noxcc } from "../../../../../../framework/core/noxcc";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { BaseObject } from "../../../BaseObject";
+import { BossBullet } from "../BossBullet";
 import { BossShootable } from "./BossShootable";
 
 const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
@@ -32,11 +33,11 @@ export class BossShoot6 extends BaseObject implements BossShootable {
     // 发射
     public shoot(): void {
         let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
-        noxcc.setPosAR(bullet, 637, 264);
+        noxcc.setPosAR(bullet, 637 - noxcc.aw(this.map.node), 264 - noxcc.ah(this.map.node));
         noxcc.setParent(bullet, this.map.node);
         var speedX = this.params.speed * Math.cos(this.index * this.dr);
         var speedY = this.params.speed * Math.sin(this.index * this.dr);
-        bullet.getComponent(RigidBody2D).linearVelocity = new Vec2(speedX, speedY);
+        bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
         this.index++;
         if (this.index >= this.params.count) {
             this.index = 0;

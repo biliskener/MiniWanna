@@ -74,6 +74,20 @@ export class BulletPrefabMgr extends Component {
         }
     }
 
+    createRawBullet(type: string): Node {
+        var prefab = this[type] as Prefab;
+        if (prefab) {
+            var node = cc_instantiate(prefab);
+            var animation = node.getComponent(Animation);
+            if (animation) animation.enabled = true;
+            node.getComponent("BossBullet").enabled = true;
+            return node;
+        }
+        else {
+            return null;
+        }
+    }
+
     createBullet(map: GameMap, type: string, group: number): Node {
         var prefab = this[type] as Prefab;
         if (prefab) {

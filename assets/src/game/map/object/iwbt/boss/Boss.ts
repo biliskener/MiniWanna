@@ -37,8 +37,8 @@ export class Boss extends BaseObject {
             { type: BossShoot3, start: 25, end: 45 },
             { type: BossShoot4, start: 35, end: 55 },
             { type: BossShoot5, start: 45, end: 65 },
-            //{ type: BossShoot6, start: 55, end: 75 },
-            //{ type: BossShoot7, start: 70, end: 90 },
+            { type: BossShoot6, start: 55, end: 75 },
+            { type: BossShoot7, start: 70, end: 90 },
         ];
 
         // 通关的时间

@@ -1,9 +1,11 @@
-import { Node, RigidBody2D, Vec2, _decorator } from "cc";
-import { cc_macro, cc_view } from "../../../../../../framework/core/nox";
+import { bits, Node, Rect, RigidBody2D, Vec2, _decorator } from "cc";
+import { cc_isValid, cc_macro, cc_view } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
+import { MapUtil } from "../../../../MapUtil";
 import { BaseObject } from "../../../BaseObject";
+import { BossBullet } from "../BossBullet";
 import { BossShootable } from "./BossShootable";
 
 const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
@@ -45,23 +47,24 @@ export class BossShoot5 extends BaseObject implements BossShootable {
             let bullets: Node[] = [];
             let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
             bullets.push(bullet);
-            noxcc.setX(bullets[0], -noxcc.w(bullets[0]));
-            noxcc.setY(bullets[0], cc_view.getVisibleSize().height * (i + 1) / 4);
-            noxcc.setParent(bullet[0], this.map.node);
+            noxcc.setX(bullet, -noxcc.w(bullet) - noxcc.aw(this.map.node));
+            noxcc.setY(bullet, noxcc.h(this.map.node) * (i + 1) / 4 - noxcc.ah(this.map.node));
+            noxcc.setParent(bullet, this.map.node);
             let speedX = this.params.speed1;
             let speedY = 0;
-            (bullets[0] as any).speedX = this.params.speed2;
-            (bullets[0] as any).speedY = 0;
+            bullet["__speedX"] = this.params.speed2;
+            bullet["__speedY"] = 0;
             if (i % 2 == this.count % 2) {
                 speedX = -speedX;
-                (bullets[0] as any).speedX = -(bullets[0] as any).speedX;
-                bullets[0].angle = 180;
-                noxcc.setX(bullets[0], cc_view.getVisibleSize().width + noxcc.w(bullets[0]));
+                bullet["__speedX"] = -this.params.speed2;
+                bullet["__speedY"] = 0;
+                bullet.angle = 180;
+                noxcc.setX(bullet, noxcc.w(this.map.node) + noxcc.w(bullet) - noxcc.aw(this.map.node));
             }
-            bullets[0].getComponent(RigidBody2D).linearVelocity = new Vec2(speedX, speedY);
-            this.bullets.push(bullets[0]);
+            bullet.getComponent(BossBullet).setSpeed(speedX, speedY);
+            this.bullets.push(bullet);
             this.scheduleOnce(() => {
-                bullets[0].getComponent(RigidBody2D).linearVelocity = new Vec2(0, 0);
+                bullets[0].getComponent(BossBullet).setSpeed(0, 0);
                 let angle = bullets[0].angle;
                 let centreX = bullets[0].position.x - (((i + this.count) % 2) * 2 - 1) * this.radius;
                 let centreY = bullets[0].position.y;
@@ -69,23 +72,29 @@ export class BossShoot5 extends BaseObject implements BossShootable {
                 for (let i = 0; i < this.params.count - 1; i++) {
                     angle += this.da;
                     delay += 0.1;
-                    let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+                    let bullet = BulletPrefabMgr.currenton().createRawBullet(this.params.bullet);
                     let cos = Math.cos(angle * Math.PI / 180);
                     let sin = Math.sin(angle * Math.PI / 180);
                     noxcc.setX(bullet, centreX + this.radius * cos);
                     noxcc.setY(bullet, centreY + this.radius * sin);
-                    (bullet as any).speedX = this.params.speed2 * cos;
-                    (bullet as any).speedY = this.params.speed2 * sin;
+                    bullet["__speedX"] = this.params.speed2 * cos;
+                    bullet["__speedY"] = this.params.speed2 * sin;
                     bullet.angle = angle;
                     bullets.push(bullet);
                     this.scheduleOnce(() => {
-                        noxcc.setParent(bullet, this.map.node);
+                        if (cc_isValid(bullet)) {
+                            MapUtil.addCircleCollider(bullet, this.map, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(bullet), noxcc.h(bullet)), 0);
+                            MapUtil.setDynamicType(bullet);
+                            noxcc.setParent(bullet, this.map.node);
+                        }
                     }, delay);
                 }
                 this.scheduleOnce(() => {
                     for (let i = 0; i < this.params.count; i++) {
                         let bullet = bullets[i];
-                        bullet.getComponent(RigidBody2D).linearVelocity = new Vec2((bullet as any).speedX, (bullet as any).speedY);
+                        if (cc_isValid(bullet)) {
+                            bullet.getComponent(BossBullet).setSpeed(bullet["__speedX"], bullet["__speedY"]);
+                        }
                     }
                 }, delay);
             }, this.time1);
