@@ -347,6 +347,14 @@ export module MapUtil {
         }
     }
 
+    export function setKinematicType(node: Node) {
+        if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+            node.getComponent(RigidBody2D).type = ERigidBody2DType.Kinematic;
+        }
+        else {
+        }
+    }
+
     export function removeCollider(node: Node): void {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
             node.removeComponent(Collider2D);
