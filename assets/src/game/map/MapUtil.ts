@@ -61,6 +61,7 @@ export module MapUtil {
             var body = node.addComponent(RigidBody2D);
             body.group = group;
             body.fixedRotation = true;
+            body.gravityScale = 0;
             body.type = ERigidBody2DType.Static;
             if (enabledContactListener) {
                 body.enabledContactListener = true;
