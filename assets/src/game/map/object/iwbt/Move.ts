@@ -1,6 +1,7 @@
 import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledObjectGroup, Vec3, _decorator } from "cc";
-import { cc_assert, cc_tween, cc_view } from "../../../../framework/core/nox";
+import { cc_assert, cc_isValid, cc_tween, cc_view } from "../../../../framework/core/nox";
 import { ObjectTag } from "../../../const/ObjectTag";
+import { CollisionObject } from "../../collision/CollisionObject";
 import { MapUtil } from "../../MapUtil";
 import { BaseObject } from "../BaseObject";
 
@@ -19,10 +20,12 @@ export class Move extends BaseObject {
     };
 
     private layer: TiledObjectGroup;
-    private triggered: boolean;         // 是否已经触发
+    private hasTriggered: boolean;      // 是否已经触发
+
+    private movingObjects: { targetNode: Node, isMoving: boolean, startPosition: Vec3, stopPosition: Vec3 }[] = [];
 
     start(): void {
-        var tiledMap = this.map.getTiledMap();
+        let tiledMap = this.map.getTiledMap();
         this.layer = tiledMap.getObjectGroup(this.params.layer);
         cc_assert(this.layer);
 
@@ -35,16 +38,17 @@ export class Move extends BaseObject {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        if (!this.triggered) {
-            this.triggered = true;
-            for (var i in this.params.objects) {
-                var name = this.params.objects[i];
-                let node = this.layer.node.getChildByName(name);
-                var distance = this.params.distance;
+        if (!this.hasTriggered) {
+            this.hasTriggered = true;
+            this.movingObjects = [];
+            for (let i in this.params.objects) {
+                let name = this.params.objects[i];
+                let targetNode = this.layer.node.getChildByName(name);
+                let distance = this.params.distance;
                 if (distance <= 0) {
                     distance = cc_view.getVisibleSize().width;
                 }
-                var position: Vec3;
+                let position: Vec3;
                 if (this.params.direction == "up") {
                     position = new Vec3(0, distance);
                 }
@@ -57,16 +61,51 @@ export class Move extends BaseObject {
                 else if (this.params.direction == "right") {
                     position = new Vec3(distance, 0);
                 }
-                var duration = distance / this.params.speed;
-                cc_tween(node)
-                    .by(duration, { position: position })
-                    .call(() => {
-                        if (this.params.remove || this.params.distance <= 0) {
-                            MapUtil.removeCollider(node);
-                            node._destroyImmediate();
-                        }
-                    })
-                    .start();
+                if (targetNode.getComponent(CollisionObject)) { // 非触发器类，如移动的砖块
+                    this.movingObjects.push({
+                        targetNode: targetNode,
+                        isMoving: false,
+                        startPosition: targetNode.position.clone(),
+                        stopPosition: targetNode.position.clone().add(position)
+                    });
+                }
+                else {
+                    let duration = distance / this.params.speed;    // 触发器类，如尖刺
+                    cc_tween(targetNode)
+                        .by(duration, { position: position })
+                        .call(() => {
+                            if (this.params.remove || this.params.distance <= 0) {
+                                MapUtil.removeCollider(targetNode);
+                                targetNode._destroyImmediate();
+                            }
+                        })
+                        .start();
+                }
+            }
+        }
+    }
+
+    update(dt: number) {
+        let speedValue = this.params.speed;
+        for (let movingObject of this.movingObjects) {
+            let targetNode = movingObject.targetNode;
+            let startPosition = movingObject.startPosition;
+            let stopPosition = movingObject.stopPosition;
+            if (cc_isValid(targetNode)) {
+                let curPosition = targetNode.position.clone();
+                let distance = stopPosition.clone().subtract(curPosition).length();
+                let speedVector = stopPosition.clone().subtract(startPosition).normalize().multiplyScalar(speedValue);
+                if (dt * speedValue > distance) {
+                    MapUtil.addMovement(targetNode, stopPosition.x - curPosition.x, stopPosition.y - curPosition.y);
+                    if (this.params.remove || this.params.distance <= 0) {
+                        movingObject.isMoving = false;
+                        MapUtil.removeCollider(targetNode);
+                        targetNode._destroyImmediate();
+                    }
+                }
+                else {
+                    MapUtil.addMovement(targetNode, speedVector.x * dt, speedVector.y * dt);
+                }
             }
         }
     }

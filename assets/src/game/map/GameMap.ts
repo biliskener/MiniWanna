@@ -809,6 +809,18 @@ export class GameMap extends NoxComponent {
         return this.tiledMap;
     }
 
+    public get cameraRect() {
+        return this.getComponent(CameraControl).getCameraRect();
+    }
+
+    public get cameraWidth() {
+        return this.cameraRect.width;
+    }
+
+    public get cameraHeight() {
+        return this.cameraRect.height;
+    }
+
     public deferredActivateNode(node: Node, active: boolean) {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
             if (PhysicsSystem2D.instance.stepping) {
