@@ -1,5 +1,5 @@
 import { Collider2D, Contact2DType, IPhysics2DContact, Node, PhysicsSystem2D, RigidBody, RigidBody2D, sp, TiledMap, Vec2, Vec3, _decorator } from "cc";
-import { cc_assert, cc_director } from "../../../../framework/core/nox";
+import { cc_assert } from "../../../../framework/core/nox";
 import { noxcc } from "../../../../framework/core/noxcc";
 import { MapUtil } from "../../../../game/map/MapUtil";
 import { GameConfig, PhysicsEngineType } from "../../../config/GameConfig";
@@ -21,10 +21,6 @@ export class Platform extends BaseObject {
 
     protected touchingPlayer: Collider2D = null;
     protected touchingPosition: Vec3 = null;
-    protected isLeftHit: boolean = false;
-    protected isRightHit: boolean = false;
-    protected isTopHit: boolean = false;
-    protected isBottomHit: boolean = false;
 
     protected contactList: IPhysics2DContact[] = [];
 
@@ -54,21 +50,44 @@ export class Platform extends BaseObject {
         dt = Math.min(dt, 1.0 / 50);
 
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+            let isLeftHit = false;
+            let isRightHit = false;
+            let isTopHit = false;
+            let isBottomHit = false;
             for (var contact of this.contactList) {
-                var points = contact.getWorldManifold().points;
-                var point = points[0];
-                point = noxcc.worldToLocal(this.node.parent, point);
-                if (this.node.position.x < point.x) {
-                    this.isRightHit = true;
+                var selfIsA = contact.colliderA.node == this.node;
+                var normal = contact.getManifold().localNormal;
+                if (normal.x < -0.3) {
+                    if (selfIsA) {
+                        isLeftHit = true;
+                    }
+                    else {
+                        isRightHit = true;
+                    }
                 }
-                else if (this.node.position.x > point.x) {
-                    this.isLeftHit = true;
+                else if (normal.x > 0.3) {
+                    if (selfIsA) {
+                        isRightHit = true;
+                    }
+                    else {
+                        isLeftHit = true;
+                    }
                 }
-                if (this.node.position.y + 8 < point.y) {
-                    this.isTopHit = true;
+                if (normal.y < -0.3) {
+                    if (selfIsA) {
+                        isBottomHit = true;
+                    }
+                    else {
+                        isTopHit = true;
+                    }
                 }
-                else if (this.node.position.y + 8 < point.y) {
-                    this.isBottomHit = true;
+                else if (normal.y > 0.3) {
+                    if (selfIsA) {
+                        isTopHit = true;
+                    }
+                    else {
+                        isBottomHit = true;
+                    }
                 }
             }
 
@@ -76,46 +95,41 @@ export class Platform extends BaseObject {
             var movementY = 0;
             var newSpeedX = this.currSpeedX;
             var newSpeedY = this.currSpeedY;
-            if (this.isLeftHit && this.isRightHit) {
+            if (isLeftHit && isRightHit) {
             }
-            else if (!this.isLeftHit && !this.isRightHit) {
+            else if (!isLeftHit && !isRightHit) {
                 movementX = this.currSpeedX * dt;
             }
-            else if (this.isLeftHit && this.currSpeedX < 0) {
+            else if (isLeftHit && this.currSpeedX < 0) {
                 newSpeedX *= -1;
             }
-            else if (this.isRightHit && this.currSpeedX > 0) {
+            else if (isRightHit && this.currSpeedX > 0) {
                 newSpeedX *= -1;
             }
             else {
                 movementX = this.currSpeedX * dt;
             }
-            if (this.isBottomHit && this.isTopHit) {
+            if (isBottomHit && isTopHit) {
             }
-            else if (!this.isBottomHit && !this.isTopHit) {
+            else if (!isBottomHit && !isTopHit) {
                 movementY = this.currSpeedY * dt;
             }
-            else if (this.isBottomHit && this.currSpeedY < 0) {
+            else if (isBottomHit && this.currSpeedY < 0) {
                 newSpeedY *= -1;
             }
-            else if (this.isTopHit && this.currSpeedY > 0) {
+            else if (isTopHit && this.currSpeedY > 0) {
                 newSpeedY *= -1;
             }
             else {
                 movementX = this.currSpeedX * dt;
             }
-            if (true || newSpeedX != this.currSpeedX || newSpeedY != this.currSpeedY) {
+            if (newSpeedX != this.currSpeedX || newSpeedY != this.currSpeedY) {
                 this.setSpeed(newSpeedX, newSpeedY);
             }
         }
         else {
             MapUtil.addMovement(this.node, this.currSpeedX * dt, this.currSpeedY * dt);
         }
-
-        this.isLeftHit = false;
-        this.isRightHit = false;
-        this.isTopHit = false;
-        this.isBottomHit = false;
     }
 
     onEnable() {
