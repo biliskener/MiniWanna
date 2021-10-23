@@ -46,7 +46,7 @@ export module GameConfig {
     export const jumpGravityScale = 1.0;                    // 跳跃按键按住时的重力缩放
     export const riseGravityScale = 1.0;                    // 上升时的重力缩放
     export const fallGravityScale = 1.0;                    // 下落时的重力缩放
-    export const jumpForceFactor = 22;                      // 跳跃时施加的力的因子, 如果对象面积小，则此值应该小
+    export const jumpForceFactor = 20;                      // 跳跃时施加的力的因子, 如果对象面积小，则此值应该小
     export const slowDownDistance: number = 0.4 * 50 * 50;  // 每秒减速距离
     export const speedUpDistance: number = 0.4 * 50 * 50;   // 每秒加速距离
     export const roundedCornerWidth: number = 0.5;          // 碰撞圆角宽度, 值越小越好，太小会卡脚，太大角色会抖动
