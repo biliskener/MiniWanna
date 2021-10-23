@@ -24,21 +24,22 @@ export class Platform extends BaseObject {
 
     protected contactList: IPhysics2DContact[] = [];
 
-    setSpeed(speedX: number, speedY: number) {
-        this.currSpeedX = speedX;
-        this.currSpeedY = speedY;
-        if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-            this.getComponent(RigidBody2D).linearVelocity = new Vec2(this.currSpeedX / 40, this.currSpeedY / 40);
-            if (this.touchingPlayer) {
-                this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = this.getComponent(RigidBody2D).linearVelocity;
+    setSpeed(x: number, y: number, force?: boolean) {
+        if (force || this.currSpeedX != x || this.currSpeedY != y) {
+            this.currSpeedX = x;
+            this.currSpeedY = y;
+            if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+                var rigidBody = this.getComponent(RigidBody2D);
+                rigidBody.linearVelocity = new Vec2(this.currSpeedX / 40, this.currSpeedY / 40);
+                if (this.touchingPlayer) {
+                    this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = rigidBody.linearVelocity;
+                }
             }
         }
     }
 
     onLoad(): void {
         this.initSpeed = this.initSpeed || new Vec2(0, 0);
-        this.currSpeedX = this.initSpeed.x;
-        this.currSpeedY = this.initSpeed.y;
     }
 
     start(): void {
@@ -46,7 +47,7 @@ export class Platform extends BaseObject {
             collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
             collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
         }
-        this.setSpeed(this.currSpeedX, this.currSpeedY);
+        this.setSpeed(this.initSpeed.x, this.initSpeed.y);
     }
 
     update(dt: number): void {
@@ -126,9 +127,7 @@ export class Platform extends BaseObject {
             else {
                 movementX = this.currSpeedX * dt;
             }
-            if (newSpeedX != this.currSpeedX || newSpeedY != this.currSpeedY) {
-                this.setSpeed(newSpeedX, newSpeedY);
-            }
+            this.setSpeed(newSpeedX, newSpeedY);
         }
         else {
             MapUtil.addMovement(this.node, this.currSpeedX * dt, this.currSpeedY * dt);

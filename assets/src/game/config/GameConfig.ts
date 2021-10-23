@@ -51,7 +51,7 @@ export module GameConfig {
     export const speedUpDistance: number = 0.4 * 50 * 50;   // 每秒加速距离
     export const roundedCornerWidth: number = 0.5;          // 碰撞圆角宽度, 值越小越好，太小会卡脚，太大角色会抖动
     export const roundedCornerHeight: number = 0.2;         // 碰撞圆角高度, 值越小越好，太小会卡脚，太大角色会抖动
-    export const platformMovementFix: number = 0.9;         // 若无修正值，人物无法稳定站在一个移动的平台上，暂无更好的解决方案
+    export const platformMovementFix: number = 0.0;         // 若无修正值，人物无法稳定站在一个移动的平台上，暂无更好的解决方案
     export const triggerCollisionSize: number = 0.5;        // 触发器有效范围
 
     export const spikeSpacing = useIwbtLevels ? 0 : 10;
