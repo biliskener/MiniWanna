@@ -30,9 +30,14 @@ export class Platform extends BaseObject {
             this.currSpeedY = y;
             if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
                 var rigidBody = this.getComponent(RigidBody2D);
-                rigidBody.linearVelocity = new Vec2(this.currSpeedX / 40, this.currSpeedY / 40);
+                var oldSpeedX = rigidBody.linearVelocity.x;
+                var oldSpeedY = rigidBody.linearVelocity.y;
+                var newSpeedX = this.currSpeedX / 40;
+                var newSpeedY = this.currSpeedY / 40;
+                rigidBody.linearVelocity = new Vec2(newSpeedX, newSpeedY);
                 if (this.touchingPlayer) {
-                    this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = rigidBody.linearVelocity;
+                    var playerRigiBdody = this.touchingPlayer.getComponent(RigidBody2D);
+                    playerRigiBdody.linearVelocity = playerRigiBdody.linearVelocity.clone().add2f(newSpeedX - oldSpeedX, newSpeedY - oldSpeedY);
                 }
             }
         }
@@ -40,6 +45,29 @@ export class Platform extends BaseObject {
 
     onLoad(): void {
         this.initSpeed = this.initSpeed || new Vec2(0, 0);
+    }
+
+    onEnable() {
+        this.node.on('transform-changed', this._onNodeTransformChanged, this);
+    }
+
+    onDisable() {
+        this.node.off('transform-changed', this._onNodeTransformChanged, this);
+    }
+
+    _onNodeTransformChanged(type) {
+        if (GameConfig.physicsEngineType == PhysicsEngineType.TUX) {
+            if (PhysicsSystem2D.instance.stepping) {
+                return;
+            }
+
+            if (type & Node.TransformBit.POSITION) {
+                if (this.touchingPlayer) {
+                    noxcc.addXY(this.touchingPlayer.node, this.node.position.x - this.touchingPosition.x, this.node.position.y - this.touchingPosition.y);
+                    this.touchingPosition = this.node.position.clone();
+                }
+            }
+        }
     }
 
     start(): void {

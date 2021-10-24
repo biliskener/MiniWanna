@@ -131,7 +131,7 @@ export class Player extends BaseObject {
 
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
             this.body = this.getComponent(RigidBody2D);
-            this.speed = this.body.linearVelocity;
+            this.speed = this.body.linearVelocity.clone();
             this.gravity = new Vec2(0, GameConfig.gravity * this.body.gravityScale);
         }
         else {
@@ -255,7 +255,7 @@ export class Player extends BaseObject {
                     this.speed = new Vec2(platform.linearVelocity.x, this.body.linearVelocity.y);
                 }
                 else {
-                    this.speed = this.body.linearVelocity;
+                    this.speed = this.body.linearVelocity.clone();
                 }
             }
             else {
