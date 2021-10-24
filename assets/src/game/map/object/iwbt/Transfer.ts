@@ -21,10 +21,12 @@ export class Transfer extends Component {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        if (SceneManager.getRunningSceneId() == SceneId.level) {
-            LevelScene.currenton().loadLevel(selfNode.name, null);
-            GameData.INSTANCE.currSavedData.setLevelAndTile(selfNode.name, null);
-            GameData.INSTANCE.saveGame();
-        }
+        this.scheduleOnce(() => {
+            if (SceneManager.getRunningSceneId() == SceneId.level) {
+                LevelScene.currenton().loadLevel(selfNode.name, null);
+                GameData.INSTANCE.currSavedData.setLevelAndTile(selfNode.name, null);
+                GameData.INSTANCE.saveGame();
+            }
+        });
     }
 }
