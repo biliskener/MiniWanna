@@ -22,6 +22,8 @@ export module GameConfig {
     export const speedUpDuration: number = 0.01;
     export const slowDownDuration: number = 0.01;
     export const enableUseJump2: boolean = true;
+    export const betterJumpSpeed: boolean = true;   // 为true时，起跳有保底值
+    export const betterJump2Speed: boolean = true;  // 为true时，起跳有保底值
 
     export const tileWidth: number = 32;
     export const tileHeight: number = 32;
