@@ -70,19 +70,19 @@
   </object>
   <object id="36" name="trigger07" x="608" y="352" width="32.0417" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor070&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor070&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;blockChange&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="37" name="trigger08" x="576" y="352" width="32" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor080&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor080&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;blockChange&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="38" name="trigger09" x="544" y="352" width="32" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor090&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor090&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;blockChange&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
