@@ -1,4 +1,5 @@
 import { Collider2D, Component, Contact2DType, IPhysics2DContact, Node, TiledTile, _decorator } from "cc";
+import { cc_assert } from "../../../../framework/core/nox";
 import { GameConfig } from "../../../config/GameConfig";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { GameData } from "../../../data/GameData";
@@ -9,11 +10,12 @@ const { ccclass, property, executeInEditMode, requireComponent, executionOrder, 
 @ccclass
 @disallowMultiple
 export class Save extends BaseObject {
-    private tile: TiledTile;
+    private tiledTile: TiledTile;
 
     start() {
+        this.tiledTile = this.getComponent(TiledTile);
+        cc_assert(this.tiledTile);
         this.deactivate();
-
         this.getComponent(Collider2D).on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
     }
 
@@ -27,26 +29,21 @@ export class Save extends BaseObject {
         this.save();
     }
 
-    // 设置图块（为了改变图块）
-    public setTile(tile): void {
-        this.tile = tile;
-    }
-
     // 保存 
     save() {
-        if (this.tile.grid == GameConfig.saveTile) {
+        if (this.tiledTile.grid == GameConfig.saveTile) {
             this.deactivate();
-            GameData.INSTANCE.currSavedData.setLevelAndTile(this.map.levelName, [this.tile.x, this.tile.y]);
+            GameData.INSTANCE.currSavedData.setLevelAndTile(this.map.levelName, [this.tiledTile.x, this.tiledTile.y]);
             GameData.INSTANCE.saveGame();
         }
     }
 
     deactivate() {
-        this.tile.grid = GameConfig.saveDoneTile;
-        this.tile.updateInfo();
+        this.tiledTile.grid = GameConfig.saveDoneTile;
+        this.tiledTile._layer.markForUpdateRenderData(); // updateInfo没有效
         this.scheduleOnce(() => {
-            this.tile.grid = GameConfig.saveTile;
-            this.tile.updateInfo();
+            this.tiledTile.grid = GameConfig.saveTile;
+            this.tiledTile._layer.markForUpdateRenderData();
         }, 3);
     }
 }

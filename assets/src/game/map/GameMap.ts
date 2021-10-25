@@ -291,11 +291,12 @@ export class GameMap extends NoxComponent {
         else if (tile.grid == GameConfig.emptyTile || GameConfig.backgroundTiles.indexOf(tile.grid) >= 0) {
             // 背景，不处理。
         }
-        else if (tile.grid == GameConfig.saveTile) {
+        else if (tile.grid == GameConfig.saveTile || tile.grid == GameConfig.saveDoneTile) {
             // 存档点
             if (isAdd) {
-                var save = tile.node.addComponent(Save);
-                save.setTile(tile);
+                tile.node.addComponent(Save);
+                tile.grid = GameConfig.saveTile;
+                tile._layer.markForUpdateRenderData();
                 collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Trigger, true, tileSize, tileSize.width, tileSize.height);
             }
             else {
@@ -400,7 +401,7 @@ export class GameMap extends NoxComponent {
                 tile._x = x;
                 tile._y = y;
                 tile._layer = layer;
-                tile.updateInfo();
+                tile._layer.markForUpdateRenderData();
                 cherry.parent = layer.node;
                 noxcc.addX(cherry, tileSize.width / 2 - noxcc.aw(tile.node.parent));
                 noxcc.addY(cherry, tileSize.height / 2 - noxcc.ah(tile.node.parent));

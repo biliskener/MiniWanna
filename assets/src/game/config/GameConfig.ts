@@ -28,8 +28,8 @@ export module GameConfig {
     export const blockTile: number = 3;
     export const emptyTile: number = 0;
     export const backgroundTiles: number[] = [11];
-    export const saveTile: number = 15;
-    export const saveDoneTile: number = 16;
+    export const saveTile: number = 16;
+    export const saveDoneTile: number = 15;
     export const spikeDownTile: number = 17;
     export const spikeUpTile: number = 20;
     export const spikeLeftTile: number = 18;
