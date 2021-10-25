@@ -285,7 +285,7 @@
     },
     "jump": 8.5,
     "jump2": 7,
-    "maxSpeed": 3,
+    "maxSpeed": 3.5,
     "maxVspeed": 9,
     "blood": {
       "__uuid__": "46d70735-959c-4fd4-a1b6-1273ecaeaa80",
