@@ -1,6 +1,7 @@
 import { RigidBody2D, Vec2, _decorator } from "cc";
 import { cc_instantiate, cc_view } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
+import { noxSound } from "../../../../../../framework/core/noxSound";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { BaseObject } from "../../../BaseObject";
@@ -40,6 +41,7 @@ export class BossShoot4 extends BaseObject implements BossShootable {
 
     // 发射
     public shoot(): void {
+        //noxSound.playEffect("sound/iwbt/bossHit.mp3");
         let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setX(bullet, 32 + (noxcc.w(bullet) + this.space) / 2 * (this.count % 2) + noxcc.w(bullet) / 2 + this.index * (this.space + noxcc.w(bullet)) - noxcc.aw(this.map.node));
         noxcc.setY(bullet, noxcc.h(this.map.node) + noxcc.h(bullet) / 2 - noxcc.aw(this.map.node));

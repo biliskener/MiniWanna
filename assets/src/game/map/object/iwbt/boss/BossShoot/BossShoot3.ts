@@ -1,5 +1,6 @@
 import { _decorator } from "cc";
 import { noxcc } from "../../../../../../framework/core/noxcc";
+import { noxSound } from "../../../../../../framework/core/noxSound";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { BaseObject } from "../../../BaseObject";
@@ -27,6 +28,7 @@ export class BossShoot3 extends BaseObject implements BossShootable {
 
     // 发射
     public shoot(): void {
+        //noxSound.playEffect("sound/iwbt/bossHit.mp3");
         for (let i = 0; i < 2; i++) {
             let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
             if (i % 2 == 0) {

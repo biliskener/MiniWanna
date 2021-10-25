@@ -67,7 +67,6 @@ export class LevelScene extends BaseScene {
 
         GameData.INSTANCE.currSavedData.dataChangedEvent.addListener(this, this.updateInfoPanel);
 
-        noxSound.playBgWithSoundNames(["sound/iwbt/track01.mp3"]);
         this.updateInfoPanel();
     }
 
@@ -129,6 +128,16 @@ export class LevelScene extends BaseScene {
             }
 
             var loadedCallback = (map: GameMap, mapParentNode: Node) => {
+                if (levelName == "boss") {
+                    noxSound.playBgWithSoundNames(["sound/iwbt/lastboss.mp3"]);
+                }
+                else if (levelName == "end") {
+                    noxSound.playBgWithSoundNames(["sound/iwbt/theta.mp3"]);
+                }
+                else {
+                    noxSound.playBgWithSoundNames(["sound/iwbt/megaman.mp3"]);
+                }
+
                 this.maps[mapIdx] = map;
 
                 noxcc.setParent(mapParentNode, this.node);

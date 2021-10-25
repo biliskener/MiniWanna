@@ -619,7 +619,7 @@ export module noxcc {
 
     export function loadAudioClip(url: string, callback: (err: Error | null, obj: AudioClip) => any): void {
         ++_isLoadingAudio;
-        cc_resources.load(url.replace(/(\.mp3)$/, ""), AudioClip, function (err: Error | null, obj: AudioClip) {
+        cc_resources.load(url.replace(/(\.mp3|\.wav)$/, ""), AudioClip, function (err: Error | null, obj: AudioClip) {
             --_isLoadingAudio;
             callback && callback(err, obj);
         });

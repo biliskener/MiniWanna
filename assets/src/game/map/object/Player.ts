@@ -466,7 +466,7 @@ export class Player extends BaseObject {
             bullet.setPosition(this.node.position.x, this.node.position.y + noxcc.h(this.node) / 3);
             var body = bullet.getComponent(RigidBody2D);
             body.linearVelocity = new Vec2(body.linearVelocity.x *= this.node.scale.x, 0);
-            noxSound.play(this.shootSound);
+            noxSound.playEffect("sound/iwbt/shoot.wav");
         }
     }
 
@@ -484,7 +484,7 @@ export class Player extends BaseObject {
                 if (GameConfig.enableUseJump2) {
                     this.canJump2 = true;
                 }
-                noxSound.play(this.jumpSound);
+                noxSound.playEffect("sound/iwbt/jump.wav");
             }
             else if (this.canJump2) {
                 this.canJump2 = false;
@@ -497,7 +497,7 @@ export class Player extends BaseObject {
                     else {
                         this.speed.y = targetSpeedY;
                     }
-                    noxSound.play(this.dJumpSound);
+                    noxSound.playEffect("sound/iwbt/dJump.wav");
                 }
             }
             this.canJump = false;

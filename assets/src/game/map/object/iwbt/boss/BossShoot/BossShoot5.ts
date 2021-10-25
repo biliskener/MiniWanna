@@ -1,6 +1,7 @@
 import { bits, Node, Rect, RigidBody2D, Vec2, _decorator } from "cc";
 import { cc_isValid, cc_macro, cc_view } from "../../../../../../framework/core/nox";
 import { noxcc } from "../../../../../../framework/core/noxcc";
+import { noxSound } from "../../../../../../framework/core/noxSound";
 import { BulletPrefabMgr } from "../../../../../BulletPrefabMgr";
 import { ObjectGroup } from "../../../../../const/ObjectGroup";
 import { MapUtil } from "../../../../MapUtil";
@@ -42,6 +43,7 @@ export class BossShoot5 extends BaseObject implements BossShootable {
 
     // 发射
     public shoot(): void {
+        //noxSound.playEffect("sound/iwbt/bossHit.mp3");
         this.count++;
         for (let i = 0; i < 3; i++) {
             let bullets: Node[] = [];
@@ -83,6 +85,7 @@ export class BossShoot5 extends BaseObject implements BossShootable {
                     bullets.push(bullet);
                     this.scheduleOnce(() => {
                         if (cc_isValid(bullet)) {
+                            //noxSound.playEffect("sound/iwbt/bossHit.mp3");
                             MapUtil.addCircleCollider(bullet, this.map, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(bullet), noxcc.h(bullet)), 0);
                             MapUtil.setDynamicType(bullet);
                             noxcc.setParent(bullet, this.map.node);

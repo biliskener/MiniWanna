@@ -1,5 +1,6 @@
 import { Collider2D, Contact2DType, IPhysics2DContact, Node, TiledObjectGroup, Vec3, _decorator } from "cc";
 import { cc_assert, cc_isValid, cc_tween, cc_view } from "../../../../framework/core/nox";
+import { noxSound } from "../../../../framework/core/noxSound";
 import { ObjectTag } from "../../../const/ObjectTag";
 import { CollisionObject } from "../../collision/CollisionObject";
 import { MapUtil } from "../../MapUtil";
@@ -16,7 +17,8 @@ export class Move extends BaseObject {
         distance: number;               // 距离（0 为飞出屏幕外）
         speed: number;                  // 速度
         remove: boolean;                // 移动完删除（不能删除，所以比例设为 0），防止隐藏在方块底下的尖刺依旧和玩家发生碰撞
-        layer: string,                  // 移动的图块对象所在的图层（默认 Layer2）
+        layer: string,                  // 移动的图块对象所在的图层
+        sound: string                   // 触发时的声音
     };
 
     private layer: TiledObjectGroup;
@@ -41,6 +43,9 @@ export class Move extends BaseObject {
         if (!this.hasTriggered) {
             this.hasTriggered = true;
             this.movingObjects = [];
+            if (this.params.sound) {
+                noxSound.playEffect(`sound/iwbt/${this.params.sound}.wav`);
+            }
             for (let i in this.params.objects) {
                 let name = this.params.objects[i];
                 let targetNode = this.layer.node.getChildByName(name);

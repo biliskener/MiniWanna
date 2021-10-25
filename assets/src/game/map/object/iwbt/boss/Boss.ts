@@ -13,6 +13,7 @@ import { BossShoot4 } from "./BossShoot/BossShoot4";
 import { BossShoot5 } from "./BossShoot/BossShoot5";
 import { BossShoot6 } from "./BossShoot/BossShoot6";
 import { BossShoot7 } from "./BossShoot/BossShoot7";
+import { noxSound } from "../../../../../framework/core/noxSound";
 
 const { ccclass, property, executeInEditMode, disallowMultiple, requireComponent, executionOrder } = _decorator;
 
@@ -59,6 +60,9 @@ export class Boss extends BaseObject {
                         this.success = true;
                         noxcc.setZOrder(this.node, 1);
                         cc_tween(this.node)
+                            .call(() => {
+                                noxSound.playEffect("sound/iwbt/blockChange.wav");
+                            })
                             .to(0.5, { scale: new Vec3(0.07, 0.07, 1) })
                             .to(0.5, { position: new Vec3(320, -272) })
                             .call(() => {

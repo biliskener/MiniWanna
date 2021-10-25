@@ -36,7 +36,7 @@
  <objectgroup id="2" name="Trigger">
   <object id="32" name="trigger01" x="224" y="544" width="64" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike010&quot;,&quot;spike011&quot;,&quot;spike012&quot;],&quot;direction&quot;:&quot;right&quot;,&quot;distance&quot;:32,&quot;speed&quot;:100}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike010&quot;,&quot;spike011&quot;,&quot;spike012&quot;],&quot;direction&quot;:&quot;right&quot;,&quot;distance&quot;:32,&quot;speed&quot;:100,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="params2" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike020&quot;,&quot;spike021&quot;,&quot;spike022&quot;],&quot;direction&quot;:&quot;left&quot;,&quot;distance&quot;:32,&quot;speed&quot;:100}"/>
     <property name="script" value="Move"/>
     <property name="script2" value="Move"/>
@@ -44,7 +44,7 @@
   </object>
   <object id="34" name="trigger03" x="480" y="416" width="32" height="96">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike030&quot;,&quot;spike032&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300,&quot;remove&quot;:true}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike030&quot;,&quot;spike032&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300,&quot;remove&quot;:true,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="params2" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike031&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300}"/>
     <property name="script" value="Move"/>
     <property name="script2" value="Move"/>
@@ -52,67 +52,67 @@
   </object>
   <object id="33" name="trigger04" x="384" y="448" width="64" height="128">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike040&quot;,&quot;spike041&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:300}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike040&quot;,&quot;spike041&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:300,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="35" name="trigger05" x="544" y="544" width="96" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike050&quot;,&quot;spike051&quot;,&quot;spike052&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike050&quot;,&quot;spike051&quot;,&quot;spike052&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="46" name="trigger06" x="64" y="288" width="32" height="96">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike060&quot;,&quot;spike061&quot;,&quot;spike062&quot;],&quot;direction&quot;:&quot;right&quot;,&quot;distance&quot;:0,&quot;speed&quot;:200}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike060&quot;,&quot;spike061&quot;,&quot;spike062&quot;],&quot;direction&quot;:&quot;right&quot;,&quot;distance&quot;:0,&quot;speed&quot;:200,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="36" name="trigger07" x="608" y="352" width="32.0417" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor070&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor070&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="37" name="trigger08" x="576" y="352" width="32" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor080&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor080&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="38" name="trigger09" x="544" y="352" width="32" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor090&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;floor090&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;break&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="39" name="trigger10" x="448" y="288" width="32" height="96">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry100&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry100&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;cherry&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="40" name="trigger11" x="288" y="288" width="32" height="96">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry110&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry110&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;cherry&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="43" name="trigger12" x="416" y="32" width="32" height="224">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry120&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry120&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;cherry&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="44" name="trigger13" x="320" y="32" width="32" height="224">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry130&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;cherry130&quot;],&quot;direction&quot;:&quot;up&quot;,&quot;distance&quot;:0,&quot;speed&quot;:500,&quot;sound&quot;:&quot;cherry&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="49" name="trigger14" x="1248" y="224" width="32" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike140&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:32,&quot;speed&quot;:200}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike140&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:32,&quot;speed&quot;:200,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="params2" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike141&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:32,&quot;speed&quot;:200}"/>
     <property name="script" value="Move"/>
     <property name="script2" value="Move"/>
@@ -120,13 +120,13 @@
   </object>
   <object id="51" name="trigger15" x="1088" y="192" width="64" height="32">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike150&quot;],&quot;direction&quot;:&quot;left&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike150&quot;],&quot;direction&quot;:&quot;left&quot;,&quot;distance&quot;:32,&quot;speed&quot;:300,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="script" value="Move"/>
    </properties>
   </object>
   <object id="52" name="trigger16" x="1440" y="32" width="32" height="128">
    <properties>
-    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike160&quot;],&quot;direction&quot;:&quot;left&quot;,&quot;distance&quot;:0,&quot;speed&quot;:300}"/>
+    <property name="params" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike160&quot;],&quot;direction&quot;:&quot;left&quot;,&quot;distance&quot;:0,&quot;speed&quot;:300,&quot;sound&quot;:&quot;gras&quot;}"/>
     <property name="params2" value="{&quot;layer&quot;:&quot;Layer1&quot;,&quot;objects&quot;:[&quot;spike161&quot;],&quot;direction&quot;:&quot;down&quot;,&quot;distance&quot;:0,&quot;speed&quot;:300}"/>
     <property name="script" value="Move"/>
     <property name="script2" value="Move"/>

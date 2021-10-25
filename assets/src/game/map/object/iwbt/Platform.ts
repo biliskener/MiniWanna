@@ -1,6 +1,7 @@
 import { Collider2D, Contact2DType, IPhysics2DContact, Node, PhysicsSystem2D, RigidBody, RigidBody2D, sp, TiledMap, Vec2, Vec3, _decorator } from "cc";
 import { cc_assert } from "../../../../framework/core/nox";
 import { noxcc } from "../../../../framework/core/noxcc";
+import { noxSound } from "../../../../framework/core/noxSound";
 import { MapUtil } from "../../../../game/map/MapUtil";
 import { GameConfig, PhysicsEngineType } from "../../../config/GameConfig";
 import { ObjectGroup } from "../../../const/ObjectGroup";
@@ -167,6 +168,7 @@ export class Platform extends BaseObject {
             this.touchingPlayer = otherCollider;
             this.touchingPosition = this.node.position.clone();
             this.touchingPlayer.getComponent(RigidBody2D).linearVelocity = this.getComponent(RigidBody2D).linearVelocity;
+            noxSound.playEffect("sound/iwbt/wallum.wav");
         }
         else if (otherCollider.group == ObjectGroup.Block || otherCollider.group == ObjectGroup.Platform) {
             if (contact) {
