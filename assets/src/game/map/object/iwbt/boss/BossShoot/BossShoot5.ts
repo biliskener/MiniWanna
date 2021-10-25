@@ -81,7 +81,7 @@ export class BossShoot5 extends BaseObject implements BossShootable {
                     noxcc.setY(bullet, centreY + this.radius * sin);
                     bullet["__speedX"] = this.params.speed2 * cos;
                     bullet["__speedY"] = this.params.speed2 * sin;
-                    bullet.angle = angle;
+                    bullet.angle = angle % 360;
                     bullets.push(bullet);
                     this.scheduleOnce(() => {
                         if (cc_isValid(bullet)) {
