@@ -31,7 +31,7 @@ export class LayerTrigger extends BaseObject {
     }
 
     private onContact(otherNode: Node, selfNode: Node): void {
-        noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
+        //noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
         this.map.deferredActivateNode(this.node, !!this.params.visibleWhenActivated);
         this.map.requestPause();
         var doTransition = (cross: boolean) => {
@@ -51,7 +51,7 @@ export class LayerTrigger extends BaseObject {
                 layer.getComponent(LayerVisibility).doTransition(() => {
                     if (++doneCount == layers.length) {
                         if (cross) {
-                            noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
+                            //noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
                             LevelScene.currenton().unloadCrossLevel();
                         }
                         this.map.applyGravity();

@@ -82,12 +82,12 @@ export class LevelScene extends BaseScene {
     private loadLevelEx(mapIdx: number, levelName: string, targetTile: [number, number], needSave?: boolean, levelLoadedCallback?: () => any): void {
         this.unloadLevelEx(mapIdx);
 
-        let mapPrefabName = GameConfig.useIwbtLevels ? "prefab/iwbt/map" : "prefab/escape/map";
+        let mapPrefabName = "prefab/iwbt/map";
         noxcc.loadPrefab(mapPrefabName, (err: Error, mapPrefab: Prefab) => {
             if (!cc_isValid(this)) return;
 
             if (GameConfig.useRawTileMapAssets) {
-                let tiledMapName = (GameConfig.useIwbtLevels ? "tiled/iwbt/" : "tiled/escape/") + levelName;
+                let tiledMapName = "tiled/iwbt/" + levelName;
                 noxcc.loadTmxAsset(tiledMapName, (err: Error, tmxAsset: TiledMapAsset) => {
                     if (!cc_isValid(this)) return;
 
@@ -102,7 +102,7 @@ export class LevelScene extends BaseScene {
                 });
             }
             else {
-                let levelPrefabName = (GameConfig.useIwbtLevels ? "level/iwbt/" : "level/escape/") + levelName;
+                let levelPrefabName = "level/iwbt/" + levelName;
                 noxcc.loadPrefab(levelPrefabName, (err: Error, prefab: Prefab) => {
                     if (!cc_isValid(this)) return;
 

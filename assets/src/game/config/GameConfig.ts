@@ -7,7 +7,6 @@ export enum PhysicsEngineType {
 
 export module GameConfig {
     export const invincibleMode: boolean = false;
-    export const useIwbtLevels: boolean = true;
     export const usePhysicsDraw: boolean = false;
     export const useRawTileMapAssets: boolean = false;   // 直接使用TiledMap资源，而不是使用预制作为关卡
     export const physicsEngineType: PhysicsEngineType = PhysicsSystem2D.PHYSICS_BOX2D ? PhysicsEngineType.BOX2D : PhysicsEngineType.TUX;
@@ -57,8 +56,8 @@ export module GameConfig {
     export const platformMovementFix: number = 0.0;         // 若无修正值，人物无法稳定站在一个移动的平台上，暂无更好的解决方案
     export const triggerCollisionSize: number = 0.5;        // 触发器有效范围
 
-    export const spikeSpacing = useIwbtLevels ? 1 : 10;
-    export const spikeIsRect = useIwbtLevels ? false : physicsEngineType == PhysicsEngineType.BOX2D;
+    export const spikeSpacing = 1;
+    export const spikeIsRect = false;
 
     export const spikeGids = [GameConfig.spikeDownTile, GameConfig.spikeLeftTile, GameConfig.spikeUpTile, GameConfig.spikeRightTile];
 }

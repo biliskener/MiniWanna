@@ -544,27 +544,12 @@ export class Player extends BaseObject {
                 }
 
                 this.playerDeathPos = this.node.getPosition();
-                // GM8 的 I wanna 引擎是 20 帧，每帧 40 个血，会比较卡，改成 32 帧，每帧 25 个血。  
-                if (GameConfig.useIwbtLevels) {
-                    noxSound.playEffect("sound/iwbt/break.wav");
-                    this.node.setScale(0, 0);
-                    this.schedule(this.bloodEmitter, 0.01, 32, 0.01);
-                    this.schedule(() => {
-                        LevelScene.currenton().reloadLevel();
-                    }, 1, 0, 1.5);
-                }
-                else {
-                    noxSound.playEffect("sound/escape/BgsRoleDie.mp3");
-                    noxcc.setNodeOpacity(this.node, 0);
-                    var animation = this.getDeadAnim();
-                    noxcc.setZOrder(animation.node, 1);
-                    animation.node.active = true;
-                    animation.play("dead");
-                    this.schedule(() => {
-                        animation.node.active = false;
-                        LevelScene.currenton().reloadLevel();
-                    }, 1, 0, animation.defaultClip.duration + 0.5);
-                }
+                noxSound.playEffect("sound/iwbt/break.wav");
+                this.node.setScale(0, 0);
+                this.schedule(this.bloodEmitter, 0.01, 32, 0.01);
+                this.schedule(() => {
+                    LevelScene.currenton().reloadLevel();
+                }, 1, 0, 1.5);
             }
         }
     }

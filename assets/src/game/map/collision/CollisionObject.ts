@@ -175,12 +175,7 @@ export class CollisionObject extends Component {
                     return CollisionGroup.COLGROUP_MOVING;
                     break;
                 case ObjectGroup.Platform:
-                    if (GameConfig.useIwbtLevels) {
-                        return CollisionGroup.COLGROUP_MOVING_STATIC;
-                    }
-                    else {
-                        return CollisionGroup.COLGROUP_STATIC;
-                    }
+                    return CollisionGroup.COLGROUP_MOVING_STATIC;
                     break;
                 default:
                     cc_assert(false, "fatal error");
