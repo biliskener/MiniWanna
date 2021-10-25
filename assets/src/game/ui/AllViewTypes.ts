@@ -9,13 +9,6 @@ export const AllViewTypes = {
         resPath: "scene/LevelScene",
     },
 
-    GameScene: {
-        flags: ViewFlag.Main,
-        module: ZOrder.scene,
-        hierarchy: 1,
-        resPath: "scene/GameScene",
-    },
-
     SplashScene: {
         flags: ViewFlag.Main,
         module: ZOrder.scene,

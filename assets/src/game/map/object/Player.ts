@@ -525,8 +525,6 @@ export class Player extends BaseObject {
         if (sceneId == SceneId.select) {
             this.restartScene();
         }
-        else if (sceneId == SceneId.end) {
-        }
         else {
             if (this.playerStatus != PlayerStatus.PLAYER_DEATH) {
                 this.setPlayerStatus(PlayerStatus.PLAYER_DEATH);
