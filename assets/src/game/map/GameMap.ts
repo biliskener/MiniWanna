@@ -168,6 +168,7 @@ export class GameMap extends NoxComponent {
     private makeMapColliderBy(layerName: string): boolean {
         let layer = this.tiledMap.getLayer(layerName);
         if (layer) {
+            layer.node.active = true;
             let tileSize = layer.getMapTileSize();
             let layerSize = layer.getLayerSize();
             for (let y = 0; y < layerSize.height; ++y) {
@@ -190,6 +191,7 @@ export class GameMap extends NoxComponent {
 
         let objectGroup = this.tiledMap.getObjectGroup(layerName);
         if (objectGroup) {
+            objectGroup.node.active = true;
             let tileWidth = this.tiledMap.getTileSize().width;
             let tileHeight = this.tiledMap.getTileSize().height;
             let objects = objectGroup.getObjects();
@@ -430,6 +432,13 @@ export class GameMap extends NoxComponent {
 
         if (SceneManager.getRunningSceneId() == SceneId.select) {
             return;
+        }
+
+        for (var layerName of ["Impossible", "VeryHard", "Hard", "Medium"]) {
+            var tiledLayer = this.tiledMap.getLayer(layerName);
+            if (tiledLayer) tiledLayer.node.active = false;
+            var objectLayer = this.tiledMap.getLayer(layerName);
+            if (objectLayer) objectLayer.node.active = false;
         }
         if (GameData.INSTANCE.currSavedData.mode == "Impossible") return;
         this.makeMapColliderBy("VeryHard");
