@@ -278,33 +278,34 @@ export class Player extends BaseObject {
             }
 
             //4. 调整水平速度
+            var platformSpeedX = platform ? platform.linearVelocity.x : 0;
             if (this.leftButton) {
                 if (GameConfig.useSpeedUp) {
-                    this.speed.x = Math.max(-this.maxSpeed, this.speed.x - GameConfig.speedUpDistance * dt);
+                    this.speed.x = Math.max(platformSpeedX - this.maxSpeed, this.speed.x - this.maxSpeed / GameConfig.speedUpDuration * dt);
                 }
                 else {
-                    this.speed.x = (platform ? platform.linearVelocity.x : 0) - this.maxSpeed;
+                    this.speed.x = platformSpeedX - this.maxSpeed;
                 }
             }
             else if (this.rightButton) {
                 if (GameConfig.useSpeedUp) {
-                    this.speed.x = Math.min(this.maxSpeed, this.speed.x + GameConfig.speedUpDistance * dt);
+                    this.speed.x = Math.min(platformSpeedX + this.maxSpeed, this.speed.x + this.maxSpeed / GameConfig.speedUpDuration * dt);
                 }
                 else {
-                    this.speed.x = (platform ? platform.linearVelocity.x : 0) + this.maxSpeed;
+                    this.speed.x = platformSpeedX + this.maxSpeed;
                 }
             }
             else {
                 if (GameConfig.useSlowDown) {
-                    if (this.speed.x > 0) {
-                        this.speed.x = Math.max(0, this.speed.x - GameConfig.slowDownDistance * dt);
+                    if (this.speed.x > platformSpeedX) {
+                        this.speed.x = Math.max(platformSpeedX, this.speed.x - this.maxSpeed / GameConfig.slowDownDuration * dt);
                     }
-                    else if (this.speed.x < 0) {
-                        this.speed.x = Math.min(0, this.speed.x + GameConfig.slowDownDistance * dt);
+                    else if (this.speed.x < platformSpeedX) {
+                        this.speed.x = Math.min(platformSpeedX, this.speed.x + this.maxSpeed / GameConfig.slowDownDuration * dt);
                     }
                 }
                 else {
-                    this.speed.x = (platform ? platform.linearVelocity.x : 0) + 0;
+                    this.speed.x = platformSpeedX + 0;
                 }
             }
 
@@ -340,12 +341,20 @@ export class Player extends BaseObject {
                     this.body.gravityScale = GameConfig.riseGravityScale;
                 }
                 //8.1 若不应用水平速度则直接修改位移
-                if (!GameConfig.applyHorizontalSpeed) {
+                if (!GameConfig.applyHorizontalSpeed && !GameConfig.applyHorizontalImpulse) {
                     noxcc.addX(this.node, this.speed.x * dt);
                     this.speed.x = 0;
                 }
                 //8.2 速度应用到物理引擎
-                this.body.linearVelocity = this.speed;
+                if (GameConfig.applyHorizontalImpulse) {
+                    if (this.body.linearVelocity.x != this.speed.x) {
+                        var horzImpulse = (this.speed.x - this.body.linearVelocity.x) * this.body.getMass();
+                        this.body.applyLinearImpulseToCenter(new Vec2(horzImpulse, 0), true);
+                    }
+                }
+                else {
+                    this.body.linearVelocity = this.speed;
+                }
             }
             else {
                 //9. 调整位移
@@ -480,7 +489,12 @@ export class Player extends BaseObject {
                 this.canJump2 = false;
                 // 下降阶段才能二段跳
                 if (this.playerStatus == PlayerStatus.PLAYER_FALL) {
-                    this.speed.y = this.jump2;
+                    if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
+                        this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, this.jump2 * GameConfig.jumpForceFactor), true);
+                    }
+                    else {
+                        this.speed.y = this.jump2;
+                    }
                     noxSound.play(this.dJumpSound);
                 }
             }
