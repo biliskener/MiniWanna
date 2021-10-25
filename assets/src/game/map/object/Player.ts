@@ -404,7 +404,7 @@ export class Player extends BaseObject {
             }
         }
         else {
-            if (otherCollider.group == ObjectGroup.Spike) {
+            if (otherCollider.group == ObjectGroup.Spike || otherCollider.group == ObjectGroup.BossBullet1 || otherCollider.group == ObjectGroup.BossBullet2) {
                 if (!GameConfig.invincibleMode && !this.invincible) {
                     this.isDying = true;
                 }
