@@ -574,9 +574,8 @@ export class GameMap extends NoxComponent {
                     cc_assert(object.name != "");
                     node.name = object.name;
 
-                    var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
+                    MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
                     MapUtil.setKinematicType(node);
-                    collider.offset.y += noxcc.h(node) / 2;
                 }
             }
         }
