@@ -474,12 +474,12 @@ export class Player extends BaseObject {
     private playerJump(): void {
         if (this.canJump) {
             if (this.touchedFootColliders.length > 0 || this.isHitBottom) {
-                var targetSpeedY = GameConfig.betterJump2Speed ? this.jump + Math.max(0, -this.body.linearVelocity.y) : this.jump;
                 if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
+                    var targetSpeedY = GameConfig.betterJump2Speed ? this.jump + Math.max(0, -this.body.linearVelocity.y) : this.jump;
                     this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, targetSpeedY * GameConfig.jumpForceFactor), true);
                 }
                 else {
-                    this.speed.y = targetSpeedY;
+                    this.speed.y = this.jump;
                 }
                 if (GameConfig.enableUseJump2) {
                     this.canJump2 = true;
@@ -490,12 +490,12 @@ export class Player extends BaseObject {
                 this.canJump2 = false;
                 // 下降阶段才能二段跳
                 if (this.playerStatus == PlayerStatus.PLAYER_FALL) {
-                    var targetSpeedY = GameConfig.betterJump2Speed ? this.jump2 + Math.max(0, -this.body.linearVelocity.y) : this.jump2;
                     if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
+                        var targetSpeedY = GameConfig.betterJump2Speed ? this.jump2 + Math.max(0, -this.body.linearVelocity.y) : this.jump2;
                         this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, targetSpeedY * GameConfig.jumpForceFactor), true);
                     }
                     else {
-                        this.speed.y = targetSpeedY;
+                        this.speed.y = this.jump2;
                     }
                     noxSound.playEffect("sound/iwbt/dJump.wav");
                 }
