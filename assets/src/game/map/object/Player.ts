@@ -166,14 +166,14 @@ export class Player extends BaseObject {
                 break;
             case KeyCode.ARROW_UP:
             case KeyCode.SHIFT_LEFT:
-            case KeyCode.KEY_L:
+            case KeyCode.KEY_K:
                 if (!this.jumpButton) {
                     this.canJump = true;
                     this.jumpButton = true;
                 }
                 break;
             case KeyCode.KEY_Z:
-            case KeyCode.KEY_K:
+            case KeyCode.KEY_J:
                 if (!this.shootButton) {
                     this.canShoot = true;
                     this.shootButton = true;
@@ -201,12 +201,12 @@ export class Player extends BaseObject {
                 break;
             case KeyCode.ARROW_UP:
             case KeyCode.SHIFT_LEFT:
-            case KeyCode.KEY_L:
+            case KeyCode.KEY_K:
                 this.playerStopJump();
                 this.jumpButton = false;
                 break;
             case KeyCode.KEY_Z:
-            case KeyCode.KEY_K:
+            case KeyCode.KEY_J:
                 this.shootButton = false;
                 break;
         }
