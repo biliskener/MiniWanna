@@ -253,7 +253,7 @@ export class GameMap extends NoxComponent {
                         node.destroy();
                         node = cherry;
                     }
-                    else if (object.gid == GameConfig.blockTile) {
+                    else if (GameConfig.blockTiles.indexOf(object.gid) >= 0) {
                         MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
                     }
                     else {
@@ -381,11 +381,21 @@ export class GameMap extends NoxComponent {
                 MapUtil.removeCollider(tile.node);
             }
         }
+        else if (tile.grid == GameConfig.vineLeftTile) {
+            cc_assert(false);
+            // 左蔓藤，没实现。
+        }
         else if (tile.grid == GameConfig.vineRightTile) {
+            cc_assert(false);
             // 右蔓藤，没实现。
         }
-        else if (tile.grid == GameConfig.vineLeftTile) {
+        else if (tile.grid == GameConfig.vineUpTile) {
+            cc_assert(false);
             // 左蔓藤，没实现。
+        }
+        else if (tile.grid == GameConfig.vineDownTile) {
+            cc_assert(false);
+            // 右蔓藤，没实现。
         }
         else if (tile.grid == GameConfig.transferTile) {
             // 传送门，由于没法区分多个门，所以在对象层里处理。

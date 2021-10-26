@@ -29,19 +29,19 @@ export module GameConfig {
 
     export const rebornTile: number = 14;
     export const platformTile: number = 2;
-    export const blockTile: number = 3;
+    export const blockTiles: number[] = [1, 3, 6, 7, 8, 9, 10, 12];
     export const emptyTile: number = 0;
-    export const backgroundTiles: number[] = [11];
-    export const saveTile: number = 16;
+    export const backgroundTiles: number[] = [4, 5, 11, 13];
     export const saveDoneTile: number = 15;
+    export const saveTile: number = 16;
     export const spikeDownTile: number = 17;
     export const spikeUpTile: number = 20;
     export const spikeLeftTile: number = 18;
     export const spikeRightTile: number = 19;
     export const vineDownTile: number = -1;
     export const vineUpTile: number = -1;
-    export const vineLeftTile: number = -1;
-    export const vineRightTile: number = -1;
+    export const vineLeftTile: number = 22;
+    export const vineRightTile: number = 21;
     export const transferTile: number = 23;
     export const cherryTile: number = 24;
 
