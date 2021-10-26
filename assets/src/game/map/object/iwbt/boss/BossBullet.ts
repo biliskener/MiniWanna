@@ -28,7 +28,7 @@ export class BossBullet extends BaseObject {
         cameraRect.height += 300;
         if (!cameraRect.contains(pos)) {
             MapUtil.removeCollider(this.node);
-            this.node.destroy();
+            this.node._destroyImmediate();
         }
     }
 

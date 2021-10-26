@@ -51,9 +51,11 @@ export class BossShoot2 extends BaseObject implements BossShootable {
         for (let i = 0; i < this.bullets.length; i++) {
             let bullet = this.bullets[i];
             if (cc_isValid(bullet)) {
-                MapUtil.removeCollider(bullet);
                 cc_tween(bullet)
                     .to(0.5, { scale: new Vec3(0.5, 0.5, 1) })
+                    .call(() => {
+                        MapUtil.removeCollider(bullet);
+                    })
                     .removeSelf()
                     .start();
             }
