@@ -53,9 +53,6 @@ export class BossShoot2 extends BaseObject implements BossShootable {
             if (cc_isValid(bullet)) {
                 cc_tween(bullet)
                     .to(0.5, { scale: new Vec3(0.5, 0.5, 1) })
-                    .call(() => {
-                        MapUtil.removeCollider(bullet);
-                    })
                     .removeSelf()
                     .start();
             }

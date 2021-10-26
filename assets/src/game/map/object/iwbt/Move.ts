@@ -80,7 +80,6 @@ export class Move extends BaseObject {
                         .by(duration, { position: position })
                         .call(() => {
                             if (this.params.remove || this.params.distance <= 0) {
-                                MapUtil.removeCollider(targetNode);
                                 targetNode._destroyImmediate();
                             }
                         })
@@ -104,7 +103,6 @@ export class Move extends BaseObject {
                     MapUtil.addMovement(targetNode, stopPosition.x - curPosition.x, stopPosition.y - curPosition.y);
                     if (this.params.remove || this.params.distance <= 0) {
                         movingObject.isMoving = false;
-                        MapUtil.removeCollider(targetNode);
                         targetNode._destroyImmediate();
                     }
                 }

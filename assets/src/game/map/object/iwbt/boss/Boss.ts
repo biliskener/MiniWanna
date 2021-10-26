@@ -65,9 +65,6 @@ export class Boss extends BaseObject {
                             })
                             .to(0.5, { scale: new Vec3(0.07, 0.07, 1) })
                             .to(0.5, { position: new Vec3(320, -272) })
-                            .call(() => {
-                                MapUtil.removeCollider(this.node);
-                            })
                             .removeSelf()
                             .start();
                     }
