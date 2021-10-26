@@ -70,13 +70,14 @@ export class GameMap extends NoxComponent {
     }
 
     start(): void {
+        this.makeMapEdges();
+
         this.makeLayerComponents();
         this.makeRigidSquares();
 
         this.makeMapColliders();
         this.makeObjects("Object");
         this.makeObjects("Transfer");
-        this.makeMapEdges();
 
         this.makeMapTriggers();
 
@@ -413,8 +414,7 @@ export class GameMap extends NoxComponent {
         var objectGroup = this.tiledMap.getObjectGroup("Trigger");
         if (objectGroup) {
             var objects = objectGroup.getObjects();
-            for (var i in objects) {
-                var object = objects[i];
+            for (var object of objects) {
                 var node: Node = null;
                 if (object.type == 0) {
                     node = noxcc.newNode(object.name != "" ? object.name : "object" + object.id);
@@ -434,10 +434,10 @@ export class GameMap extends NoxComponent {
 
                 // 矩形区域
                 if (object.type == 0) {
-                    noxcc.setX(node, object.x - noxcc.aw(node.parent));
-                    noxcc.setY(node, object.y - object.height - noxcc.ah(node.parent));
-                    noxcc.addX(node, noxcc.aw(node));
-                    noxcc.addY(node, noxcc.ah(node));
+                    var posX = object.x - noxcc.aw(node.parent);
+                    var posY = object.y - object.height - noxcc.ah(node.parent);
+                    noxcc.setPosAR(node, posX + noxcc.aw(node), posY + noxcc.ah(node));
+                    MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
                 }
                 else if (object.type == 4) {
                 }
@@ -446,8 +446,7 @@ export class GameMap extends NoxComponent {
                 }
 
                 // 添加触发区域对应的组件与参数，可多个。
-                var j = 1;
-                while (true) {
+                for (var j = 1; ; ++j) {
                     var id = (j == 1 ? "" : String(j));
                     if (object["script" + id]) {
                         var trigger = node.addComponent(object["script" + id]);
@@ -461,16 +460,6 @@ export class GameMap extends NoxComponent {
                     } else {
                         break;
                     }
-                    j++;
-                }
-
-                if (object.type == 0) {
-                    MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
-                }
-                else if (object.type == 4) {
-                }
-                else {
-                    cc_assert(false);
                 }
             }
         }
