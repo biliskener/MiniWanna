@@ -167,122 +167,6 @@ export class GameMap extends NoxComponent {
         }
     }
 
-    // 制作该图层的碰撞组件（包括创建玩家、存档点和樱桃等）  
-    private makeMapColliderBy(layerName: string): boolean {
-        let layer = this.tiledMap.getLayer(layerName);
-        if (layer) {
-            layer.node.active = true;
-            let tileSize = layer.getMapTileSize();
-            let layerSize = layer.getLayerSize();
-            for (let y = 0; y < layerSize.height; ++y) {
-                for (let x = 0; x < layerSize.width; ++x) {
-                    let tile: TiledTile = layer.getTiledTileAt(x, y, true);
-                    if (tile.grid != 0) {
-                        this.onTileAdd(tile);
-                    }
-                }
-            }
-            return true;
-        }
-
-        let objectGroup = this.tiledMap.getObjectGroup(layerName);
-        if (objectGroup) {
-            objectGroup.node.active = true;
-            let tileWidth = this.tiledMap.getTileSize().width;
-            let tileHeight = this.tiledMap.getTileSize().height;
-            let objects = objectGroup.getObjects();
-            for (let object of objects) {
-                if (object.gid && object.gid != 0) {
-                    let node = objectGroup.node.getChildByName("img" + object.id);
-                    cc_assert(node);
-                    if (GameConfig.spikeIsRect && GameConfig.spikeGids.indexOf(object.gid) >= 0) {
-                        MapUtil.addCircleCollider(node, this, ObjectGroup.Spike, true, new Rect(
-                            GameConfig.spikeSpacing, GameConfig.spikeSpacing,
-                            noxcc.w(node) - GameConfig.spikeSpacing * 2,
-                            noxcc.h(node) - GameConfig.spikeSpacing * 2,
-                        ), 0);
-                        node.addComponent(Spike);
-                    }
-                    else if (object.gid == GameConfig.spikeDownTile) {
-                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
-                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) / 2, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
-                        ]);
-                        node.addComponent(Spike);
-                    }
-                    else if (object.gid == GameConfig.spikeLeftTile) {
-                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
-                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) / 2),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
-                        ]);
-                        node.addComponent(Spike);
-                    }
-                    else if (object.gid == GameConfig.spikeRightTile) {
-                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
-                            new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) / 2),
-                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
-                        ]);
-                        node.addComponent(Spike);
-                    }
-                    else if (object.gid == GameConfig.spikeUpTile) {
-                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
-                            new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
-                        ]);
-                        node.addComponent(Spike);
-                    }
-                    else if (object.gid == GameConfig.cherryTile) {
-                        var cherry = cc_instantiate(this.cherryPrefab);
-                        cherry.getComponent(Animation).enabled = true;
-                        cherry.getComponent(BossBullet).enabled = false;
-                        noxcc.setPosAR(cherry, node.position.x + tileWidth / 2, node.position.y + tileHeight / 2);
-                        MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
-                        MapUtil.setDynamicType(cherry);
-                        cherry.parent = node.parent;
-                        node.destroy();
-                        node = cherry;
-                    }
-                    else if (GameConfig.blockTiles.indexOf(object.gid) >= 0) {
-                        MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
-                    }
-                    else {
-                        cc_assert(false);
-                    }
-                    if (object.name != "") {
-                        cc_assert(node.parent.getChildByName(object.name) == null);
-                        node.name = object.name;
-                    }
-
-                    // 添加自定义组件
-                    for (var j = 1; ; ++j) {
-                        var id = (j == 1 ? "" : String(j));
-                        if (object["script" + id]) {
-                            var component = node.addComponent(object["script" + id]);
-                            var params = object["params" + id];
-                            if (params && params.match(/^[\[\{]/)) {
-                                component["params"] = JSON.parse(params);
-                            }
-                            else {
-                                component["params"] = params;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                }
-                else {
-                    cc_assert(false);
-                }
-            }
-            return true;
-        }
-        return false;
-    }
-
     private onTileAdd(tile: TiledTile): void {
         var layer = tile.node.parent.getComponent(TiledLayer);
 
@@ -401,167 +285,55 @@ export class GameMap extends NoxComponent {
         }
     }
 
-    // 制作碰撞组件 
-    private makeMapColliders(): void {
-        for (let i = 1; i < 99; ++i) {
-            this.makeMapColliderBy("Layer" + i)
-        }
+    private makeMapEdges(): void {
+        var tileSize = this.tiledMap.getTileSize();
+        var bbox = noxcc.arect(this.node);
+        var ext = 3;
+        var edges: { [key: string]: Rect } = {
+            left: new Rect(
+                bbox.xMin - tileSize.width * 10,
+                bbox.yMin - tileSize.height * ext,
+                tileSize.width * 10,
+                bbox.height + tileSize.height * ext * 2
+            ),
+            right: new Rect(
+                bbox.xMax,
+                bbox.yMin - tileSize.height * ext,
+                tileSize.width * 10,
+                bbox.height + tileSize.height * ext * 2
+            ),
+            bottom: new Rect(
+                bbox.xMin - tileSize.width * ext,
+                bbox.yMin - tileSize.height * 10,
+                bbox.width + tileSize.width * ext * 2,
+                tileSize.height * 10,
+            ),
+            top: new Rect(
+                bbox.xMin - tileSize.width * ext,
+                bbox.yMax,
+                bbox.width + tileSize.width * ext * 2,
+                tileSize.height * 10,
+            ),
+        };
+        for (var dir in edges) {
+            var edge = edges[dir];
+            var node = noxcc.newNode();
+            node.name = "edge_" + dir;
+            node.parent = this.node;
+            node.active = false;
 
-        if (SceneManager.getRunningSceneId() == SceneId.select) {
-            return;
-        }
+            noxcc.setAnchor(node, 0, 0);
+            node.setPosition(edge.x, edge.y);
+            noxcc.setSize(node, edge.size);
 
-        for (var layerName of ["Impossible", "VeryHard", "Hard", "Medium"]) {
-            var tiledLayer = this.tiledMap.getLayer(layerName);
-            if (tiledLayer) tiledLayer.node.active = false;
-            var objectLayer = this.tiledMap.getLayer(layerName);
-            if (objectLayer) objectLayer.node.active = false;
-        }
-        if (GameData.INSTANCE.currSavedData.mode == "Impossible") return;
-        this.makeMapColliderBy("VeryHard");
-        if (GameData.INSTANCE.currSavedData.mode == "VeryHard") return;
-        this.makeMapColliderBy("Hard");
-        if (GameData.INSTANCE.currSavedData.mode == "Hard") return;
-        this.makeMapColliderBy("Medium");
-    }
+            var mapEdge = node.addComponent(MapEdge);
+            mapEdge.dirName = dir;
 
-    // 制作触发器（触发区域的陷阱以及传送门）
-    private makeMapTriggers(): void {
-        var objectGroup = this.tiledMap.getObjectGroup("Trigger");
-        if (objectGroup) {
-            var objects = objectGroup.getObjects();
-            for (var object of objects) {
-                var node: Node = null;
-                if (object.type == 0) {
-                    node = noxcc.newNode(object.name != "" ? object.name : "object" + object.id);
-                    noxcc.setSize(node, object.width, object.height);
-                    noxcc.setAnchor(node, 0, 1);
-                    noxcc.setPosAR(node, object.x - noxcc.aw(this.node), object.y - noxcc.ah(this.node));
-                }
-                else if (object.type == 4) {
-                    node = objectGroup.node.getChildByName("img" + object.id);
-                }
-                else {
-                    cc_assert(false, "not supported");
-                }
+            node.active = true;
 
-                cc_assert(this.node.getChildByName(node.name) == null);
-                node.active = false;
-                node.parent = this.node;
+            var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
 
-                // 矩形区域
-                if (object.type == 0) {
-                    var posX = object.x - noxcc.aw(node.parent);
-                    var posY = object.y - object.height - noxcc.ah(node.parent);
-                    noxcc.setPosAR(node, posX + noxcc.aw(node), posY + noxcc.ah(node));
-                    MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
-                }
-                else if (object.type == 4) {
-                }
-                else {
-                    cc_assert(false, "not supported");
-                }
-
-                // 添加自定义组件
-                for (var j = 1; ; ++j) {
-                    var id = (j == 1 ? "" : String(j));
-                    if (object["script" + id]) {
-                        var component = node.addComponent(object["script" + id]);
-                        var params = object["params" + id];
-                        if (params && params.match(/^[\[\{]/)) {
-                            component["params"] = JSON.parse(params);
-                        }
-                        else {
-                            component["params"] = params;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-
-                node.active = true;
-            }
-        }
-    }
-
-    // 制作对象（目前只有设置平台的参数） 
-    private makeObjects(groupName: string): void {
-        var objectGroup = this.tiledMap.getObjectGroup(groupName);
-        if (objectGroup) {
-            var objects = objectGroup.getObjects();
-            for (var i = 0; i < objects.length; ++i) {
-                var object = objects[i];
-                if (object.name.match(/^(platform|rigid_square_)\d+$/i) && !(object as any).mainPlatform) { // 平台
-                    var node = noxcc.newNode();
-                    node.parent = objectGroup.node;
-                    node.active = false;
-
-                    var imgNode = cc_find("img" + object.id, objectGroup.node);
-                    noxcc.setSize(node, noxcc.size(imgNode));
-                    noxcc.setAnchor(node, noxcc.anchor(imgNode));
-                    node.setPosition(imgNode.getPosition());
-                    imgNode.parent = node;
-                    cc_assert(object.name != "");
-                    imgNode.name = object.name;
-                    imgNode.setPosition(0, 0);
-
-                    var minX = noxcc.aleft(node);
-                    var minY = noxcc.abottom(node);
-                    var maxX = noxcc.aright(node);
-                    var maxY = noxcc.atop(node);
-
-                    var targetNodes: Node[] = [];
-                    for (var j = 0; j < objects.length; ++j) {
-                        var otherObject = objects[j];
-                        if (otherObject != object && (otherObject as any).mainPlatform == object.name) {
-                            var imgNode = cc_find("img" + otherObject.id, objectGroup.node);
-                            imgNode.parent = node;
-                            imgNode.setPosition(imgNode.position.clone().subtract(node.position));
-                            minX = Math.min(minX, noxcc.left(imgNode));
-                            minY = Math.min(minY, noxcc.bottom(imgNode));
-                            maxX = Math.max(maxX, noxcc.right(imgNode));
-                            maxY = Math.max(maxY, noxcc.top(imgNode));
-                            targetNodes.push(imgNode);
-                        }
-                    }
-
-                    if (targetNodes.length) {
-                        var newWidth = maxX - minX;
-                        var newHeight = maxY - minY;
-                        noxcc.setSize(node, newWidth, newHeight);
-                        noxcc.setAnchor(node, -minX / newWidth, -minY / newHeight);
-                    }
-
-                    cc_assert(object.name != "");
-                    node.name = object.name;
-
-                    MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
-                    MapUtil.setKinematicType(node);
-
-                    // 必须先设定参数，再设置parent
-                    var platform = node.addComponent(Platform);
-                    platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
-
-                    // 添加自定义组件
-                    for (var j = 1; ; ++j) {
-                        var id = (j == 1 ? "" : String(j));
-                        if (object["script" + id]) {
-                            var component = node.addComponent(object["script" + id]);
-                            var params = object["params" + id];
-                            if (params && params.match(/^[\[\{]/)) {
-                                component["params"] = JSON.parse(params);
-                            }
-                            else {
-                                component["params"] = params;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-
-                    node.active = true;
-                }
-            }
+            this.allMapEdges[dir] = mapEdge;
         }
     }
 
@@ -663,55 +435,283 @@ export class GameMap extends NoxComponent {
         node.active = true;
     }
 
-    private makeMapEdges(): void {
-        var tileSize = this.tiledMap.getTileSize();
-        var bbox = noxcc.arect(this.node);
-        var ext = 3;
-        var edges: { [key: string]: Rect } = {
-            left: new Rect(
-                bbox.xMin - tileSize.width * 10,
-                bbox.yMin - tileSize.height * ext,
-                tileSize.width * 10,
-                bbox.height + tileSize.height * ext * 2
-            ),
-            right: new Rect(
-                bbox.xMax,
-                bbox.yMin - tileSize.height * ext,
-                tileSize.width * 10,
-                bbox.height + tileSize.height * ext * 2
-            ),
-            bottom: new Rect(
-                bbox.xMin - tileSize.width * ext,
-                bbox.yMin - tileSize.height * 10,
-                bbox.width + tileSize.width * ext * 2,
-                tileSize.height * 10,
-            ),
-            top: new Rect(
-                bbox.xMin - tileSize.width * ext,
-                bbox.yMax,
-                bbox.width + tileSize.width * ext * 2,
-                tileSize.height * 10,
-            ),
-        };
-        for (var dir in edges) {
-            var edge = edges[dir];
-            var node = noxcc.newNode();
-            node.name = "edge_" + dir;
-            node.parent = this.node;
-            node.active = false;
+    // 制作碰撞组件 
+    private makeMapColliders(): void {
+        for (let i = 1; i < 99; ++i) {
+            this.makeMapColliderBy("Layer" + i)
+        }
 
-            noxcc.setAnchor(node, 0, 0);
-            node.setPosition(edge.x, edge.y);
-            noxcc.setSize(node, edge.size);
+        if (SceneManager.getRunningSceneId() == SceneId.select) {
+            return;
+        }
 
-            var mapEdge = node.addComponent(MapEdge);
-            mapEdge.dirName = dir;
+        for (var layerName of ["Impossible", "VeryHard", "Hard", "Medium"]) {
+            var tiledLayer = this.tiledMap.getLayer(layerName);
+            if (tiledLayer) tiledLayer.node.active = false;
+            var objectLayer = this.tiledMap.getLayer(layerName);
+            if (objectLayer) objectLayer.node.active = false;
+        }
+        if (GameData.INSTANCE.currSavedData.mode == "Impossible") return;
+        this.makeMapColliderBy("VeryHard");
+        if (GameData.INSTANCE.currSavedData.mode == "VeryHard") return;
+        this.makeMapColliderBy("Hard");
+        if (GameData.INSTANCE.currSavedData.mode == "Hard") return;
+        this.makeMapColliderBy("Medium");
+    }
 
-            node.active = true;
+    // 制作该图层的碰撞组件（包括创建玩家、存档点和樱桃等）  
+    private makeMapColliderBy(layerName: string): boolean {
+        let layer = this.tiledMap.getLayer(layerName);
+        if (layer) {
+            layer.node.active = true;
+            let tileSize = layer.getMapTileSize();
+            let layerSize = layer.getLayerSize();
+            for (let y = 0; y < layerSize.height; ++y) {
+                for (let x = 0; x < layerSize.width; ++x) {
+                    let tile: TiledTile = layer.getTiledTileAt(x, y, true);
+                    if (tile.grid != 0) {
+                        this.onTileAdd(tile);
+                    }
+                }
+            }
+            return true;
+        }
 
-            var collider = MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
+        let objectGroup = this.tiledMap.getObjectGroup(layerName);
+        if (objectGroup) {
+            objectGroup.node.active = true;
+            let tileWidth = this.tiledMap.getTileSize().width;
+            let tileHeight = this.tiledMap.getTileSize().height;
+            let objects = objectGroup.getObjects();
+            for (let object of objects) {
+                if (object.gid && object.gid != 0) {
+                    let node = objectGroup.node.getChildByName("img" + object.id);
+                    cc_assert(node);
+                    if (GameConfig.spikeIsRect && GameConfig.spikeGids.indexOf(object.gid) >= 0) {
+                        MapUtil.addCircleCollider(node, this, ObjectGroup.Spike, true, new Rect(
+                            GameConfig.spikeSpacing, GameConfig.spikeSpacing,
+                            noxcc.w(node) - GameConfig.spikeSpacing * 2,
+                            noxcc.h(node) - GameConfig.spikeSpacing * 2,
+                        ), 0);
+                        node.addComponent(Spike);
+                    }
+                    else if (object.gid == GameConfig.spikeDownTile) {
+                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
+                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) / 2, GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
+                        ]);
+                        node.addComponent(Spike);
+                    }
+                    else if (object.gid == GameConfig.spikeLeftTile) {
+                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
+                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) / 2),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
+                        ]);
+                        node.addComponent(Spike);
+                    }
+                    else if (object.gid == GameConfig.spikeRightTile) {
+                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
+                            new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) / 2),
+                            new Vec2(GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
+                        ]);
+                        node.addComponent(Spike);
+                    }
+                    else if (object.gid == GameConfig.spikeUpTile) {
+                        MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
+                            new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
+                        ]);
+                        node.addComponent(Spike);
+                    }
+                    else if (object.gid == GameConfig.cherryTile) {
+                        var cherry = cc_instantiate(this.cherryPrefab);
+                        cherry.getComponent(Animation).enabled = true;
+                        cherry.getComponent(BossBullet).enabled = false;
+                        noxcc.setPosAR(cherry, node.position.x + tileWidth / 2, node.position.y + tileHeight / 2);
+                        MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
+                        MapUtil.setDynamicType(cherry);
+                        cherry.parent = node.parent;
+                        node.destroy();
+                        node = cherry;
+                    }
+                    else if (GameConfig.blockTiles.indexOf(object.gid) >= 0) {
+                        MapUtil.addBoxCollider(node, this, ObjectGroup.Block, true, null, 0);
+                    }
+                    else {
+                        cc_assert(false);
+                    }
+                    if (object.name != "") {
+                        cc_assert(node.parent.getChildByName(object.name) == null);
+                        node.name = object.name;
+                    }
 
-            this.allMapEdges[dir] = mapEdge;
+                    // 添加自定义组件
+                    for (var j = 1; ; ++j) {
+                        var id = (j == 1 ? "" : String(j));
+                        if (object["script" + id]) {
+                            var component = node.addComponent(object["script" + id]);
+                            var params = object["params" + id];
+                            if (params && params.match(/^[\[\{]/)) {
+                                component["params"] = JSON.parse(params);
+                            }
+                            else {
+                                component["params"] = params;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                else {
+                    cc_assert(false);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    // 制作对象（目前只有设置平台的参数） 
+    private makeObjects(groupName: string): void {
+        var objectGroup = this.tiledMap.getObjectGroup(groupName);
+        if (objectGroup) {
+            var objects = objectGroup.getObjects();
+            for (var i = 0; i < objects.length; ++i) {
+                var object = objects[i];
+                if (object.name.match(/^(platform|rigid_square_)\d+$/i) && !(object as any).mainPlatform) { // 平台
+                    var node = noxcc.newNode();
+                    node.parent = objectGroup.node;
+                    node.active = false;
+
+                    var imgNode = cc_find("img" + object.id, objectGroup.node);
+                    noxcc.setSize(node, noxcc.size(imgNode));
+                    noxcc.setAnchor(node, noxcc.anchor(imgNode));
+                    node.setPosition(imgNode.getPosition());
+                    imgNode.parent = node;
+                    cc_assert(object.name != "");
+                    imgNode.name = object.name;
+                    imgNode.setPosition(0, 0);
+
+                    var minX = noxcc.aleft(node);
+                    var minY = noxcc.abottom(node);
+                    var maxX = noxcc.aright(node);
+                    var maxY = noxcc.atop(node);
+
+                    var targetNodes: Node[] = [];
+                    for (var j = 0; j < objects.length; ++j) {
+                        var otherObject = objects[j];
+                        if (otherObject != object && (otherObject as any).mainPlatform == object.name) {
+                            var imgNode = cc_find("img" + otherObject.id, objectGroup.node);
+                            imgNode.parent = node;
+                            imgNode.setPosition(imgNode.position.clone().subtract(node.position));
+                            minX = Math.min(minX, noxcc.left(imgNode));
+                            minY = Math.min(minY, noxcc.bottom(imgNode));
+                            maxX = Math.max(maxX, noxcc.right(imgNode));
+                            maxY = Math.max(maxY, noxcc.top(imgNode));
+                            targetNodes.push(imgNode);
+                        }
+                    }
+
+                    if (targetNodes.length) {
+                        var newWidth = maxX - minX;
+                        var newHeight = maxY - minY;
+                        noxcc.setSize(node, newWidth, newHeight);
+                        noxcc.setAnchor(node, -minX / newWidth, -minY / newHeight);
+                    }
+
+                    cc_assert(object.name != "");
+                    node.name = object.name;
+
+                    MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
+                    MapUtil.setKinematicType(node);
+
+                    // 必须先设定参数，再设置parent
+                    var platform = node.addComponent(Platform);
+                    platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
+
+                    // 添加自定义组件
+                    for (var j = 1; ; ++j) {
+                        var id = (j == 1 ? "" : String(j));
+                        if (object["script" + id]) {
+                            var component = node.addComponent(object["script" + id]);
+                            var params = object["params" + id];
+                            if (params && params.match(/^[\[\{]/)) {
+                                component["params"] = JSON.parse(params);
+                            }
+                            else {
+                                component["params"] = params;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+
+                    node.active = true;
+                }
+            }
+        }
+    }
+
+    // 制作触发器（触发区域的陷阱以及传送门）
+    private makeMapTriggers(): void {
+        var objectGroup = this.tiledMap.getObjectGroup("Trigger");
+        if (objectGroup) {
+            var objects = objectGroup.getObjects();
+            for (var object of objects) {
+                var node: Node = null;
+                if (object.type == 0) {
+                    node = noxcc.newNode(object.name != "" ? object.name : "object" + object.id);
+                    noxcc.setSize(node, object.width, object.height);
+                    noxcc.setAnchor(node, 0, 1);
+                    noxcc.setPosAR(node, object.x - noxcc.aw(this.node), object.y - noxcc.ah(this.node));
+                }
+                else if (object.type == 4) {
+                    node = objectGroup.node.getChildByName("img" + object.id);
+                }
+                else {
+                    cc_assert(false, "not supported");
+                }
+
+                cc_assert(this.node.getChildByName(node.name) == null);
+                node.active = false;
+                node.parent = this.node;
+
+                // 矩形区域
+                if (object.type == 0) {
+                    var posX = object.x - noxcc.aw(node.parent);
+                    var posY = object.y - object.height - noxcc.ah(node.parent);
+                    noxcc.setPosAR(node, posX + noxcc.aw(node), posY + noxcc.ah(node));
+                    MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
+                }
+                else if (object.type == 4) {
+                }
+                else {
+                    cc_assert(false, "not supported");
+                }
+
+                // 添加自定义组件
+                for (var j = 1; ; ++j) {
+                    var id = (j == 1 ? "" : String(j));
+                    if (object["script" + id]) {
+                        var component = node.addComponent(object["script" + id]);
+                        var params = object["params" + id];
+                        if (params && params.match(/^[\[\{]/)) {
+                            component["params"] = JSON.parse(params);
+                        }
+                        else {
+                            component["params"] = params;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+
+                node.active = true;
+            }
         }
     }
 
