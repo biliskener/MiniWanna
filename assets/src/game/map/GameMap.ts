@@ -178,13 +178,6 @@ export class GameMap extends NoxComponent {
                 for (let x = 0; x < layerSize.width; ++x) {
                     let tile: TiledTile = layer.getTiledTileAt(x, y, true);
                     if (tile.grid != 0) {
-                        if (tile.grid == GameConfig.rebornTile) {
-                            // 玩家起始位置 
-                            if (!this.rebornTile) {
-                                this.rebornPlayer([tile.x, tile.y]);
-                            }
-                            tile.grid = GameConfig.emptyTile;
-                        }
                         this.onTileAdd(tile);
                     }
                 }
@@ -279,10 +272,19 @@ export class GameMap extends NoxComponent {
         var x = tile.x;
         var y = tile.y;
         var tileSize = layer.getMapTileSize();
+        var layerSize = layer.getLayerSize();
 
         var collider = null;
 
-        if (tile.grid == GameConfig.platformTile) {
+        if (tile.grid == GameConfig.rebornTile) {
+            // 玩家起始位置 
+            if (!this.rebornTile) {
+                this.rebornPlayer([tile.x, tile.y]);
+            }
+            tile.grid = GameConfig.emptyTile;
+            tile._layer.markForUpdateRenderData();
+        }
+        else if (tile.grid == GameConfig.platformTile) {
             tile.grid = GameConfig.emptyTile;
             layer.setTiledTileAt(x, y, null);
         }
@@ -365,22 +367,17 @@ export class GameMap extends NoxComponent {
             // 传送门，由于没法区分多个门，所以在对象层里处理。
         }
         else if (tile.grid == GameConfig.cherryTile) {
-            cc_assert(false, "未测试");
-            // 樱桃，删除地图上的樱桃图块，创建新的樱桃对象。
-            // PS：2.2.1 版本之前需要在 start 函数才可以。
             tile.grid = GameConfig.emptyTile;
             layer.setTiledTileAt(x, y, null);
+            layer.markForUpdateRenderData();
             var cherry = cc_instantiate(this.cherryPrefab);
             cherry.getComponent(Animation).enabled = true;
             cherry.getComponent(BossBullet).enabled = false;
-            tile = cherry.addComponent(TiledTile);
-            tile._x = x;
-            tile._y = y;
-            tile._layer = layer;
-            tile._layer.markForUpdateRenderData();
-            cherry.parent = layer.node;
-            noxcc.addX(cherry, tileSize.width / 2 - noxcc.aw(tile.node.parent));
-            noxcc.addY(cherry, tileSize.height / 2 - noxcc.ah(tile.node.parent));
+            var cherryX = (x + 0.5) * tileSize.width - noxcc.aw(this.node);
+            var cherryY = (layerSize.y - 1 - y + 0.5) * tileSize.height - noxcc.ah(this.node);
+            noxcc.setPosAR(cherry, cherryX, cherryY);
+            collider = MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(cherry), noxcc.h(cherry)), 0);
+            noxcc.setParent(cherry, this.node);
         }
         else {
             collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Block, false, tileSize, tileSize.width, tileSize.height);
