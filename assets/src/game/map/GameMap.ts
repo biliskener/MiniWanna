@@ -339,18 +339,7 @@ export class GameMap extends NoxComponent {
 
     private makeLayerComponents() {
         for (var layer of this.tiledMap.getLayers()) {
-            let properties = layer.getProperties();
-            if (properties.script && typeof (properties.script) == "string") {
-                let params = properties.params as string;
-                let component = layer.addComponent(properties.script);
-                if (params && params.match(/^[\[\{]/)) {
-                    component["params"] = JSON.parse(params);
-                }
-                else {
-                    cc_assert(false);
-                    component["params"] = params;
-                }
-            }
+            this.loadCustomScriptsForNode(layer.node, layer.getProperties());
         }
     }
 
@@ -418,19 +407,9 @@ export class GameMap extends NoxComponent {
             imgNode.parent = node;
         }
 
-        if (properties.script && typeof (properties.script) == "string") {
-            let params = properties.params as string;
-            let component = node.addComponent(properties.script);
-            if (params && params.match(/^[\[\{]/)) {
-                component["params"] = JSON.parse(params);
-            }
-            else {
-                cc_assert(false);
-                component["params"] = params;
-            }
-        }
-
         MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, null, 0);
+
+        this.loadCustomScriptsForNode(node, objectGroup.getProperties());
 
         node.active = true;
     }
@@ -480,6 +459,8 @@ export class GameMap extends NoxComponent {
         let objectGroup = this.tiledMap.getObjectGroup(layerName);
         if (objectGroup) {
             objectGroup.node.active = true;
+            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
+
             let tileWidth = this.tiledMap.getTileSize().width;
             let tileHeight = this.tiledMap.getTileSize().height;
             let objects = objectGroup.getObjects();
@@ -549,27 +530,13 @@ export class GameMap extends NoxComponent {
                         node.name = object.name;
                     }
 
-                    // 添加自定义组件
-                    for (var j = 1; ; ++j) {
-                        var id = (j == 1 ? "" : String(j));
-                        if (object["script" + id]) {
-                            var component = node.addComponent(object["script" + id]);
-                            var params = object["params" + id];
-                            if (params && params.match(/^[\[\{]/)) {
-                                component["params"] = JSON.parse(params);
-                            }
-                            else {
-                                component["params"] = params;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
+                    this.loadCustomScriptsForNode(node, object);
                 }
                 else {
                     cc_assert(false);
                 }
             }
+
             return true;
         }
         return false;
@@ -579,6 +546,7 @@ export class GameMap extends NoxComponent {
     private makeObjects(groupName: string): void {
         var objectGroup = this.tiledMap.getObjectGroup(groupName);
         if (objectGroup) {
+            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
             var objects = objectGroup.getObjects();
             for (var i = 0; i < objects.length; ++i) {
                 var object = objects[i];
@@ -634,21 +602,7 @@ export class GameMap extends NoxComponent {
                     platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
 
                     // 添加自定义组件
-                    for (var j = 1; ; ++j) {
-                        var id = (j == 1 ? "" : String(j));
-                        if (object["script" + id]) {
-                            var component = node.addComponent(object["script" + id]);
-                            var params = object["params" + id];
-                            if (params && params.match(/^[\[\{]/)) {
-                                component["params"] = JSON.parse(params);
-                            }
-                            else {
-                                component["params"] = params;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
+                    this.loadCustomScriptsForNode(node, object);
 
                     node.active = true;
                 }
@@ -660,6 +614,7 @@ export class GameMap extends NoxComponent {
     private makeMapTriggers(): void {
         var objectGroup = this.tiledMap.getObjectGroup("Trigger");
         if (objectGroup) {
+            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
             var objects = objectGroup.getObjects();
             for (var object of objects) {
                 var node: Node = null;
@@ -694,23 +649,28 @@ export class GameMap extends NoxComponent {
                 }
 
                 // 添加自定义组件
-                for (var j = 1; ; ++j) {
-                    var id = (j == 1 ? "" : String(j));
-                    if (object["script" + id]) {
-                        var component = node.addComponent(object["script" + id]);
-                        var params = object["params" + id];
-                        if (params && params.match(/^[\[\{]/)) {
-                            component["params"] = JSON.parse(params);
-                        }
-                        else {
-                            component["params"] = params;
-                        }
-                    } else {
-                        break;
-                    }
-                }
+                this.loadCustomScriptsForNode(node, object);
 
                 node.active = true;
+            }
+        }
+    }
+
+    private loadCustomScriptsForNode(targetNode: Node, properties: any) {
+        for (var j = 1; ; ++j) {
+            var id = (j == 1 ? "" : String(j));
+            var script = properties["script" + id];
+            if (typeof (script) == "string") {
+                var component = targetNode.addComponent(script);
+                var params = properties["params" + id];
+                if (typeof (params) == "string" && params.match(/^[\[\{]/)) {
+                    component["params"] = JSON.parse(params);
+                }
+                else if (params != null) {
+                    component["params"] = params;
+                }
+            } else {
+                break;
             }
         }
     }
