@@ -35,7 +35,7 @@ export class LayerTrigger extends BaseObject {
         this.map.deferredActivateNode(this.node, !!this.params.visibleWhenActivated);
         this.map.requestPause();
         var doTransition = (cross: boolean) => {
-            var targetMap = cross ? LevelScene.currenton().getCrossMap() : this.map;
+            var targetMap = cross ? LevelScene.CURRENTON.getCrossMap() : this.map;
             // 开始平台动画效果
             let layerNames = this.params.targetLayers.split("|");
             let layers: TiledLayer[] = [];
@@ -52,7 +52,7 @@ export class LayerTrigger extends BaseObject {
                     if (++doneCount == layers.length) {
                         if (cross) {
                             //noxSound.playEffect("sound/escape/BgsSwitchEat.mp3");
-                            LevelScene.currenton().unloadCrossLevel();
+                            LevelScene.CURRENTON.unloadCrossLevel();
                         }
                         this.map.applyGravity();
                         this.map.cancelPause();
@@ -63,7 +63,7 @@ export class LayerTrigger extends BaseObject {
         };
         if (this.params.targetLevel) {
             this.map.scheduleOnce(() => {
-                LevelScene.currenton().loadCrossLevel(this.params.targetLevel || this.map.levelName, () => {
+                LevelScene.CURRENTON.loadCrossLevel(this.params.targetLevel || this.map.levelName, () => {
                     doTransition(true);
                 });
             }, 0.2);

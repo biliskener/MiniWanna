@@ -23,7 +23,7 @@ export class Transfer extends Component {
     private onContact(otherNode: Node, selfNode: Node): void {
         this.scheduleOnce(() => {
             if (SceneManager.getRunningSceneId() == SceneId.level) {
-                LevelScene.currenton().loadLevel(selfNode.name, null);
+                LevelScene.CURRENTON.loadLevel(selfNode.name, null);
                 GameData.INSTANCE.currSavedData.setLevelAndTile(selfNode.name, null);
                 GameData.INSTANCE.saveGame();
             }

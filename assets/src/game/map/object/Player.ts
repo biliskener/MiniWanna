@@ -27,7 +27,7 @@ cc_macro.ENABLE_TILEDMAP_CULLING = false;
 @disallowMultiple
 export class Player extends BaseObject {
     private static gCurrenton: Player = null;
-    public static currenton(): Player {
+    public static get CURRENTON(): Player {
         return Player.gCurrenton;
     }
 
@@ -546,7 +546,7 @@ export class Player extends BaseObject {
                 this.node.setScale(0, 0);
                 this.schedule(this.bloodEmitter, 0.01, 32, 0.01);
                 this.schedule(() => {
-                    LevelScene.currenton().reloadLevel();
+                    LevelScene.CURRENTON.reloadLevel();
                 }, 1, 0, 1.5);
             }
         }

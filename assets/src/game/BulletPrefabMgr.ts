@@ -10,7 +10,7 @@ const { ccclass, property, executeInEditMode, requireComponent, executionOrder, 
 @disallowMultiple
 export class BulletPrefabMgr extends Component {
     private static gCurrenton: BulletPrefabMgr = null;
-    public static currenton(): BulletPrefabMgr {
+    public static get CURRENTON(): BulletPrefabMgr {
         return BulletPrefabMgr.gCurrenton;
     }
 

@@ -17,7 +17,7 @@ enum MAP_IDX {
 
 export class LevelScene extends BaseScene {
     private static gCurrenton: LevelScene = null;
-    public static currenton(): LevelScene {
+    public static get CURRENTON(): LevelScene {
         return LevelScene.gCurrenton;
     }
 

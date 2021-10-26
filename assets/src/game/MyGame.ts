@@ -30,7 +30,7 @@ export class MyGame {
         noxSound.setMusicOn(SettingData.INSTANCE.enableSound);
         noxSound.setEffectOn(SettingData.INSTANCE.enableSound);
 
-        cc_assert(BulletPrefabMgr.currenton());
+        cc_assert(BulletPrefabMgr.CURRENTON);
 
         SceneManager.pushScene(SplashScene.create());
     }

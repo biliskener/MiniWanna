@@ -30,7 +30,7 @@ export class BossShoot3 extends BaseObject implements BossShootable {
     public shoot(): void {
         //noxSound.playEffect("sound/iwbt/bossHit.mp3");
         for (let i = 0; i < 2; i++) {
-            let bullet = BulletPrefabMgr.currenton().createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+            let bullet = BulletPrefabMgr.CURRENTON.createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
             if (i % 2 == 0) {
                 noxcc.setX(bullet, -noxcc.w(bullet) - noxcc.aw(this.map.node));
                 bullet.angle = 0;
