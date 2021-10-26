@@ -27,10 +27,10 @@ export module GameConfig {
     export const tileWidth: number = 32;
     export const tileHeight: number = 32;
 
+    export const emptyTile: number = 0;
     export const rebornTile: number = 14;
     export const platformTile: number = 2;
     export const blockTiles: number[] = [1, 3, 6, 7, 8, 9, 10, 12];
-    export const emptyTile: number = 0;
     export const backgroundTiles: number[] = [4, 5, 11, 13];
     export const saveDoneTile: number = 15;
     export const saveTile: number = 16;
