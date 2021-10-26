@@ -139,6 +139,9 @@ export class GameMap extends NoxComponent {
                 MapUtil.addBoxCollider(this.playerNode, this, group, true, colliderRect, 0);
             }
             MapUtil.addFootBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
+            colliderRect.x += GameConfig.crushCheckingOffsetX;
+            colliderRect.width -= GameConfig.crushCheckingOffsetX * 2;
+            colliderRect.height -= GameConfig.crushCheckingOffsetY;
             MapUtil.addHeadBoxCollider(this.playerNode, group, colliderRect, cornerWidth, cornerHeight);
 
             MapUtil.setDynamicType(this.playerNode);

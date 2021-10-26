@@ -51,6 +51,8 @@ export module GameConfig {
     export const riseGravityScale = 1.0;                    // 上升时的重力缩放
     export const fallGravityScale = 1.0;                    // 下落时的重力缩放
     export const jumpForceFactor = 20;                      // 跳跃时施加的力的因子, 如果对象面积小，则此值应该小
+    export const crushCheckingOffsetX = 6;                  // 挤压检测X偏移
+    export const crushCheckingOffsetY = 1;                  // 挤压检测Y偏移
     export const roundedCornerWidth: number = 0.5;          // 碰撞圆角宽度, 值越小越好，太小会卡脚，太大角色会抖动
     export const roundedCornerHeight: number = 0.2;         // 碰撞圆角高度, 值越小越好，太小会卡脚，太大角色会抖动
     export const platformMovementFix: number = 0.0;         // 若无修正值，人物无法稳定站在一个移动的平台上，暂无更好的解决方案
