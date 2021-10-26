@@ -273,7 +273,7 @@ export class GameMap extends NoxComponent {
         return false;
     }
 
-    private onTileAction(tile: TiledTile, isAdd: boolean): void {
+    private onTileAdd(tile: TiledTile): void {
         var layer = tile.node.parent.getComponent(TiledLayer);
 
         var x = tile.x;
@@ -283,102 +283,66 @@ export class GameMap extends NoxComponent {
         var collider = null;
 
         if (tile.grid == GameConfig.platformTile) {
-            if (isAdd) {
-                tile.grid = GameConfig.emptyTile;
-                layer.setTiledTileAt(x, y, null);
-            }
-            else {
-                cc_assert(false, "fatal error");
-            }
+            tile.grid = GameConfig.emptyTile;
+            layer.setTiledTileAt(x, y, null);
         }
         else if (tile.grid == GameConfig.emptyTile || GameConfig.backgroundTiles.indexOf(tile.grid) >= 0) {
             // 背景，不处理。
         }
         else if (tile.grid == GameConfig.saveTile || tile.grid == GameConfig.saveDoneTile) {
             // 存档点
-            if (isAdd) {
-                tile.node.addComponent(Save);
-                tile.grid = GameConfig.saveTile;
-                tile._layer.markForUpdateRenderData();
-                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Trigger, true, tileSize, tileSize.width, tileSize.height);
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
-                tile.node.removeComponent(Save);
-            }
+            tile.node.addComponent(Save);
+            tile.grid = GameConfig.saveTile;
+            tile._layer.markForUpdateRenderData();
+            collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Trigger, true, tileSize, tileSize.width, tileSize.height);
         }
         else if (GameConfig.spikeIsRect && GameConfig.spikeGids.indexOf(tile.grid) >= 0) {
-            if (isAdd) {
-                collider = MapUtil.addTiledCircleCollider(
-                    tile, this, ObjectGroup.Spike, false, tileSize,
-                    tileSize.width - GameConfig.spikeSpacing * 2,
-                    tileSize.height - GameConfig.spikeSpacing * 2);
-                if (GameConfig.useSpikeTileAsObject) {
-                    tile.addComponent(Spike);
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
+            collider = MapUtil.addTiledCircleCollider(
+                tile, this, ObjectGroup.Spike, false, tileSize,
+                tileSize.width - GameConfig.spikeSpacing * 2,
+                tileSize.height - GameConfig.spikeSpacing * 2);
+            if (GameConfig.useSpikeTileAsObject) {
+                tile.addComponent(Spike);
             }
         }
         else if (tile.grid == GameConfig.spikeDownTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
-                    new Vec2(GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width / 2, GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
-                ]);
-                if (GameConfig.useSpikeTileAsObject) {
-                    tile.addComponent(Spike);
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
+            collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
+                new Vec2(GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing),
+                new Vec2(tileSize.width / 2, GameConfig.spikeSpacing),
+                new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
+            ]);
+            if (GameConfig.useSpikeTileAsObject) {
+                tile.addComponent(Spike);
             }
         }
         else if (tile.grid == GameConfig.spikeLeftTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
-                    new Vec2(GameConfig.spikeSpacing, tileSize.height / 2),
-                    new Vec2(tileSize.width - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
-                ]);
-                if (GameConfig.useSpikeTileAsObject) {
-                    tile.addComponent(Spike);
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
+            collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
+                new Vec2(GameConfig.spikeSpacing, tileSize.height / 2),
+                new Vec2(tileSize.width - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
+            ]);
+            if (GameConfig.useSpikeTileAsObject) {
+                tile.addComponent(Spike);
             }
         }
         else if (tile.grid == GameConfig.spikeRightTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
-                    new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height / 2),
-                    new Vec2(GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
-                ]);
-                if (GameConfig.useSpikeTileAsObject) {
-                    tile.addComponent(Spike);
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
+            collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
+                new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                new Vec2(tileSize.width - GameConfig.spikeSpacing, tileSize.height / 2),
+                new Vec2(GameConfig.spikeSpacing, tileSize.height - GameConfig.spikeSpacing)
+            ]);
+            if (GameConfig.useSpikeTileAsObject) {
+                tile.addComponent(Spike);
             }
         }
         else if (tile.grid == GameConfig.spikeUpTile) {
-            if (isAdd) {
-                collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
-                    new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                    new Vec2(tileSize.width / 2, tileSize.height - GameConfig.spikeSpacing)
-                ]);
-                if (GameConfig.useSpikeTileAsObject) {
-                    tile.addComponent(Spike);
-                }
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
+            collider = MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Spike, false, [
+                new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                new Vec2(tileSize.width - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
+                new Vec2(tileSize.width / 2, tileSize.height - GameConfig.spikeSpacing)
+            ]);
+            if (GameConfig.useSpikeTileAsObject) {
+                tile.addComponent(Spike);
             }
         }
         else if (tile.grid == GameConfig.vineLeftTile) {
@@ -404,38 +368,23 @@ export class GameMap extends NoxComponent {
             cc_assert(false, "未测试");
             // 樱桃，删除地图上的樱桃图块，创建新的樱桃对象。
             // PS：2.2.1 版本之前需要在 start 函数才可以。
-            if (isAdd) {
-                tile.grid = GameConfig.emptyTile;
-                layer.setTiledTileAt(x, y, null);
-                var cherry = cc_instantiate(this.cherryPrefab);
-                cherry.getComponent(Animation).enabled = true;
-                cherry.getComponent(BossBullet).enabled = false;
-                tile = cherry.addComponent(TiledTile);
-                tile._x = x;
-                tile._y = y;
-                tile._layer = layer;
-                tile._layer.markForUpdateRenderData();
-                cherry.parent = layer.node;
-                noxcc.addX(cherry, tileSize.width / 2 - noxcc.aw(tile.node.parent));
-                noxcc.addY(cherry, tileSize.height / 2 - noxcc.ah(tile.node.parent));
-            }
+            tile.grid = GameConfig.emptyTile;
+            layer.setTiledTileAt(x, y, null);
+            var cherry = cc_instantiate(this.cherryPrefab);
+            cherry.getComponent(Animation).enabled = true;
+            cherry.getComponent(BossBullet).enabled = false;
+            tile = cherry.addComponent(TiledTile);
+            tile._x = x;
+            tile._y = y;
+            tile._layer = layer;
+            tile._layer.markForUpdateRenderData();
+            cherry.parent = layer.node;
+            noxcc.addX(cherry, tileSize.width / 2 - noxcc.aw(tile.node.parent));
+            noxcc.addY(cherry, tileSize.height / 2 - noxcc.ah(tile.node.parent));
         }
         else {
-            if (isAdd) {
-                collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Block, false, tileSize, tileSize.width, tileSize.height);
-            }
-            else {
-                MapUtil.removeCollider(tile.node);
-            }
+            collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Block, false, tileSize, tileSize.width, tileSize.height);
         }
-    }
-
-    private onTileRemove(tile: TiledTile): void {
-        this.onTileAction(tile, false);
-    }
-
-    private onTileAdd(tile: TiledTile): void {
-        this.onTileAction(tile, true);
     }
 
     // 制作碰撞组件 
