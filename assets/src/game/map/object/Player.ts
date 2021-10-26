@@ -246,13 +246,13 @@ export class Player extends BaseObject {
             this.playerStatus != PlayerStatus.PLAYER_ENTERGATE
         ) {
             //1. 调整下落速度
-            var platform: RigidBody2D = null;
+            var firstFloor = this.getFirstFloor();
             if (this.touchedFootColliders.length > 0) {
-                platform = this.touchedFootColliders[0].getComponent(RigidBody2D);
+                firstFloor = this.touchedFootColliders[0].getComponent(RigidBody2D);
             }
             if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-                if (platform) {
-                    this.speed = new Vec2(platform.linearVelocity.x, this.body.linearVelocity.y);
+                if (firstFloor) {
+                    this.speed = new Vec2(firstFloor.linearVelocity.x, this.body.linearVelocity.y);
                 }
                 else {
                     this.speed = this.body.linearVelocity.clone();
@@ -278,7 +278,7 @@ export class Player extends BaseObject {
             }
 
             //4. 调整水平速度
-            var platformSpeedX = platform ? platform.linearVelocity.x : 0;
+            var platformSpeedX = firstFloor ? firstFloor.linearVelocity.x : 0;
             if (this.leftButton) {
                 if (GameConfig.useSpeedUp) {
                     this.speed.x = Math.max(platformSpeedX - this.maxSpeed, this.speed.x - this.maxSpeed / GameConfig.speedUpDuration * dt);
@@ -611,10 +611,12 @@ export class Player extends BaseObject {
         }
     }
 
-    public getDeadAnim() {
-        var animation = noxcc.findAnimation("dead", this.map.node.parent.parent);
-        cc_assert(animation);
-        return animation;
+    public getFirstFloor(): RigidBody2D {
+        var firstFloor: RigidBody2D = null;
+        if (this.touchedFootColliders.length > 0) {
+            firstFloor = this.touchedFootColliders[0].getComponent(RigidBody2D);
+        }
+        return firstFloor;
     }
 
     public pause() {

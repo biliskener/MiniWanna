@@ -10,6 +10,7 @@ import { CollisionHit } from "../../collision/CollisionHit";
 import { CollisionObject } from "../../collision/CollisionObject";
 import { HitResponse } from "../../collision/HitResponse";
 import { BaseObject } from "../BaseObject";
+import { Player } from "../Player";
 
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
@@ -36,9 +37,12 @@ export class Platform extends BaseObject {
                 var newSpeedX = this.currSpeedX / 40;
                 var newSpeedY = this.currSpeedY / 40;
                 rigidBody.linearVelocity = new Vec2(newSpeedX, newSpeedY);
-                if (this.touchingPlayer) {
-                    var playerRigiBdody = this.touchingPlayer.getComponent(RigidBody2D);
-                    playerRigiBdody.linearVelocity = playerRigiBdody.linearVelocity.clone().add2f(newSpeedX - oldSpeedX, newSpeedY - oldSpeedY);
+                if (false && this.touchingPlayer) { // 下面的代码关掉，人物可能在平台上漂移，其实也对
+                    var player = this.touchingPlayer.getComponent(Player);
+                    if (player.getFirstFloor() == rigidBody) {  // 有此判断时，若两个对冲平台冲击时，人物会有漂移，是因为另一个平台碰到了角色的脚底。
+                        var playerRigiBdody = this.touchingPlayer.getComponent(RigidBody2D);
+                        playerRigiBdody.linearVelocity = playerRigiBdody.linearVelocity.clone().add2f(newSpeedX - oldSpeedX, newSpeedY - oldSpeedY);
+                    }
                 }
             }
         }
