@@ -14,8 +14,11 @@ import { NoticeManager } from './framework/mgr/NoticeManager';
 import { MyApp } from './game/MyApp';
 import { initObjectGroup } from './game/const/ObjectGroup';
 import { MapUtil } from './game/map/MapUtil';
+import { cc_macro } from './framework/core/nox';
 
 export function main(uiRootNode: Node) {
+    cc_macro.ENABLE_TILEDMAP_CULLING = false;
+
     //cc_game.setFrameRate(25);
     noxcc.init(uiRootNode);
     ResourceAlivePools.init();

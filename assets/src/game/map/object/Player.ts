@@ -21,8 +21,6 @@ import { BaseObject } from "./BaseObject";
 import { Platform } from "./iwbt/Platform";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
-cc_macro.ENABLE_TILEDMAP_CULLING = false;
-
 @ccclass
 @disallowMultiple
 export class Player extends BaseObject {
