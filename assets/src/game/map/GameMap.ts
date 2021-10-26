@@ -78,7 +78,6 @@ export class GameMap extends NoxComponent {
         this.makeMapColliders();
         this.makeObjects("Object");
         this.makeObjects("Transfer");
-
         this.makeMapTriggers();
 
         this.applyGravity();
@@ -257,6 +256,23 @@ export class GameMap extends NoxComponent {
                         cc_assert(node.parent.getChildByName(object.name) == null);
                         node.name = object.name;
                     }
+
+                    // 添加自定义组件
+                    for (var j = 1; ; ++j) {
+                        var id = (j == 1 ? "" : String(j));
+                        if (object["script" + id]) {
+                            var component = node.addComponent(object["script" + id]);
+                            var params = object["params" + id];
+                            if (params && params.match(/^[\[\{]/)) {
+                                component["params"] = JSON.parse(params);
+                            }
+                            else {
+                                component["params"] = params;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
                 }
                 else {
                     cc_assert(false);
@@ -430,6 +446,7 @@ export class GameMap extends NoxComponent {
                 }
 
                 cc_assert(this.node.getChildByName(node.name) == null);
+                node.active = false;
                 node.parent = this.node;
 
                 // 矩形区域
@@ -445,22 +462,24 @@ export class GameMap extends NoxComponent {
                     cc_assert(false, "not supported");
                 }
 
-                // 添加触发区域对应的组件与参数，可多个。
+                // 添加自定义组件
                 for (var j = 1; ; ++j) {
                     var id = (j == 1 ? "" : String(j));
                     if (object["script" + id]) {
-                        var trigger = node.addComponent(object["script" + id]);
+                        var component = node.addComponent(object["script" + id]);
                         var params = object["params" + id];
                         if (params && params.match(/^[\[\{]/)) {
-                            trigger["params"] = JSON.parse(params);
+                            component["params"] = JSON.parse(params);
                         }
                         else {
-                            trigger["params"] = params;
+                            component["params"] = params;
                         }
                     } else {
                         break;
                     }
                 }
+
+                node.active = true;
             }
         }
     }
@@ -513,17 +532,34 @@ export class GameMap extends NoxComponent {
                         noxcc.setAnchor(node, -minX / newWidth, -minY / newHeight);
                     }
 
-                    // 必须先设定参数，再设置parent
-                    var platform = node.addComponent(Platform);
-                    platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
-
-                    node.active = true;
-
                     cc_assert(object.name != "");
                     node.name = object.name;
 
                     MapUtil.addBoxCollider(node, this, ObjectGroup.Platform, true, new Rect(0, noxcc.h(node) / 2, noxcc.w(node), noxcc.h(node) / 2), 0);
                     MapUtil.setKinematicType(node);
+
+                    // 必须先设定参数，再设置parent
+                    var platform = node.addComponent(Platform);
+                    platform.initSpeed = new Vec2((object as any).speedX || 0, (object as any).speedY || 0);
+
+                    // 添加自定义组件
+                    for (var j = 1; ; ++j) {
+                        var id = (j == 1 ? "" : String(j));
+                        if (object["script" + id]) {
+                            var component = node.addComponent(object["script" + id]);
+                            var params = object["params" + id];
+                            if (params && params.match(/^[\[\{]/)) {
+                                component["params"] = JSON.parse(params);
+                            }
+                            else {
+                                component["params"] = params;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+
+                    node.active = true;
                 }
             }
         }
