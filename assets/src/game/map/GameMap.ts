@@ -459,7 +459,7 @@ export class GameMap extends NoxComponent {
         let objectGroup = this.tiledMap.getObjectGroup(layerName);
         if (objectGroup) {
             objectGroup.node.active = true;
-            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
+            //this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
 
             let tileWidth = this.tiledMap.getTileSize().width;
             let tileHeight = this.tiledMap.getTileSize().height;
@@ -546,7 +546,7 @@ export class GameMap extends NoxComponent {
     private makeObjects(groupName: string): void {
         var objectGroup = this.tiledMap.getObjectGroup(groupName);
         if (objectGroup) {
-            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
+            //this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
             var objects = objectGroup.getObjects();
             for (var i = 0; i < objects.length; ++i) {
                 var object = objects[i];
@@ -614,7 +614,7 @@ export class GameMap extends NoxComponent {
     private makeMapTriggers(): void {
         var objectGroup = this.tiledMap.getObjectGroup("Trigger");
         if (objectGroup) {
-            this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
+            //this.loadCustomScriptsForNode(objectGroup.node, objectGroup.getProperties());
             var objects = objectGroup.getObjects();
             for (var object of objects) {
                 var node: Node = null;
