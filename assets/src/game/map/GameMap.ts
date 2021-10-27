@@ -637,9 +637,6 @@ export class GameMap extends NoxComponent {
 
                 // 矩形区域
                 if (object.type == 0) {
-                    var posX = object.x - noxcc.aw(node.parent);
-                    var posY = object.y - object.height - noxcc.ah(node.parent);
-                    noxcc.setPosAR(node, posX + noxcc.aw(node), posY + noxcc.ah(node));
                     MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
                 }
                 else if (object.type == 4) {
