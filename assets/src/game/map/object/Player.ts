@@ -521,7 +521,9 @@ export class Player extends BaseObject {
     private killPlayer(force?: boolean): void {
         var sceneId = SceneManager.getRunningSceneId();
         if (sceneId == SceneId.select) {
-            this.restartScene();
+            this.schedule(() => {
+                this.restartScene();
+            });
         }
         else {
             if (this.playerStatus != PlayerStatus.PLAYER_DEATH) {
