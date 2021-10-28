@@ -618,13 +618,13 @@ export class GameMap extends NoxComponent {
             var objects = objectGroup.getObjects();
             for (var object of objects) {
                 var node: Node = null;
-                if (object.type == 0) {
+                if (object.type == TiledMap.TMXObjectType.RECT) {
                     node = noxcc.newNode(object.name != "" ? object.name : "object" + object.id);
                     noxcc.setSize(node, object.width, object.height);
                     noxcc.setAnchor(node, 0, 1);
                     noxcc.setPosAR(node, object.x - noxcc.aw(this.node), object.y - noxcc.ah(this.node));
                 }
-                else if (object.type == 4) {
+                else if (object.type == TiledMap.TMXObjectType.IMAGE) {
                     node = objectGroup.node.getChildByName("img" + object.id);
                 }
                 else {
@@ -636,10 +636,10 @@ export class GameMap extends NoxComponent {
                 node.parent = this.node;
 
                 // 矩形区域
-                if (object.type == 0) {
+                if (object.type == TiledMap.TMXObjectType.RECT) {
                     MapUtil.addBoxCollider(node, this, ObjectGroup.Trigger, true, null, 0);
                 }
-                else if (object.type == 4) {
+                else if (object.type == TiledMap.TMXObjectType.IMAGE) {
                 }
                 else {
                     cc_assert(false, "not supported");
