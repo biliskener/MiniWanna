@@ -273,7 +273,7 @@ export class GameMap extends NoxComponent {
             layer.markForUpdateRenderData();
             var cherry = cc_instantiate(this.cherryPrefab);
             cherry.getComponent(Animation).enabled = true;
-            cherry.getComponent(BossBullet).enabled = false;
+            cherry.getComponent(BossBullet).enabled = true;
             var cherryX = (x + 0.5) * tileSize.width - noxcc.aw(this.node);
             var cherryY = (layerSize.y - 1 - y + 0.5) * tileSize.height - noxcc.ah(this.node);
             noxcc.setPosAR(cherry, cherryX, cherryY);
@@ -511,7 +511,7 @@ export class GameMap extends NoxComponent {
                     else if (object.gid == GameConfig.cherryTile) {
                         var cherry = cc_instantiate(this.cherryPrefab);
                         cherry.getComponent(Animation).enabled = true;
-                        cherry.getComponent(BossBullet).enabled = false;
+                        cherry.getComponent(BossBullet).enabled = true;
                         noxcc.setPosAR(cherry, node.position.x + tileWidth / 2, node.position.y + tileHeight / 2);
                         MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
                         MapUtil.setDynamicType(cherry);
