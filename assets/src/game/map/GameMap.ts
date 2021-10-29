@@ -18,6 +18,7 @@ import { Save } from "./object/iwbt/Save";
 import { Platform } from "./object/iwbt/Platform";
 import { CameraControl } from "./CameraControl";
 import { BossBullet } from "./object/iwbt/boss/BossBullet";
+import { BulletPrefabMgr } from "../BulletPrefabMgr";
 const { ccclass, property, executeInEditMode, requireComponent, executionOrder, disallowMultiple } = _decorator;
 
 @ccclass
@@ -787,5 +788,44 @@ export class GameMap extends NoxComponent {
 
     public startVibrate(duration: number) {
         this.getComponent(CameraControl).startVibrate(duration);
+    }
+
+    public createRawBullet(type: string): Node {
+        var prefab = BulletPrefabMgr.CURRENTON.getPrefab(type);
+        if (prefab) {
+            var node = cc_instantiate(prefab);
+            var animation = node.getComponent(Animation);
+            if (animation) animation.enabled = true;
+            var bossBullet = node.getComponent(BossBullet);
+            bossBullet.enabled = true;
+            bossBullet.autoRemove = true;
+            return node;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public createBullet(type: string, group: number): Node {
+        var prefab = BulletPrefabMgr.CURRENTON.getPrefab(type);
+        if (prefab) {
+            var node = cc_instantiate(prefab);
+            var animation = node.getComponent(Animation);
+            if (animation) animation.enabled = true;
+            var bossBullet = node.getComponent(BossBullet);
+            bossBullet.enabled = true;
+            bossBullet.autoRemove = true;
+            if (type.match(/^cherry/)) {
+                MapUtil.addCircleCollider(node, this, group, true, new Rect(0, 0, noxcc.w(node), noxcc.h(node)), 0);
+            }
+            else {
+                MapUtil.addBoxCollider(node, this, group, true, null, 0);
+            }
+            MapUtil.setDynamicType(node);
+            return node;
+        }
+        else {
+            return null;
+        }
     }
 }

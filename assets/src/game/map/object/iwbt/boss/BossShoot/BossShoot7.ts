@@ -28,7 +28,7 @@ export class BossShoot7 extends BaseObject implements BossShootable {
     // 开始发射
     public startShoot(): void {
         //noxSound.playEffect("sound/iwbt/bossHit.mp3");
-        this.bullet1 = BulletPrefabMgr.CURRENTON.createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+        this.bullet1 = this.map.createBullet(this.params.bullet, ObjectGroup.BossBullet1);
         noxcc.setX(this.bullet1, noxcc.w(this.map.node) / 2 - noxcc.aw(this.map.node));
         noxcc.setY(this.bullet1, noxcc.h(this.map.node) + noxcc.h(this.bullet1) / 2 - noxcc.ah(this.map.node));
         noxcc.setParent(this.bullet1, this.map.node);
@@ -55,7 +55,7 @@ export class BossShoot7 extends BaseObject implements BossShootable {
     public shoot(): void {
         //noxSound.playEffect("sound/iwbt/bossHit.mp3");
         for (let i = 0; i < this.params.count; i++) {
-            let bullet = BulletPrefabMgr.CURRENTON.createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+            let bullet = this.map.createBullet(this.params.bullet, ObjectGroup.BossBullet1);
             noxcc.setPosAR(bullet, this.bullet1.position.x, this.bullet1.position.y);
             noxcc.setParent(bullet, this.map.node);
             let radian = i * this.dr - 0.04 * this.count;

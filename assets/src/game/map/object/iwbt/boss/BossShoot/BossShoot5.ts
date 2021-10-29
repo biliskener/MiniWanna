@@ -47,7 +47,7 @@ export class BossShoot5 extends BaseObject implements BossShootable {
         this.count++;
         for (let i = 0; i < 3; i++) {
             let bullets: Node[] = [];
-            let bullet = BulletPrefabMgr.CURRENTON.createBullet(this.map, this.params.bullet, ObjectGroup.BossBullet1);
+            let bullet = this.map.createBullet(this.params.bullet, ObjectGroup.BossBullet1);
             bullets.push(bullet);
             noxcc.setX(bullet, -noxcc.w(bullet) - noxcc.aw(this.map.node));
             noxcc.setY(bullet, noxcc.h(this.map.node) * (i + 1) / 4 - noxcc.ah(this.map.node));
@@ -74,7 +74,7 @@ export class BossShoot5 extends BaseObject implements BossShootable {
                 for (let i = 0; i < this.params.count - 1; i++) {
                     angle += this.da;
                     delay += 0.1;
-                    let bullet = BulletPrefabMgr.CURRENTON.createRawBullet(this.params.bullet);
+                    let bullet = this.map.createRawBullet(this.params.bullet);
                     let cos = Math.cos(angle * Math.PI / 180);
                     let sin = Math.sin(angle * Math.PI / 180);
                     noxcc.setX(bullet, centreX + this.radius * cos);
