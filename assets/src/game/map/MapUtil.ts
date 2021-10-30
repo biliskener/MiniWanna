@@ -341,7 +341,9 @@ export module MapUtil {
 
     export function setDynamicType(node: Node) {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-            node.getComponent(RigidBody2D).type = ERigidBody2DType.Dynamic;
+            var rigidBody2D = node.getComponent(RigidBody2D);
+            rigidBody2D.type = ERigidBody2DType.Dynamic;
+            rigidBody2D.allowSleep = false;
         }
         else {
         }
