@@ -477,27 +477,6 @@ export class CollisionSystem /*implements ISchedulable*/ {
         }
     }
 
-    public collision_static(constraints: Collision.Constraints,
-        movement: Readonly<Vec2>,
-        dest: Readonly<Rect>,
-        object: CollisionObject): void {
-        this.collision_tilemap(constraints, movement, dest, object);
-
-        // collision with other (static) objects
-        for (var static_object of this.m_objects) {
-            if (static_object.get_group() != CollisionGroup.COLGROUP_STATIC &&
-                static_object.get_group() != CollisionGroup.COLGROUP_MOVING_STATIC)
-                continue;
-            if (!static_object.is_valid())
-                continue;
-
-            if (static_object != object) {
-                this.check_collisions(constraints, movement, dest, static_object.get_bbox(),
-                    object, static_object);
-            }
-        }
-    }
-
     public collision_tilemap(constraints: Collision.Constraints, movement: Readonly<Vec2>, dest: Readonly<Rect>, object: CollisionObject): void {
         // calculate rectangle where the object will move
         for (var solids of this.get_solid_tilemaps()) {
@@ -586,20 +565,20 @@ export class CollisionSystem /*implements ISchedulable*/ {
     public get_hit_normal(r1: Readonly<Rect>, r2: Readonly<Rect>, hit: CollisionHit, normal: Vec2): void {
         const ileft = r1.xMax - r2.xMin;
         const iright = r2.xMax - r1.xMin;
-        const ibottom = r1.yMax - r2.yMin;
         const itop = r2.yMax - r1.yMin;
+        const ibottom = r1.yMax - r2.yMin;
 
         const vert_penetration = Math.min(itop, ibottom);
         const horiz_penetration = Math.min(ileft, iright);
 
         if (vert_penetration < horiz_penetration) {
-            if (ibottom < itop) {
-                hit.top = true;
-                normal.y = vert_penetration;
-            }
-            else {
+            if (itop < ibottom) {
                 hit.bottom = true;
                 normal.y = -vert_penetration;
+            }
+            else {
+                hit.top = true;
+                normal.y = vert_penetration;
             }
         }
         else {
@@ -658,6 +637,27 @@ export class CollisionSystem /*implements ISchedulable*/ {
                 var dest2 = object2.get_dest();
                 dest2.x += normal.x;
                 dest2.y += normal.y;
+            }
+        }
+    }
+
+    public collision_static(constraints: Collision.Constraints,
+        movement: Readonly<Vec2>,
+        dest: Readonly<Rect>,
+        object: CollisionObject): void {
+        this.collision_tilemap(constraints, movement, dest, object);
+
+        // collision with other (static) objects
+        for (var static_object of this.m_objects) {
+            if (static_object.get_group() != CollisionGroup.COLGROUP_STATIC &&
+                static_object.get_group() != CollisionGroup.COLGROUP_MOVING_STATIC)
+                continue;
+            if (!static_object.is_valid())
+                continue;
+
+            if (static_object != object) {
+                this.check_collisions(constraints, movement, dest, static_object.get_bbox(),
+                    object, static_object);
             }
         }
     }
