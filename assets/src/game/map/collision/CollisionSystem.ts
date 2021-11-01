@@ -169,7 +169,12 @@ export class CollisionSystem /*implements ISchedulable*/ {
                 || !object.is_valid())
                 continue;
 
-            this.collision_static_constrains(object);
+            if (GameConfig.useSimpleCollision) {
+                this.collision_static_constrains_simple(object);
+            }
+            else {
+                this.collision_static_constrains(object);
+            }
         }
 
         // part2: COLGROUP_MOVING vs tile attributes
@@ -1264,5 +1269,276 @@ export class CollisionSystem /*implements ISchedulable*/ {
             return TileAttribute.HURTS;
         }
         return 0;
+    }
+
+
+    public collision_static_constrains_simple(object: CollisionObject) {
+        var constraints = new Constraints();
+        const movement = object.get_movement();
+        var pressure = cc_v2(0, 0);
+
+        var final_dest = object.get_dest().clone();
+        var dest = object.get_bbox().clone();
+        dest.y += movement.y;
+        for (var i = 0; i < 2; ++i) {
+            this.collision_static_simple(true, constraints, movement, dest, final_dest, object);
+
+            if (!constraints.has_constraints()) {
+                break;
+            }
+
+            // apply calculated horizontal constraints
+            if (constraints.get_position_bottom() > Collision.NEG_INFINITY) {
+                const height = constraints.get_height();
+                if (height < object.get_bbox().height) {
+                    pressure.y += object.get_bbox().height - height;
+                }
+                else {
+                    dest.height = object.get_bbox().height;
+                    dest.y = constraints.get_position_bottom() + Collision.DELTA;
+                }
+            }
+            else if (constraints.get_position_top() < Collision.POS_INFINITY) {
+                dest.height = object.get_bbox().height;
+                dest.y = constraints.get_position_top() - Collision.DELTA - dest.height;
+            }
+
+            final_dest.y = dest.y;
+        }
+
+        dest.x += movement.x;
+
+        if (constraints.has_constraints()) {
+            if (constraints.hit.bottom) {
+                dest.x += constraints.ground_movement.x;
+                dest.y += constraints.ground_movement.y;
+            }
+
+            if (constraints.hit.top || constraints.hit.bottom) {
+                constraints.hit.left = false;
+                constraints.hit.right = false;
+                object.collision_solid(constraints.hit);
+            }
+        }
+
+        var old_constraints = constraints;
+
+        constraints = new Constraints();
+        for (var i = 0; i < 2; ++i) {
+            this.collision_static_simple(false, constraints, movement, dest, dest, object);
+            if (!constraints.has_constraints()) {
+                break;
+            }
+
+            // apply calculated vertical constraints
+            const width = constraints.get_width();
+            if (width < Collision.POS_INFINITY) {
+                if (width + Collision.SHIFT_DELTA < object.get_bbox().width) {
+                    // we're crushed, but ignore this for now, we'll get this again
+                    // later if we're really crushed or things will solve itself when
+                    // looking at the horizontal constraints
+                    pressure.x += object.get_bbox().width - width;
+                }
+                else {
+                    var xmid = constraints.get_x_midpoint();
+                    dest.width = object.get_bbox().width;
+                    dest.x = xmid - object.get_bbox().width / 2;
+                }
+            }
+            else if (constraints.get_position_right() < Collision.POS_INFINITY) {
+                dest.width = object.get_bbox().width;
+                dest.x = constraints.get_position_right() - Collision.DELTA - dest.width;
+            }
+            else if (constraints.get_position_left() > Collision.NEG_INFINITY) {
+                dest.width = object.get_bbox().width;
+                dest.x = constraints.get_position_left() + Collision.DELTA;
+            }
+        }
+
+        constraints.position_top = old_constraints.position_top;
+        constraints.speed_top = old_constraints.speed_top;
+        constraints.position_bottom = old_constraints.position_bottom;
+        constraints.speed_bottom = old_constraints.speed_bottom;
+        constraints.hit.top = old_constraints.hit.top;
+        constraints.hit.bottom = old_constraints.hit.bottom;
+
+        if (constraints.has_constraints()) {
+            if (constraints.hit.left || constraints.hit.right ||
+                constraints.hit.top || constraints.hit.bottom ||
+                constraints.hit.crush) {
+                object.collision_solid(constraints.hit);
+            }
+        }
+
+        // an extra pass to make sure we're not crushed vertically
+        if (pressure.y > 0) {
+            constraints = new Constraints();
+            this.collision_static_simple(true, constraints, movement, dest, dest, object);
+            if (constraints.get_position_bottom() > Collision.NEG_INFINITY) {
+                const height = constraints.get_height();
+                if (height + Collision.SHIFT_DELTA < object.get_bbox().height) {
+                    var h = new CollisionHit();
+                    h.top = true;
+                    h.bottom = true;
+                    h.crush = pressure.y > 16;
+                    object.collision_solid(h);
+                }
+            }
+        }
+
+        // an extra pass to make sure we're not crushed horizontally
+        if (pressure.x > 0) {
+            constraints = new Constraints();
+            this.collision_static_simple(false, constraints, movement, dest, dest, object);
+            if (constraints.get_position_right() < Collision.POS_INFINITY) {
+                var width = constraints.get_width();
+                if (width + Collision.SHIFT_DELTA < object.get_bbox().width) {
+                    var h = new CollisionHit();
+                    h.top = true;
+                    h.bottom = true;
+                    h.left = true;
+                    h.right = true;
+                    h.crush = pressure.x > 16;
+                    object.collision_solid(h);
+                }
+            }
+        }
+
+        object.set_dest(dest);
+    }
+
+    public collision_static_simple(is_vert: boolean, constraints: Collision.Constraints,
+        movement: Readonly<Vec2>,
+        dest: Readonly<Rect>,
+        final_dest: Readonly<Rect>,
+        object: CollisionObject): void {
+        this.collision_tilemap_simple(is_vert, constraints, movement, dest, final_dest, object);
+
+        for (var static_object of this.m_objects) {
+            if (static_object.get_group() != CollisionGroup.COLGROUP_STATIC &&
+                static_object.get_group() != CollisionGroup.COLGROUP_MOVING_STATIC)
+                continue;
+            if (!static_object.is_valid())
+                continue;
+
+            if (static_object != object) {
+                this.check_collisions_simple(is_vert, constraints, dest, final_dest, static_object.get_bbox(),
+                    object, static_object);
+            }
+        }
+    }
+
+    public collision_tilemap_simple(is_vert: boolean, constraints: Collision.Constraints, movement: Readonly<Vec2>, dest: Readonly<Rect>, final_dest: Readonly<Rect>, object: CollisionObject): void {
+        // calculate rectangle where the object will move
+        for (var solids of this.get_solid_tilemaps()) {
+            // test with all tiles in this rectangle
+            const test_tiles = this.get_tiles_overlapping(solids, dest);
+            for (var x = test_tiles.xMin; x <= test_tiles.xMax; ++x) {
+                for (var y = test_tiles.yMin; y <= test_tiles.yMax; ++y) {
+                    const tile = this.get_tile(solids, x, y);
+
+                    if (!tile) {
+                        continue;
+                    }
+
+                    // skip non-solid tiles
+                    if (!this.is_tile_solid(tile, object)) {
+                        continue;
+                    }
+
+                    //var tile_bbox = this.get_tile_bbox(tile, ->get_tile_bbox(x, y);
+                    var tile_bbox = this.get_tile_bbox(tile);
+
+                    /* If the tile is a unisolid tile, the "is_solid()" function above
+                     * didn't do a thorough check. Calculate the position and (relative)
+                     * movement of the object and determine whether or not the tile is
+                     * solid with regard to those parameters. */
+                    if (this.is_tile_unisolid(tile)) {
+                        var relative_movement = movement.clone().subtract(this.get_solids_movement(solids, true));
+
+                        if (!this.is_tile_solid_ex(tile, tile_bbox, object.get_bbox(), relative_movement)) {
+                            continue;
+                        }
+                    }
+
+                    if (this.is_tile_slope(tile)) { // slope tile
+                        var triangle = new AATriangle();
+                        var slope_data = this.get_tile_data(tile);
+                        if (this.get_solids_flip(solids) & TileFlip.VERTICAL_FLIP) {
+                            slope_data = AATriangle.vertical_flip(slope_data);
+                        }
+                        triangle = new AATriangle(tile_bbox, slope_data);
+
+                        Collision.rectangle_aatriangle(constraints, dest, triangle,
+                            this.get_solids_movement(solids, false));
+                    }
+                    else { // normal rectangular tile
+                        this.check_collisions_simple(is_vert, constraints, dest, final_dest, tile_bbox, null, null,
+                            this.get_solids_movement(solids, false));
+                    }
+                }
+            }
+        }
+    }
+
+    private check_collisions_simple(is_vert: boolean, constraints: Collision.Constraints,
+        obj_rect: Readonly<Rect>,
+        obj_final_rect: Readonly<Rect>,
+        other_rect: Readonly<Rect>,
+        object?: CollisionObject,
+        other?: CollisionObject,
+        other_movement?: Readonly<Vec2>) {
+        other_movement = other_movement || cc_v2(0, 0);
+
+        if (!Collision.intersects(obj_rect, obj_final_rect))
+            return;
+
+        if (!Collision.intersects(obj_rect, other_rect))
+            return;
+
+        var dummy = new CollisionHit();
+
+        if (other != null && object != null && !other.collides(object, dummy))
+            return;
+        if (object != null && other != null && !object.collides(other, dummy))
+            return;
+
+        const ileft = obj_rect.xMax - other_rect.xMin;
+        const iright = other_rect.xMax - obj_rect.xMin;
+        const ibottom = obj_rect.yMax - other_rect.yMin;
+        const itop = other_rect.yMax - obj_rect.yMin;
+
+        constraints.ground_movement.add(other_movement);
+        if (other != null && object != null) {
+            const response: HitResponse = other.collision(object, dummy);
+            if (response == HitResponse.ABORT_MOVE)
+                return;
+
+            if (!other.get_movement().equals(cc_v2(0, 0))) {
+                // TODO what todo when we collide with 2 moving objects?!?
+                constraints.ground_movement.add(other.get_movement());
+            }
+        }
+
+        if (is_vert) {
+            if (ibottom < itop) {
+                constraints.constrain_top(other_rect.yMin, other_movement.y);
+                constraints.hit.top = true;
+            }
+            else {
+                constraints.constrain_bottom(other_rect.yMax, other_movement.y);
+                constraints.hit.bottom = true;
+            }
+        }
+        else {
+            if (ileft < iright) {
+                constraints.constrain_right(other_rect.xMin, other_movement.x);
+                constraints.hit.right = true;
+            }
+            else {
+                constraints.constrain_left(other_rect.xMax, other_movement.x);
+                constraints.hit.left = true;
+            }
+        }
     }
 }

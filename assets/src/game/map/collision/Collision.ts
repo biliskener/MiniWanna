@@ -2,6 +2,7 @@ import { CollisionHit } from "./CollisionHit";
 import { AATriangle } from "./AATriangle";
 import { Intersection2D, Rect, Vec2 } from "cc";
 import { cc_assert, CC_DEV, cc_log, cc_rect, cc_v2 } from "../../../framework/core/nox";
+import { GameConfig } from "../../config/GameConfig";
 
 export module Collision {
     // the engine will be run with a logical framerate of 64fps.
@@ -24,15 +25,15 @@ export module Collision {
         public ground_movement: Vec2 = new Vec2();
         public hit: CollisionHit = new CollisionHit();
 
-        private position_left: number = NEG_INFINITY;
-        private position_right: number = POS_INFINITY;
-        private position_bottom: number = NEG_INFINITY;
-        private position_top: number = POS_INFINITY;
+        public position_left: number = NEG_INFINITY;
+        public position_right: number = POS_INFINITY;
+        public position_bottom: number = NEG_INFINITY;
+        public position_top: number = POS_INFINITY;
 
-        private speed_left: number = NEG_INFINITY;
-        private speed_right: number = POS_INFINITY;
-        private speed_bottom: number = NEG_INFINITY;
-        private speed_top: number = POS_INFINITY;
+        public speed_left: number = NEG_INFINITY;
+        public speed_right: number = POS_INFINITY;
+        public speed_bottom: number = NEG_INFINITY;
+        public speed_top: number = POS_INFINITY;
 
         public has_constraints(): boolean {
             return this.position_left > NEG_INFINITY
@@ -95,7 +96,16 @@ export module Collision {
     }
 
     export function intersects(r1: Readonly<Rect>, r2: Readonly<Rect>): boolean {
-        return r1.intersects(r2);
+        if (GameConfig.useSimpleCollision) {
+            const maxax = r1.x + r1.width;
+            const maxay = r1.y + r1.height;
+            const maxbx = r2.x + r2.width;
+            const maxby = r2.y + r2.height;
+            return !(maxax <= r2.x || maxbx <= r1.x || maxay <= r2.y || maxby <= r1.y);
+        }
+        else {
+            return r1.intersects(r2);
+        }
     }
 
     export function makePlane(p1: Readonly<Vec2>, p2: Readonly<Vec2>, out: { n: Vec2, c: number }): void {

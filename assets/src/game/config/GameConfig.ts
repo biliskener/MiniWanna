@@ -10,6 +10,7 @@ export module GameConfig {
     export const usePhysicsDraw: boolean = false;
     export const useRawTileMapAssets: boolean = false;   // 直接使用TiledMap资源，而不是使用预制作为关卡
     export const physicsEngineType: PhysicsEngineType = PhysicsSystem2D.PHYSICS_BOX2D ? PhysicsEngineType.BOX2D : PhysicsEngineType.TUX;
+    export const useSimpleCollision: boolean = true;
     export const applyVerticalForce = physicsEngineType == PhysicsEngineType.BOX2D && true;         // 是否应用垂直力
     export const applyHorizontalImpulse = physicsEngineType == PhysicsEngineType.BOX2D && true;     // 使用冲量时会在地面上抖动
     export const applyHorizontalSpeed = physicsEngineType == PhysicsEngineType.BOX2D && !applyHorizontalImpulse && true;   // 是否应用水平速度, 为true时可能会卡脚, 为false时出现跳跃挂墙上并且角落卡住更麻烦且暂无解决方案
