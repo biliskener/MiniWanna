@@ -1434,6 +1434,10 @@ declare global {
                  * @param str 
                  */
                 export function isUUID(str: string): string;
+                /**
+                 * 生成一个新的 uuid
+                 */
+                export function generate(): string;
             }
         }
     }

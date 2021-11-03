@@ -36,3 +36,7 @@ export interface IConfigGroupsInfo {
     icon: string;
 }
 export type IConfigGroups = Record<ITextureCompressPlatform, IConfigGroupsInfo>;
+
+export type IPVRQuality = 'fastest' | 'fast' | 'normal' | 'high' | 'best';
+export type IETCQuality = 'slow' | 'fast';
+export type IASTCQuality = 'veryfast' | 'fast' | 'medium' | 'thorough' | 'exhaustive';

@@ -19,7 +19,9 @@
     ],
     "_active": true,
     "_components": [],
-    "_prefab": null,
+    "_prefab": {
+      "__id__": 23
+    },
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -822,5 +824,9 @@
     "_isAbsVerticalCenter": true,
     "_originalWidth": 0,
     "_originalHeight": 0
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "fileId": "ffe658be-87b2-428b-a6f3-6e6145e23855"
   }
 ]

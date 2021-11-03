@@ -166,7 +166,7 @@ export interface ExecuteSceneScriptMethodOptions {
     args: any[];
 }
 
-type IPropertyValueType = IProperty | IProperty[] | null | undefined | number | boolean | string | Vec3 | Vec2;
+export type IPropertyValueType = IProperty | IProperty[] | null | undefined | number | boolean | string | Vec3 | Vec2;
 
 export interface IPropertyGroupOptions {
     id: string // 默认 'default'
@@ -312,6 +312,11 @@ export interface ScenePluginComponentInfo {
     type: string;
 }
 
+export interface QueryClassesOptions {
+    extends?: string | string[];
+    excludeSelf?: boolean;
+}
+
 // ---- 场景插件返回的 info 信息 ---- end
 
 // ---- 动画数据 ---- start
@@ -350,6 +355,10 @@ export interface IAnimCopyKeySrcInfo {
 
 export interface IAnimCopyNodeSrcInfo {
     curvesDump: IPropCurveDumpData[];
+}
+
+export interface IAnimCopyNodeDstInfo {
+    nodePath: string;
 }
 
 interface IEventDump {
