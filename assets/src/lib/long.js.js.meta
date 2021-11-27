@@ -1,5 +1,5 @@
 {
-  "ver": "4.0.22",
+  "ver": "4.0.23",
   "importer": "javascript",
   "imported": true,
   "uuid": "256c78cd-9b43-4f93-92b3-4c9d3267e108",
@@ -13,7 +13,6 @@
     "executionScope": "global",
     "loadPluginInWeb": true,
     "loadPluginInNative": true,
-    "loadPluginInEditor": true,
-    "importAsPlugin": true
+    "loadPluginInEditor": true
   }
 }
