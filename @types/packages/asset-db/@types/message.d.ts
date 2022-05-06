@@ -89,7 +89,7 @@ export interface message extends EditorMessageMap {
     },
     'query-asset-info': {
         params: [
-            string,
+            string, // uuid | url | path
         ],
         result: AssetInfo | null,
     },

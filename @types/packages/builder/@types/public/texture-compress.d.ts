@@ -18,19 +18,47 @@ export type ITextureCompressType =
     | 'astc_8x8'
     | 'astc_10x5'
     | 'astc_10x10'
-    | 'astc_12x12';
+    | 'astc_12x12'
+    | string;
 export type ITextureCompressPlatform = 'miniGame' | 'web' | 'ios' | 'android';
-export type IQualityType = 'etc' | 'pvr' | 'number' | 'astc';
+
+export interface IHandlerInfo {
+    type: 'program' | 'npm' | 'function';
+    info: ICommandInfo | Function;
+    func?: Function;
+}
+
+export interface ICustomConfig {
+    id: string;
+    name: string;
+    path: string;
+    command: string;
+    format: string;
+    overwrite?: boolean;
+}
+
+export interface ICommandInfo {
+    command: string;
+    params?: string[];
+    path: string;
+}
+
 export interface ITextureFormatInfo {
     displayName: string;
-    qualityType: IQualityType;
+    value: ITextureCompressType | string;
+    formatSuffix?: string;
     alpha?: boolean;
+    formatType?: string;
+    handler?: IHandlerInfo;
+    custom?: boolean;
+    params?: string[];
 }
 export interface ISupportFormat {
     rgb: ITextureCompressType[];
     rgba: ITextureCompressType[];
 }
 export interface IConfigGroupsInfo {
+    defaultSupport?: ISupportFormat,
     support: ISupportFormat,
     displayName: string;
     icon: string;

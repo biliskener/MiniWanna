@@ -27,6 +27,7 @@ export interface ISettings {
     designResolution: ISettingsDesignResolution;
     jsList: string[];
     launchScene: string;
+    preloadAssets: string[],
     moduleIds: string[];
     platform: string;
     renderPipeline: string;

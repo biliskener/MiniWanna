@@ -1,4 +1,4 @@
-import { ITextureCompressType, IPVRQuality, IASTCQuality, IETCQuality } from './texture-compress';
+import { ITextureCompressType, IPVRQuality, IASTCQuality, IETCQuality, ITextureFormatInfo } from './texture-compress';
 import { IBuildTaskOption } from './options';
 import { IBuildResult } from './build-result';
 
@@ -17,6 +17,13 @@ export type IVerificationRuleMap = Record<
         message?: string;
     }
 >;
+
+export interface ITextureFormatConfig {
+    displayName: string;
+    options: IDisplayOptions;
+    formats: ITextureFormatInfo[]; // 未指定 formats 则当前格式 key 作为存储的格式 value
+    suffix: string;
+}
 
 export type IDisplayOptions = Record<string, IConfigItem>;
 
@@ -50,6 +57,7 @@ export interface IBuildPlugin {
     unload?: BuildPlugin.Unload;
 }
 export type IBaseHooks = (options: IBuildTaskOption, result: IBuildResult) => Promise<void> | void;
+export type IBuildStageHooks = (root: string, options: IBuildTaskOption) => Promise<void> | void;
 
 export namespace BuildPlugin {
     export type Configs = Record<string, IBuildPluginConfig>;
@@ -65,6 +73,10 @@ export namespace BuildHook {
     export type onBeforeCompressSettings = IBaseHooks;
     export type onAfterCompressSettings = IBaseHooks;
     export type onAfterBuild = IBaseHooks;
+
+    export type onAfterMake = IBuildStageHooks;
+    export type onBeforeMake = IBuildStageHooks;
+
     export type load = () => Promise<void> | void;
     export type unload = () => Promise<void> | void;
 }

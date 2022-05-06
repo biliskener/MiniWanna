@@ -329,6 +329,7 @@ export interface IKeyDumpData {
     outTangent?: number;
     outTangentWeight?: number;
     interpMode?: number;
+    broken?: boolean;
     tangentWeightMode?: number;
     imgUrl?: string;
     easingMethod?: number;
@@ -341,12 +342,14 @@ export interface IDumpType {
 
 export interface IPropCurveDumpData {
     nodePath: string;
+    // 原始的 keyframe 数据
     keyframes: IKeyDumpData[];
     displayName: string;
     key: string;
     type?: IDumpType;
     preExtrap: number;
     postExtrap: number;
+    isCurveSupport: boolean; // 是否支持贝塞尔曲线编辑
 }
 
 export interface IAnimCopyKeySrcInfo {

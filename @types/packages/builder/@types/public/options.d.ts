@@ -13,10 +13,10 @@ export interface IBuildTaskOption {
     moveRemoteBundleScript: boolean;
     mergeJson: boolean;
     name: string;
-    packAutoAtlas: boolean;
+    // packAutoAtlas: boolean;
     platform: Platform;
     scenes: IBuildSceneItem[];
-    compressTexture: boolean;
+    skipCompressTexture: boolean;
     sourceMaps: boolean;
     startScene: string;
     outputName: string;
@@ -97,9 +97,11 @@ export type Platform =
     | 'alipay-mini-game'
     | 'mac'
     | 'ios'
+    | 'linux'
     // | 'ios-app-clip'
     | 'android'
     | 'ohos'
+    | 'open-harmonyos'
     | 'windows'
     | 'xiaomi-quick-game'
     | 'baidu-mini-game'

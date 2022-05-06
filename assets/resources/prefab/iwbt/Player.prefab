@@ -8,11 +8,12 @@
       "__id__": 1
     },
     "optimizationPolicy": 0,
-    "asyncLoadAssets": false
+    "asyncLoadAssets": false,
+    "persistent": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "player",
+    "_name": "Player",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
