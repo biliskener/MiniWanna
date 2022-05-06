@@ -1,19 +1,13 @@
 {
-    "version": "1.4.0",
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "Creator Debug: Launch Chrome",
             "type": "chrome",
             "request": "launch",
+            "preLaunchTask": "Cocos Creator compile",
+            "name": "Cocos Creator Launch Chrome against localhost",
             "url": "http://localhost:7456",
-            "preLaunchTask": "CocosCreator compile",
-            "sourceMaps": true,
-            "userDataDir": "${workspaceRoot}/.vscode/chrome",
-            "diagnosticLogging": false,
-            "pathMapping": {
-                "/preview-scripts/assets": "${workspaceRoot}/temp/quick-scripts/assets",
-                "/": "${workspaceRoot}"
-            }
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }

@@ -2,20 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "compile",
-            "command": "curl",
-            "args": [
-                "http://localhost:7456/update-db"
-            ],
-            "type": "shell",
-            "isBackground": true,
-            "group": "build",
-            "presentation": {
-                "reveal": "always"
-            }
-        },
-        {
-            "label": "CocosCreator compile",
+            "label": "Cocos Creator compile",
             "command": "curl",
             "args": [
                 "http://localhost:7456/asset-db/refresh"
