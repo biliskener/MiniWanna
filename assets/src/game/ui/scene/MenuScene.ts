@@ -1,12 +1,11 @@
-import { Button, EventKeyboard, KeyCode, Label, Node, SystemEvent } from "cc";
+import { EventKeyboard, Input, KeyCode, Label, Node } from "cc";
 import { BaseScene } from "../../../framework/base/BaseScene";
 import { SceneManager } from "../../../framework/base/SceneManager";
-import { cc_assert, cc_find, cc_systemEvent } from "../../../framework/core/nox";
+import { cc_assert, cc_find, cc_input } from "../../../framework/core/nox";
 import { noxcc } from "../../../framework/core/noxcc";
 import { SceneId } from "../../const/SceneId";
 import { GameData } from "../../data/GameData";
 import { AllViewTypes } from "../AllViewTypes";
-import { LevelScene } from "./LevelScene";
 import { SelectScene } from "./SelectScene";
 
 
@@ -52,8 +51,8 @@ export class MenuScene extends BaseScene {
     public onEnter(): void {
         super.onEnter();
 
-        cc_systemEvent.on(SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc_systemEvent.on(SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+        cc_input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc_input.on(Input.EventType.KEY_UP, this.onKeyUp, this);
 
         GameData.INSTANCE.loadAllSavedData();
         this.showSavedData();
@@ -63,8 +62,8 @@ export class MenuScene extends BaseScene {
     public onExit(): void {
         GameData.INSTANCE.unloadAllSavedData();
 
-        cc_systemEvent.off(SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc_systemEvent.off(SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+        cc_input.off(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc_input.off(Input.EventType.KEY_UP, this.onKeyUp, this);
 
         super.onExit();
     }

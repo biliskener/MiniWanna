@@ -1,11 +1,11 @@
 {
-  "ver": "1.0.23",
+  "ver": "1.0.25",
   "importer": "image",
   "imported": true,
   "uuid": "e3b6ef54-0cbc-41dc-b835-3351e6fc6def",
   "files": [
-    ".png",
-    ".json"
+    ".json",
+    ".png"
   ],
   "subMetas": {
     "blood": {
@@ -50,9 +50,10 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "e3b6ef54-0cbc-41dc-b835-3351e6fc6def"
+        "imageUuidOrDatabaseUri": "e3b6ef54-0cbc-41dc-b835-3351e6fc6def",
+        "visible": false
       },
-      "ver": "1.0.21",
+      "ver": "1.0.22",
       "imported": true,
       "files": [
         ".json"
@@ -84,9 +85,67 @@
         "packable": true,
         "isUuid": true,
         "imageUuidOrDatabaseUri": "e3b6ef54-0cbc-41dc-b835-3351e6fc6def@6c48a",
-        "atlasUuid": ""
+        "atlasUuid": "",
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -5,
+            -1,
+            0,
+            5,
+            -1,
+            0,
+            -5,
+            1,
+            0,
+            5,
+            1,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            1,
+            3,
+            11,
+            3,
+            1,
+            1,
+            11,
+            1
+          ],
+          "nuv": [
+            0.08333333333333333,
+            0.25,
+            0.9166666666666666,
+            0.25,
+            0.08333333333333333,
+            0.75,
+            0.9166666666666666,
+            0.75
+          ],
+          "minPos": [
+            -5,
+            -1,
+            0
+          ],
+          "maxPos": [
+            5,
+            1,
+            0
+          ]
+        }
       },
-      "ver": "1.0.9",
+      "ver": "1.0.11",
       "imported": true,
       "files": [
         ".json"

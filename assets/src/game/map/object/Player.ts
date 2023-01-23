@@ -8,8 +8,8 @@ import { CollisionHit } from "../collision/CollisionHit";
 import { HitResponse } from "../collision/HitResponse";
 import { TileAttribute } from "../collision/TileAttribute";
 import { PlayerStatus } from "./PlayerStatus";
-import { cc_assert, CC_EDITOR, cc_instantiate, cc_macro, cc_systemEvent, nox } from "../../../framework/core/nox";
-import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, SystemEvent, SystemEventType, Vec2, Vec3, _decorator } from "cc";
+import { cc_assert, CC_EDITOR, cc_input, cc_instantiate } from "../../../framework/core/nox";
+import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, Vec2, Vec3, _decorator, Input } from "cc";
 import { noxSound } from "../../../framework/core/noxSound";
 import { ObjectGroup } from "../../const/ObjectGroup";
 import { noxcc } from "../../../framework/core/noxcc";
@@ -118,8 +118,8 @@ export class Player extends BaseObject {
 
         // 监听键盘按下和释放事件 
 
-        cc_systemEvent.on(SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc_systemEvent.on(SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+        cc_input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc_input.on(Input.EventType.KEY_UP, this.onKeyUp, this);
 
         this.leftButton = 0;
         this.rightButton = 0;

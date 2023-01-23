@@ -1,11 +1,11 @@
 {
-  "ver": "1.0.23",
+  "ver": "1.0.25",
   "importer": "image",
   "imported": true,
   "uuid": "ebd33363-a899-4d56-b57a-6da54d9843b5",
   "files": [
-    ".png",
-    ".json"
+    ".json",
+    ".png"
   ],
   "subMetas": {
     "player": {
@@ -50,9 +50,10 @@
         "mipfilter": "none",
         "anisotropy": 0,
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "ebd33363-a899-4d56-b57a-6da54d9843b5"
+        "imageUuidOrDatabaseUri": "ebd33363-a899-4d56-b57a-6da54d9843b5",
+        "visible": false
       },
-      "ver": "1.0.21",
+      "ver": "1.0.22",
       "imported": true,
       "files": [
         ".json"
@@ -84,9 +85,67 @@
         "packable": true,
         "isUuid": true,
         "imageUuidOrDatabaseUri": "ebd33363-a899-4d56-b57a-6da54d9843b5@6c48a",
-        "atlasUuid": ""
+        "atlasUuid": "",
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -82.5,
+            -63,
+            0,
+            82.5,
+            -63,
+            0,
+            -82.5,
+            63,
+            0,
+            82.5,
+            63,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            4,
+            126,
+            169,
+            126,
+            4,
+            0,
+            169,
+            0
+          ],
+          "nuv": [
+            0.022988505747126436,
+            0,
+            0.9712643678160919,
+            0,
+            0.022988505747126436,
+            0.9130434782608695,
+            0.9712643678160919,
+            0.9130434782608695
+          ],
+          "minPos": [
+            -82.5,
+            -63,
+            0
+          ],
+          "maxPos": [
+            82.5,
+            63,
+            0
+          ]
+        }
       },
-      "ver": "1.0.9",
+      "ver": "1.0.11",
       "imported": true,
       "files": [
         ".json"

@@ -1,8 +1,10 @@
-import { cc_game } from "../../framework/core/nox";
+import { Settings } from "cc";
+import { cc_settings } from "../../framework/core/nox";
 
 
 function getObjectGroupIndexByName(name: string): number {
-    return cc_game.config.physics.collisionGroups.find((v) => { return v.name == name }).index;
+    const collisionGroups = cc_settings.querySettings<Array<{ name: string, index: number }>>(Settings.Category.PHYSICS, 'collisionGroups');
+    return collisionGroups!.find((v) => { return v.name == name })!.index;
 }
 
 export let ObjectGroup = {

@@ -1,9 +1,7 @@
-import { EventKeyboard, KeyCode, SystemEvent } from "cc";
+import { EventKeyboard, Input, KeyCode } from "cc";
 import { BaseScene } from "../../../framework/base/BaseScene";
 import { SceneManager } from "../../../framework/base/SceneManager";
-import { cc_macro, cc_systemEvent } from "../../../framework/core/nox";
-import { NoxScene } from "../../../framework/view/NoxScene";
-import { NoxViewMgr } from "../../../framework/view/NoxViewMgr";
+import { cc_input } from "../../../framework/core/nox";
 import { SceneId } from "../../const/SceneId";
 import { AllViewTypes } from "../AllViewTypes";
 import { MenuScene } from "./MenuScene";
@@ -34,12 +32,12 @@ export class SplashScene extends BaseScene {
     //界面打开时的调用
     public onEnter(): void {
         super.onEnter();
-        cc_systemEvent.on(SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc_input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
     }
 
     //界面关闭时的调用
     public onExit(): void {
-        cc_systemEvent.off(SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc_input.off(Input.EventType.KEY_DOWN, this.onKeyDown, this);
         super.onExit();
     }
 

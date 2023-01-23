@@ -1,7 +1,7 @@
 import { DEBUG as _CC_DEBUG, DEV as _CC_DEV, PREVIEW as _CC_PREVIEW, EDITOR as _CC_EDITOR } from "cc/env";
-import { Vec2, VERSION as _CC_VERSION, __private } from "cc";
-import { assert as _cc_assert, log as _cc_log, warn as _cc_warn, error as _cc_error, js as _cc_js, errorID as _cc_errorID, getError as _cc_getError } from "cc";
-import { v2 as _cc_v2, v3 as _cc_v3, macro as _cc_macro, sys as _cc_sys, misc as _cc_misc, systemEvent as _cc_systemEvent } from "cc";
+import { settings as _cc_settings, Vec2, VERSION as _CC_VERSION, __private } from "cc";
+import { assert as _cc_assert, log as _cc_log, debug as _cc_debug, warn as _cc_warn, error as _cc_error, js as _cc_js, errorID as _cc_errorID, getError as _cc_getError } from "cc";
+import { v2 as _cc_v2, v3 as _cc_v3, macro as _cc_macro, sys as _cc_sys, misc as _cc_misc, input as _cc_input } from "cc";
 import { color as _cc_color, rect as _cc_rect, size as _cc_size } from "cc";
 import { view as _cc_view, game as _cc_game, director as _cc_director, setDisplayStats as _cc_setDisplayStats } from "cc";
 import { isValid as _cc_isValid, find as _cc_find, instantiate as _cc_instantiate } from "cc";
@@ -17,6 +17,7 @@ export const CC_VERSION = _CC_VERSION;
 export const cc_assert: (value: any, message?: string, ...optionalParams: any[]) => asserts value = _cc_assert;
 
 export const cc_log = _cc_log;
+export const cc_debug = _cc_debug;
 export const cc_warn = _cc_warn;
 export const cc_error = _cc_error;
 export const cc_js = _cc_js;
@@ -32,6 +33,7 @@ export const cc_rect = _cc_rect;
 export const cc_size = _cc_size;
 export const cc_view = _cc_view;
 export const cc_game = _cc_game;
+export const cc_settings = _cc_settings;
 export const cc_director = _cc_director;
 export const cc_isValid = _cc_isValid;
 export const cc_find = _cc_find;
@@ -41,7 +43,7 @@ export const cc_resources = _cc_resources;
 export const cc_assetManager = _cc_assetManager;
 export const cc_clamp = _cc_clamp;
 export const cc_setDisplayStats = _cc_setDisplayStats;
-export const cc_systemEvent = _cc_systemEvent;
+export const cc_input = _cc_input;
 
 declare module wx {
     function getSystemInfoSync(): { platform: string };
@@ -222,6 +224,10 @@ export module nox {
         return obj instanceof Array;
     }
 
+    export function isSameClass(obj1: Object, obj2: Object): boolean {
+        return obj1.constructor == obj2.constructor; // 不要用js.getClassName函数
+    }
+
     //---- 类型转换帮助函数
 
     // 转换为字符串
@@ -289,7 +295,7 @@ export module nox {
 
     export function values<T>(t: TMap<T>): T[] {
         if ((<any>Object).values) {
-            return (<any>Object).values(t) as T[];
+            return (<any>Object).values(t);
         }
         else {
             let results: T[] = [];
@@ -412,20 +418,29 @@ export module nox {
         return 180 / Math.PI * radian;
     };
 
+    /*
     export function modf(v: number): [number, number] {
         let str = v + "";
         let b = str.split(".");
         return [b[0] ? parseInt(b[0]) : 0, b[1] ? parseInt(b[1]) : 0];
     }
+    */
 
-    export function fmod(y: number, x: number): number {
-        if (x > 0) {
-            return y % x;
-        }
-        else {
-            cc_assert(false);
-            return -(-y % x);
-        }
+    // 求余数
+    export function fmodf(y: number, x: number): number {
+        // 5.1 % 3 == 2.1
+        // -5.1 % 3 == -2.1
+        // 5.1 % -1 == 2.1
+        // -5.1 % -3 == -2.1
+        return y % x;
+    }
+
+    export function positiveMod(lhs: number, rhs: number): number {
+        return (lhs % rhs + rhs) % rhs;
+    }
+
+    export function positiveModf(lhs: number, rhs: number): number {
+        return fmodf(fmodf(lhs, rhs) + rhs, rhs);
     }
 
     export function deg(radian: number): number {
@@ -441,7 +456,11 @@ export module nox {
     export const atan = Math.atan;
     export const atan2 = Math.atan2;
     export const pow: Function | void = Math.pow || nox.error("Math.pow not found");
-    export const PI: number | void = Math.PI || nox.error("Math.PI not found");
+    cc_assert(Math.PI);
+    export const PI: number = Math.PI;
+    export const PI_2: number = PI / 2.0;
+    export const PI_4: number = PI / 4.0;
+    export const TAU: number = Math.PI * 2.0;
 
     export function rad2deg(radians: number): number {
         return radians * (180 / Math.PI);
@@ -482,7 +501,7 @@ export module nox {
             let index = Math.floor(Math.random() * arr.length);
             return arr[index];
         }
-        return null as any as T;
+        return null!;
     }
 
     // 获得随机索引
@@ -556,7 +575,7 @@ export module nox {
             try {
                 throw new Error('0');
             } catch (e) {
-                err = e;
+                err = e as Error;
             }
             if (!err.stack) {
                 return '(no stack trace available)';
