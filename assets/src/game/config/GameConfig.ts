@@ -1,4 +1,4 @@
-import { PhysicsSystem2D } from "cc";
+import { PHYSICS_2D_PTM_RATIO, PhysicsSystem2D } from "cc";
 
 export enum PhysicsEngineType {
     BOX2D = 1,
@@ -46,7 +46,7 @@ export module GameConfig {
     export const transferTile: number = 23;
     export const cherryTile: number = 24;
 
-    export const speedFactor = physicsEngineType == PhysicsEngineType.BOX2D && (applyHorizontalImpulse || applyHorizontalSpeed) ? 1.5 : 50; // 速度因子
+    export const speedFactor = physicsEngineType == PhysicsEngineType.BOX2D && (applyHorizontalImpulse || applyHorizontalSpeed) ? 50 / PHYSICS_2D_PTM_RATIO : 50; // 速度因子
     export const gravity = -1000;                           // 重力值
     export const jumpGravityScale = 1.0;                    // 跳跃按键按住时的重力缩放
     export const riseGravityScale = 1.0;                    // 上升时的重力缩放
