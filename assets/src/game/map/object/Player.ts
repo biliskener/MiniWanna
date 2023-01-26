@@ -9,11 +9,11 @@ import { HitResponse } from "../collision/HitResponse";
 import { TileAttribute } from "../collision/TileAttribute";
 import { PlayerStatus } from "./PlayerStatus";
 import { cc_assert, CC_EDITOR, cc_input, cc_instantiate } from "../../../framework/core/nox";
-import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, Vec2, Vec3, _decorator, Input } from "cc";
+import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, Vec2, Vec3, _decorator, Input, PhysicsSystem2D } from "cc";
 import { noxSound } from "../../../framework/core/noxSound";
 import { ObjectGroup } from "../../const/ObjectGroup";
 import { noxcc } from "../../../framework/core/noxcc";
-import { PhysicsEngineType, GameConfig } from "../../config/GameConfig";
+import { PhysicsEngineType, GameConfig, PhysicsApplyType } from "../../config/GameConfig";
 import { MapUtil } from "../../../game/map/MapUtil";
 import { ObjectTag } from "../../const/ObjectTag";
 import { Bullet } from "./iwbt/Bullet";
@@ -339,19 +339,31 @@ export class Player extends BaseObject {
                 else {
                     this.body.gravityScale = GameConfig.riseGravityScale;
                 }
-                //8.1 若不应用水平速度则直接修改位移
-                if (!GameConfig.applyHorizontalSpeed && !GameConfig.applyHorizontalImpulse) {
-                    noxcc.addX(this.node, this.speed.x * dt);
-                    this.speed.x = 0;
+                if(GameConfig.physicsApplyType == PhysicsApplyType.FORCE) {
+                    if(this.body.linearVelocity.equals(this.speed) == false) {
+                        // force * time = (v2 - v1) * mass
+                        var force = this.speed.clone().subtract(this.body.linearVelocity).multiplyScalar(this.body.getMass() / PhysicsSystem2D.instance.fixedTimeStep);
+                        this.getComponent(RigidBody2D).applyForceToCenter(force, true);
+                    }
                 }
-                //8.2 速度应用到物理引擎
-                if (GameConfig.applyHorizontalImpulse) {
-                    if (this.body.linearVelocity.x != this.speed.x) {
+                else if(GameConfig.physicsApplyType == PhysicsApplyType.IMPULSE) {
+                    if(this.body.linearVelocity.equals(this.speed) == false) {
                         var horzImpulse = (this.speed.x - this.body.linearVelocity.x) * this.body.getMass();
-                        this.body.applyLinearImpulseToCenter(new Vec2(horzImpulse, 0), true);
+                        var vertImpulse = (this.speed.y - this.body.linearVelocity.y) * this.body.getMass();
+                        this.body.applyLinearImpulseToCenter(new Vec2(horzImpulse, vertImpulse), true);
+                    }
+                }
+                else if(GameConfig.physicsApplyType == PhysicsApplyType.SPEED) {
+                    if(this.body.linearVelocity.equals(this.speed) == false) {
+                        this.body.linearVelocity = this.speed;
                     }
                 }
                 else {
+                    if(this.speed.x || this.speed.y) {
+                        noxcc.addXY(this.node, this.speed.x * dt, this.speed.y * dt);
+                        this.speed.x = 0;
+                        this.speed.y = 0;
+                    }
                     this.body.linearVelocity = this.speed;
                 }
             }
@@ -473,9 +485,8 @@ export class Player extends BaseObject {
     private playerJump(): void {
         if (this.canJump) {
             if (this.touchedFootColliders.length > 0 || this.isHitBottom) {
-                if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
-                    var targetSpeedY = GameConfig.betterJump2Speed ? this.jump + Math.max(0, -this.body.linearVelocity.y) : this.jump;
-                    this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, targetSpeedY * GameConfig.jumpForceFactor), true);
+                if(GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+                    this.speed.y = GameConfig.betterJumpSpeed ? this.jump + Math.max(0, -this.body.linearVelocity.y) : this.jump;
                 }
                 else {
                     this.speed.y = this.jump;
@@ -489,9 +500,8 @@ export class Player extends BaseObject {
                 this.canJump2 = false;
                 // 下降阶段才能二段跳
                 if (this.playerStatus == PlayerStatus.PLAYER_FALL) {
-                    if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D && GameConfig.applyVerticalForce) {
-                        var targetSpeedY = GameConfig.betterJump2Speed ? this.jump2 + Math.max(0, -this.body.linearVelocity.y) : this.jump2;
-                        this.getComponent(RigidBody2D).applyForceToCenter(new Vec2(0, targetSpeedY * GameConfig.jumpForceFactor), true);
+                    if(GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+                        this.speed.y = GameConfig.betterJump2Speed ? this.jump2 + Math.max(0, -this.body.linearVelocity.y) : this.jump2;
                     }
                     else {
                         this.speed.y = this.jump2;

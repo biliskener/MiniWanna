@@ -5,15 +5,20 @@ export enum PhysicsEngineType {
     TUX = 2,
 }
 
+export enum PhysicsApplyType {
+    FORCE,
+    IMPULSE,    // 使用冲量时会在地面上抖动
+    SPEED,      // 水平速度时可能会卡脚, 否则出现跳跃挂墙上并且角落卡住更麻烦且暂无解决方案
+    POSITION,   // 暂时还有问题
+}
+
 export module GameConfig {
     export const invincibleMode: boolean = false;
     export const usePhysicsDraw: boolean = false;
     export const useRawTileMapAssets: boolean = false;   // 直接使用TiledMap资源，而不是使用预制作为关卡
     export const physicsEngineType: PhysicsEngineType = PhysicsSystem2D.PHYSICS_BOX2D ? PhysicsEngineType.BOX2D : PhysicsEngineType.TUX;
+    export const physicsApplyType: PhysicsApplyType = physicsEngineType == PhysicsEngineType.BOX2D ? PhysicsApplyType.IMPULSE : PhysicsApplyType.POSITION;
     export const useSimpleCollision: boolean = true;
-    export const applyVerticalForce = physicsEngineType == PhysicsEngineType.BOX2D && true;         // 是否应用垂直力
-    export const applyHorizontalImpulse = physicsEngineType == PhysicsEngineType.BOX2D && true;     // 使用冲量时会在地面上抖动
-    export const applyHorizontalSpeed = physicsEngineType == PhysicsEngineType.BOX2D && !applyHorizontalImpulse && true;   // 是否应用水平速度, 为true时可能会卡脚, 为false时出现跳跃挂墙上并且角落卡住更麻烦且暂无解决方案
     export const usePolygonColliderForPlayer = physicsEngineType == PhysicsEngineType.BOX2D && true;
     export const useBlockTileAsObject: boolean = false; // 块若能移动就不要设置为false, 为false性能好
     export const useSpikeTileAsObject: boolean = true;  // 块若能移动就不要设置为false, 为false性能好
@@ -46,7 +51,7 @@ export module GameConfig {
     export const transferTile: number = 23;
     export const cherryTile: number = 24;
 
-    export const speedFactor = physicsEngineType == PhysicsEngineType.BOX2D && (applyHorizontalImpulse || applyHorizontalSpeed) ? 50 / PHYSICS_2D_PTM_RATIO : 50; // 速度因子
+    export const speedFactor = physicsEngineType == PhysicsEngineType.BOX2D  ? 50 / PHYSICS_2D_PTM_RATIO : 50; // 速度因子
     export const gravity = -1000;                           // 重力值
     export const jumpGravityScale = 1.0;                    // 跳跃按键按住时的重力缩放
     export const riseGravityScale = 1.0;                    // 上升时的重力缩放
