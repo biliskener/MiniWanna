@@ -8,7 +8,7 @@ import { CollisionHit } from "../collision/CollisionHit";
 import { HitResponse } from "../collision/HitResponse";
 import { TileAttribute } from "../collision/TileAttribute";
 import { PlayerStatus } from "./PlayerStatus";
-import { cc_assert, CC_EDITOR, cc_input, cc_instantiate } from "../../../framework/core/nox";
+import { cc_assert, CC_EDITOR, cc_input, cc_instantiate, cc_sys, nox } from "../../../framework/core/nox";
 import { Animation, assert, AudioClip, Collider2D, Contact2DType, EventKeyboard, IPhysics2DContact, KeyCode, Prefab, RigidBody2D, Vec2, Vec3, _decorator, Input, PhysicsSystem2D } from "cc";
 import { noxSound } from "../../../framework/core/noxSound";
 import { ObjectGroup } from "../../const/ObjectGroup";
@@ -94,6 +94,7 @@ export class Player extends BaseObject {
     public isDying: boolean = false;
 
     public touchedFootColliders: Collider2D[] = [];
+    public touchedFootContacts: IPhysics2DContact[] = [];
     public touchedFootPositions: Vec3[] = [];
     public touchedHeadColliders: Collider2D[] = [];
     public touchedHeadPositions: Vec3[] = [];
@@ -217,6 +218,7 @@ export class Player extends BaseObject {
                 collider.apply();
                 collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
                 collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
+                collider.on(Contact2DType.POST_SOLVE, this.onPostContact, this);
             }
         }
     }
@@ -330,7 +332,13 @@ export class Player extends BaseObject {
             }
 
             if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-                if (this.speed.y < 0) {
+                if (false && this.touchedFootColliders.length > 0) {
+                    this.body.gravityScale = 0;
+                    if (this.speed.y < 0) {
+                        this.speed.y = 0;
+                    }
+                }
+                else if (this.speed.y < 0) {
                     this.body.gravityScale = GameConfig.fallGravityScale;
                 }
                 else if (this.jumpButton) {
@@ -339,27 +347,40 @@ export class Player extends BaseObject {
                 else {
                     this.body.gravityScale = GameConfig.riseGravityScale;
                 }
-                if(GameConfig.physicsApplyType == PhysicsApplyType.FORCE) {
-                    if(this.body.linearVelocity.equals(this.speed) == false) {
+                if (GameConfig.physicsApplyType == PhysicsApplyType.FORCE) {
+                    if (this.body.linearVelocity.equals(this.speed) == false) {
                         // force * time = (v2 - v1) * mass
                         var force = this.speed.clone().subtract(this.body.linearVelocity).multiplyScalar(this.body.getMass() / PhysicsSystem2D.instance.fixedTimeStep);
                         this.getComponent(RigidBody2D).applyForceToCenter(force, true);
                     }
                 }
-                else if(GameConfig.physicsApplyType == PhysicsApplyType.IMPULSE) {
-                    if(this.body.linearVelocity.equals(this.speed) == false) {
+                else if (GameConfig.physicsApplyType == PhysicsApplyType.IMPULSE) {
+                    if (this.body.linearVelocity.equals(this.speed) == false) {
                         var horzImpulse = (this.speed.x - this.body.linearVelocity.x) * this.body.getMass();
                         var vertImpulse = (this.speed.y - this.body.linearVelocity.y) * this.body.getMass();
                         this.body.applyLinearImpulseToCenter(new Vec2(horzImpulse, vertImpulse), true);
                     }
                 }
-                else if(GameConfig.physicsApplyType == PhysicsApplyType.SPEED) {
-                    if(this.body.linearVelocity.equals(this.speed) == false) {
+                else if (GameConfig.physicsApplyType == PhysicsApplyType.SPEED) {
+                    if (this.touchedFootContacts.length > 0) {
+                        let contact = this.touchedFootContacts[0];
+                        let normal = contact.getWorldManifold().normal;
+                        if (false && this.speed.x && normal.x && normal.y) {
+                            if (this.speed.x * normal.x > 0) {
+                                this.speed.y = Math.abs(this.speed.x * normal.x / normal.y);
+                            }
+                            else {
+                                this.speed.y = -Math.abs(this.speed.x * normal.x / normal.y);
+                            }
+                            console.log(`~~~ this.speed is ${this.speed.toString()}`);
+                        }
+                    }
+                    if (this.body.linearVelocity.equals(this.speed) == false) {
                         this.body.linearVelocity = this.speed;
                     }
                 }
                 else {
-                    if(this.speed.x || this.speed.y) {
+                    if (this.speed.x || this.speed.y) {
                         noxcc.addXY(this.node, this.speed.x * dt, this.speed.y * dt);
                         this.speed.x = 0;
                         this.speed.y = 0;
@@ -400,12 +421,19 @@ export class Player extends BaseObject {
     }
 
     private onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
+        console.log(`~~~ onBeginContact: ${selfCollider.node == this.node} ${selfCollider.tag} ${contact.getWorldManifold().normal.toString()}`);
+        let normal = contact.getWorldManifold().normal;
+        let rad = Math.atan2(normal.y, normal.x);
+        let deg = nox.rad2deg(rad);
+        console.log(`~~~ ${deg}`);
         if (selfCollider.tag == ObjectTag.Foot) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
                 this.touchedFootColliders.push(otherCollider);
                 this.touchedFootPositions.push(otherCollider.node.position.clone());
+                this.touchedFootContacts.push(contact);
             }
+            //this.body.gravityScale = 0;
         }
         else if (selfCollider.tag == ObjectTag.Head) {
             var groudObjectGroups = this.getGroundObjectGroups();
@@ -423,7 +451,18 @@ export class Player extends BaseObject {
         }
     }
 
+    private onPostContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
+        console.log(`~~~ onPostContact: ${selfCollider.node == this.node} ${selfCollider.tag} ${contact.getWorldManifold().normal.toString()}`);
+        if (selfCollider.tag == ObjectTag.Foot) {
+        }
+        else if (selfCollider.tag == ObjectTag.Head) {
+        }
+        else {
+        }
+    }
+
     private onEndContact(selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact): void {
+        console.log(`~~~ onEndContact: ${selfCollider.node == this.node} ${selfCollider.tag} ${contact.getWorldManifold().normal.toString()}`);
         if (selfCollider.tag == ObjectTag.Foot) {
             var groudObjectGroups = this.getGroundObjectGroups();
             if (groudObjectGroups.indexOf(otherCollider.group) >= 0) {
@@ -431,6 +470,7 @@ export class Player extends BaseObject {
                 if (index >= 0) {
                     this.touchedFootColliders.splice(index, 1);
                     this.touchedFootPositions.splice(index, 1);
+                    this.touchedFootContacts.splice(index, 1);
                 }
             }
         }
@@ -485,7 +525,7 @@ export class Player extends BaseObject {
     private playerJump(): void {
         if (this.canJump) {
             if (this.touchedFootColliders.length > 0 || this.isHitBottom) {
-                if(GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+                if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
                     this.speed.y = GameConfig.betterJumpSpeed ? this.jump + Math.max(0, -this.body.linearVelocity.y) : this.jump;
                 }
                 else {
@@ -500,7 +540,7 @@ export class Player extends BaseObject {
                 this.canJump2 = false;
                 // 下降阶段才能二段跳
                 if (this.playerStatus == PlayerStatus.PLAYER_FALL) {
-                    if(GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
+                    if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
                         this.speed.y = GameConfig.betterJump2Speed ? this.jump2 + Math.max(0, -this.body.linearVelocity.y) : this.jump2;
                     }
                     else {

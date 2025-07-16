@@ -281,8 +281,24 @@ export class GameMap extends NoxComponent {
             collider = MapUtil.addCircleCollider(cherry, this, ObjectGroup.BossBullet1, true, new Rect(0, 0, noxcc.w(cherry), noxcc.h(cherry)), 0);
             noxcc.setParent(cherry, this.node);
         }
-        else {
+        else if (GameConfig.triangleTiles[tile.grid]) {
+            if (tile.grid == 39 || tile.grid == 40 || true) {
+                let points = GameConfig.triangleTiles[tile.grid];
+                let newPoints = [];
+                for (let point of points) {
+                    newPoints.push(new Vec2(point[0] * tileSize.width, point[1] * tileSize.height));
+                }
+                MapUtil.addTiledPolygonCollider(tile, this, ObjectGroup.Block, false, newPoints);
+            }
+        }
+        else if (GameConfig.blockTiles.indexOf(tile.grid) >= 0) {
             collider = MapUtil.addTiledBoxCollider(tile, this, ObjectGroup.Block, false, tileSize, tileSize.width, tileSize.height);
+        }
+        else if (GameConfig.backgroundTiles.indexOf(tile.grid) >= 0) {
+
+        }
+        else {
+            cc_assert(false);
         }
     }
 
@@ -505,7 +521,7 @@ export class GameMap extends NoxComponent {
                         MapUtil.addPolygonCollider(node, this, ObjectGroup.Spike, true, [
                             new Vec2(GameConfig.spikeSpacing, GameConfig.spikeSpacing),
                             new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, GameConfig.spikeSpacing),
-                            new Vec2(noxcc.w(node) - GameConfig.spikeSpacing, noxcc.h(node) - GameConfig.spikeSpacing)
+                            new Vec2(noxcc.w(node) / 2, noxcc.h(node) - GameConfig.spikeSpacing)
                         ]);
                         node.addComponent(Spike);
                     }

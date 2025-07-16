@@ -17,11 +17,11 @@ export module MapUtil {
             let manager = PhysicsSystem2D.instance;
             manager.enable = true;
             if (GameConfig.usePhysicsDraw) {
-                manager.debugDrawFlags = EPhysics2DDrawFlags.Aabb/* |
+                manager.debugDrawFlags = /*EPhysics2DDrawFlags.Aabb |
                     EPhysics2DDrawFlags.Pair |
                     EPhysics2DDrawFlags.CenterOfMass |
-                    EPhysics2DDrawFlags.Joint |
-                    EPhysics2DDrawFlags.Shape*/;
+                    EPhysics2DDrawFlags.Joint |*/
+                    EPhysics2DDrawFlags.Shape;
             }
 
             // 2.2.1 版本之前不能在 start 里开启物理引擎。
@@ -370,7 +370,7 @@ export module MapUtil {
 
     export function applyCollider(collider: Collider2D): void {
         if (GameConfig.physicsEngineType == PhysicsEngineType.BOX2D) {
-            collider.friction = 0;
+            collider.friction = 0.0;
             collider.restitution = 0;
             collider.apply();
         }

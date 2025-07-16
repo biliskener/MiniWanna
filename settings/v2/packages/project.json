@@ -1,5 +1,5 @@
 {
-  "__version__": "1.0.2",
+  "__version__": "1.0.4",
   "physics": {
     "collisionGroups": [
       {
@@ -86,10 +86,7 @@
       "15": 16384,
       "16": 8192
     },
-    "defaultMaterial": {
-      "restitution": 0,
-      "friction": 0
-    }
+    "defaultMaterial": "0b162048-2030-4fbd-bbaa-1414efe90b7e"
   },
   "general": {
     "designResolution": {
